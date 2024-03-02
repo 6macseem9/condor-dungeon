@@ -5,11 +5,13 @@ public class UnitState : State
 {
     protected Animator _animator;
     protected NavMeshAgent _nav;
+    protected Transform _transform;
 
-    public UnitState(Animator animator, NavMeshAgent nav)
+    public UnitState(Transform transform, Animator animator, NavMeshAgent nav)
     {
         _animator = animator;
         _nav = nav;
+        _transform = transform;
     }
 
     public override void FixedUpdate()

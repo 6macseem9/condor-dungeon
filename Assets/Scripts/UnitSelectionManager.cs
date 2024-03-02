@@ -50,6 +50,8 @@ public class UnitSelectionManager : MonoBehaviour
                 MoveGroup(_selectedUnits, hit.point);
             }
         }
+
+        UIDebug.Instance.Show("Selected:", _selectedUnits.Count==0? "null" : _selectedUnits[0].name, "orange");
     }
 
     private void MoveGroup(List<Unit> units,Vector3 center)

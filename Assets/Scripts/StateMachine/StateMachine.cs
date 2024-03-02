@@ -25,10 +25,16 @@ public class StateMachine
         current.State?.FixedUpdate();
     }
 
-    public void SetState(State state)
+    public void TransitionTo(State state)
     {
-        current = nodes[state.GetType()];
-        current.State?.Enter();
+        if(current==null)
+        {
+            current = nodes[state.GetType()];
+            current.State?.Enter();
+            return;
+        }
+
+        ChangeState(state);
     }
 
     private void ChangeState(State state)
