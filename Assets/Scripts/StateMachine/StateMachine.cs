@@ -86,6 +86,11 @@ public class StateMachine
         return node;
     }
 
+    public void AddNode(State state)
+    {
+        GetOrAddNode(state);
+    }
+
     private class StateNode
     {
         public State State { get; }

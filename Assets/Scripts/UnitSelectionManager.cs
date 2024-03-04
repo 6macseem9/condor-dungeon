@@ -32,6 +32,10 @@ public class UnitSelectionManager : MonoBehaviour
 
     void Update()
     {
+        //UIDebug.Instance.Show("Selected:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].name, "yellow");
+        
+        UIDebug.Instance.Show("State:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].CurState.Replace("Unit",""), "orange");
+
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -45,13 +49,21 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && _selectedUnits.Count > 0)
         {
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Unit"))
+                && hit.collider.CompareTag("EnemyUnit"))
+            {
+                foreach (var unit in _selectedUnits)
+                {
+                    unit.Chase(hit.collider.GetComponent<Unit>(),true);
+                }
+                return;
+            }
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
                 MoveGroup(_selectedUnits, hit.point);
             }
+            
         }
-
-        UIDebug.Instance.Show("Selected:", _selectedUnits.Count==0? "null" : _selectedUnits[0].name, "orange");
     }
 
     private void MoveGroup(List<Unit> units,Vector3 center)
@@ -149,6 +161,12 @@ public class UnitSelectionManager : MonoBehaviour
     {
         AllUnits.Add(unit);
     }
+    public void RemoveUnit(Unit unit)
+    {
+        AllUnits.Remove(unit);
+        _selectedUnits.Remove(unit);
+    }
+
     //private void OnDrawGizmos()
     //{
     //    var size = OptimalGridSize(3);

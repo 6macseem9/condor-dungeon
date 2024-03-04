@@ -2,12 +2,12 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class UnitMove : UnitState
+public class UnitChase : UnitState
 {
     private SpriteRenderer _actionMarker;
     private bool _startedPath;
 
-    public UnitMove(Unit unit, Animator animator, NavMeshAgent nav, SpriteRenderer actionMarker) : base(unit, animator, nav)
+    public UnitChase(Unit unit, Animator animator, NavMeshAgent nav, SpriteRenderer actionMarker) : base(unit, animator, nav)
     {
         _actionMarker = actionMarker;
     }
@@ -15,27 +15,19 @@ public class UnitMove : UnitState
     {
         _animator.Play("walk");
 
-        Util.Delay(0.02f, () => _startedPath = true);
-
         _nav.avoidancePriority = 49;
         _nav.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
     public override void Update()
     {
-        _actionMarker.transform.position = _nav.destination;
+        if (_unit.AttackTarget == null) return;
+            
+        _actionMarker.transform.position = _unit.AttackTarget.transform.position;
 
-        if (!_unit.HoldPosition && _unit.AttackTarget != null)
-        {
-            var enemy = _unit.AttackTarget.transform;
-            var dir = _transform.position - enemy.position;
-            var dest = enemy.position + dir.normalized;
-            _nav.SetDestination(dest);
-        }
-
-        if (_startedPath && _nav.velocity == Vector3.zero)
-        {
-            CompleteState();
-        }
+        var enemy = _unit.AttackTarget.transform;
+        var dir = _transform.position - enemy.position;
+        var dest = enemy.position + dir.normalized;
+        _nav.SetDestination(dest);
     }
     public override void FixedUpdate()
     {
@@ -46,9 +38,6 @@ public class UnitMove : UnitState
     }
     public override void OnExit()
     {
-        _actionMarker.enabled = false;
-        _startedPath = false;
 
-        if(_unit.HoldPosition) _unit.AttackTarget = null;
     }
 }

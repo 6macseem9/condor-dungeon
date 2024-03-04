@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class UnitIdle : UnitState
 {
-    public UnitIdle(Transform transform, Animator animator, NavMeshAgent nav) : base(transform,animator, nav)
+    public UnitIdle(Unit unit, Animator animator, NavMeshAgent nav) : base(unit, animator, nav)
     {
     }
     public override void OnEnter()
