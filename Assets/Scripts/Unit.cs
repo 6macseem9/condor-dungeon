@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 [DefaultExecutionOrder(1)]
 public class Unit : MonoBehaviour
@@ -10,11 +11,7 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public int MaxHP { get; private set; }
     [field: SerializeField] public bool HoldPosition { get; private set; }
     [SerializeField] private int _damage;
-
-    [SerializeField] private GameObject _uiElements;
-
-    private SpriteRenderer _selectionRing;
-    private SpriteRenderer _actionMarker;
+    
     private Range _attackRange;
     private Range _detectRange;
     private Healthbar _healthbar;
@@ -22,6 +19,7 @@ public class Unit : MonoBehaviour
     private NavMeshAgent _nav;
     private Animator _animator;
     private Collider _collider;
+    private UnitVisuals _visuals;
 
     private StateMachine _stateMachine;
     private UnitIdle _idleState;
@@ -31,9 +29,6 @@ public class Unit : MonoBehaviour
     private UnitDeath _deathState;
 
     public Unit AttackTarget { get; set; }
-
-    private Tweener _selectBounce;
-
     public bool Selected { get; private set; }
     public int HP { get; private set; }
     public bool IsDying { get; private set; }
@@ -41,18 +36,17 @@ public class Unit : MonoBehaviour
     //TEMP
     public string CurState { get { return _stateMachine.CurrentStateName; } } 
 
+
+
     private void Start()
     {
         _collider = GetComponent<Collider>();
+        _visuals = GetComponent<UnitVisuals>();
         _animator = GetComponentInChildren<Animator>();
         _healthbar = GetComponentInChildren<Healthbar>();   
 
         _nav = GetComponent<NavMeshAgent>();
         _nav.updateRotation = false;
-
-        var sprites = GetComponentsInChildren<SpriteRenderer>();
-        _selectionRing = sprites[1];
-        _actionMarker = sprites[2];
 
         var ranges = GetComponentsInChildren<Range>();
         _attackRange = ranges[0];
@@ -64,9 +58,6 @@ public class Unit : MonoBehaviour
 
         HP = MaxHP;
 
-        _actionMarker.transform.DORotate(new Vector3(90, 0, 360), 5, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
-        _uiElements.SetActive(Selected);
-
         SetUpStateMachine();
 
         UnitSelectionManager.Instance.AddUnit(this);
@@ -75,11 +66,11 @@ public class Unit : MonoBehaviour
     {
         _stateMachine = new StateMachine();
 
-        _idleState = new UnitIdle(this, _animator, _nav);
-        _moveState = new UnitMove(this, _animator, _nav, _actionMarker);
-        _attackState = new UnitAttack(this, _animator, _nav);
-        _chaseState = new UnitChase(this, _animator, _nav, _actionMarker);
-        _deathState = new UnitDeath(this,_animator, _nav, _actionMarker.transform, _collider,_uiElements,_attackRange.gameObject,_detectRange.gameObject,_healthbar);
+        _idleState = new UnitIdle(this, _animator, _nav,_visuals.ActionMarker);
+        _moveState = new UnitMove(this, _animator, _nav, _visuals.ActionMarker);
+        _attackState = new UnitAttack(this, _animator, _nav,_visuals.ActionMarker);
+        _chaseState = new UnitChase(this, _animator, _nav, _visuals.ActionMarker);
+        _deathState = new UnitDeath(this,_animator, _nav, _visuals.ActionMarker, _collider,_visuals.UiElements,_attackRange.gameObject,_detectRange.gameObject,_healthbar);
 
         _stateMachine.AddTransition(_idleState,_moveState, () => _nav.velocity != Vector3.zero && _nav.remainingDistance > 0.69f);
         _stateMachine.AddTransition(_moveState, _idleState, () => _moveState.Completed);
@@ -106,18 +97,10 @@ public class Unit : MonoBehaviour
         _stateMachine.FixedUpdate();
     }
 
-    private void BounceMarker()
-    {
-        _actionMarker.enabled = true;
-
-        _actionMarker.transform.DOScale(1f, 0);
-        _actionMarker.transform.DOScale(0.6f, 0.5f).SetEase(Ease.OutElastic);
-    }
-
     public void MoveTo(Vector3 position)
     {
         _nav.SetDestination(position);
-        BounceMarker();
+        _visuals.BounceMarker();
 
         AttackTarget = null;
 
@@ -126,12 +109,10 @@ public class Unit : MonoBehaviour
     public void Select(bool selected = true)
     {
         Selected = selected;
-        _uiElements.SetActive(Selected);
-
-        _selectBounce.Kill();
-        _selectBounce = _selectionRing.transform.DOScale(1.2f, 0.1f);
-        _selectBounce.onComplete = ()=> _selectBounce=_selectionRing.transform.DOScale(1f, 0.5f).SetEase(Ease.OutElastic);
+        _visuals.ShowUiElements(selected);
+        _visuals.BounceSelect();
     }
+
     public void Chase(Unit unit, bool command = false)
     {
         if (AttackTarget == unit && command) return;
@@ -140,10 +121,10 @@ public class Unit : MonoBehaviour
         _attackRange.ReTrigger();
         if (HoldPosition && !command) return;
 
-        //BounceMarker();
+        _visuals.TargetMarker();
         _stateMachine.TransitionTo(_chaseState);
     }
-
+    
     private void EnemyDetected(Unit unit)
     {
         if (AttackTarget == null)
@@ -185,6 +166,10 @@ public class Unit : MonoBehaviour
         if (IsDying) return;
 
         HP -= amount;
+        _visuals.DamageImpact(_animator.transform);
+        _visuals.Flash();
+        _visuals.ShakeHealthbar();
+
         if (HP <= 0)
         {
             HP = 0;
@@ -199,4 +184,6 @@ public class Unit : MonoBehaviour
             _attackRange.ReTrigger();
         }
     }
+
+
 }

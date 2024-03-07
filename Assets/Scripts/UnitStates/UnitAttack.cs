@@ -5,8 +5,10 @@ using UnityEngine.AI;
 
 public class UnitAttack : UnitState
 {
-    public UnitAttack(Unit unit, Animator animator, NavMeshAgent nav) : base(unit, animator, nav)
+    private SpriteRenderer _actionMarker;
+    public UnitAttack(Unit unit, Animator animator, NavMeshAgent nav, SpriteRenderer actionMarker) : base(unit, animator, nav)
     {
+        _actionMarker = actionMarker;
     }
     public override void OnEnter()
     {
@@ -19,7 +21,7 @@ public class UnitAttack : UnitState
     }
     public override void Update()
     {
-
+        _actionMarker.transform.position = _unit.AttackTarget.transform.position;
     }
     public override void FixedUpdate()
     {

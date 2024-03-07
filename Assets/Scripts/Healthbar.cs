@@ -6,7 +6,6 @@ public class Healthbar : MonoBehaviour
     private Unit _unit;
 
     private SpriteRenderer _fg;
-    private SpriteRenderer _mg;
     private SpriteRenderer _bg;
 
     private void Start()
@@ -24,7 +23,7 @@ public class Healthbar : MonoBehaviour
         transform.rotation = lookRotation;
 
         float percent = _unit.HP * 100 / _unit.MaxHP;
-        _fg.size = new Vector2(percent/100f, 0.15f);
+        _fg.size = new Vector2(percent/100f, _fg.size.y);
     }
 
     public void FadeOut()

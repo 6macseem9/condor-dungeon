@@ -24,13 +24,13 @@ public class UnitMove : UnitState
     {
         _actionMarker.transform.position = _nav.destination;
 
-        if (!_unit.HoldPosition && _unit.AttackTarget != null)
-        {
-            var enemy = _unit.AttackTarget.transform;
-            var dir = _transform.position - enemy.position;
-            var dest = enemy.position + dir.normalized;
-            _nav.SetDestination(dest);
-        }
+        //if (!_unit.HoldPosition && _unit.AttackTarget != null)
+        //{
+        //    var enemy = _unit.AttackTarget.transform;
+        //    var dir = _transform.position - enemy.position;
+        //    var dest = enemy.position + dir.normalized;
+        //    _nav.SetDestination(dest);
+        //}
 
         if (_startedPath && _nav.velocity == Vector3.zero)
         {
@@ -46,9 +46,6 @@ public class UnitMove : UnitState
     }
     public override void OnExit()
     {
-        _actionMarker.enabled = false;
         _startedPath = false;
-
-        if(_unit.HoldPosition) _unit.AttackTarget = null;
     }
 }

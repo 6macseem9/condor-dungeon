@@ -5,7 +5,6 @@ using UnityEngine.AI;
 public class UnitChase : UnitState
 {
     private SpriteRenderer _actionMarker;
-    private bool _startedPath;
 
     public UnitChase(Unit unit, Animator animator, NavMeshAgent nav, SpriteRenderer actionMarker) : base(unit, animator, nav)
     {

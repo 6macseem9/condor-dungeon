@@ -9,9 +9,9 @@ public class UnitDeath : UnitState
     private GameObject _attackRange;
     private GameObject _detectRange;
     private Healthbar _healthbar;
-    private Transform _actionMarker;
+    private SpriteRenderer _actionMarker;
 
-    public UnitDeath(Unit unit, Animator animator, NavMeshAgent nav, Transform actionMarker, Collider collider, GameObject uiElements, GameObject attackRange, GameObject detectRange, Healthbar healthbar) : base(unit, animator, nav)
+    public UnitDeath(Unit unit, Animator animator, NavMeshAgent nav, SpriteRenderer actionMarker, Collider collider, GameObject uiElements, GameObject attackRange, GameObject detectRange, Healthbar healthbar) : base(unit, animator, nav)
     {
         _collider = collider;
         _uiElements = uiElements;
@@ -25,12 +25,13 @@ public class UnitDeath : UnitState
     {
         _animator.Play("death");
 
+        _nav.enabled = false;
         _collider.enabled = false;
         _uiElements.SetActive(false);
         _attackRange.SetActive(false);
         _detectRange.SetActive(false);
         _healthbar.FadeOut();
-        _actionMarker.DOKill();
+        _actionMarker.transform.DOKill();
 
         UnitSelectionManager.Instance.RemoveUnit(_unit);
         Util.Delay(0.05f, () => WaitForAnimFinish());
