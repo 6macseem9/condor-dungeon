@@ -11,11 +11,13 @@ public class Range : MonoBehaviour
     public event RangeEvent OnEnter;
     public event RangeEvent OnExit;
 
-    private Collider _collider;
+    public float Radius { get { return _collider == null ? 0 : _collider.radius; } }
+
+    private SphereCollider _collider;
 
     private void Start()
     {
-        _collider = GetComponent<Collider>();
+        _collider = GetComponent<SphereCollider>();
     }
 
     private void OnTriggerEnter(Collider other)

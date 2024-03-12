@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: <color=white>State:</color> PlayerGrounded
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8066647424d2e5244b0e98f151f74063, type: 2}
-  m_sharedMaterial: {fileID: -8186607903786281891, guid: 8066647424d2e5244b0e98f151f74063, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2486f19830fd1e246b91bd741624831c, type: 2}
+  m_sharedMaterial: {fileID: -4995563928308110522, guid: 2486f19830fd1e246b91bd741624831c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -92,13 +92,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 12
   m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535

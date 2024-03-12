@@ -8,6 +8,8 @@ public class Healthbar : MonoBehaviour
     private SpriteRenderer _fg;
     private SpriteRenderer _bg;
 
+    public float Percent { get; private set; }
+
     private void Start()
     {
         _unit = GetComponentInParent<Unit>();
@@ -22,8 +24,8 @@ public class Healthbar : MonoBehaviour
         Quaternion lookRotation = Camera.main.transform.rotation;
         transform.rotation = lookRotation;
 
-        float percent = _unit.HP * 100 / _unit.MaxHP;
-        _fg.size = new Vector2(percent/100f, _fg.size.y);
+        Percent = _unit.HP * 100 / _unit.Stats.MaxHP;
+        _fg.size = new Vector2(Percent/100f, _fg.size.y);
     }
 
     public void FadeOut()

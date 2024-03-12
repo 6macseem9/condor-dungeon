@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 52c014a3acc0fc84e87fc46b44b4cb2c
+guid: fa786fbc1bb5df240876bfc73c1adf5f
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,9 +9,9 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - pico8-unicode-v2
+  - 6px font
   fallbackFontReferences: []
-  customCharacters: 
+  customCharacters: "\"'()+,-./0123456789:;=ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]abcdefghijklmnopqrstuvwxyz|\u03B1\u03B2\u03B3\u03B4\u03B5\u03B6\u03B7\u03B8\u03B9\u03BA"
   fontRenderingMode: 2
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0

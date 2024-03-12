@@ -14,7 +14,7 @@ public class UnitAttack : UnitState
     {
         _animator.CrossFade("attack", 0.4f);
 
-        //_nav.SetDestination(_transform.position);
+        _nav.SetDestination(_transform.position);
 
         _nav.avoidancePriority = 50;
         _nav.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;

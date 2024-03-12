@@ -1,20 +1,14 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
-using UnityEngine.UIElements;
-using System.Collections.Generic;
 
 [DefaultExecutionOrder(1)]
 public class Unit : MonoBehaviour
 {
-    [field: SerializeField] public int MaxHP { get; private set; }
-    [field: SerializeField] public bool HoldPosition { get; private set; }
-    [SerializeField] private int _damage;
-    
+    [field: SerializeField] public Stats Stats { get; private set; }
+
     private Range _attackRange;
     private Range _detectRange;
-    private Healthbar _healthbar;
 
     private NavMeshAgent _nav;
     private Animator _animator;
@@ -28,22 +22,22 @@ public class Unit : MonoBehaviour
     private UnitChase _chaseState;
     private UnitDeath _deathState;
 
+    public Healthbar Healthbar { get; private set; }
     public Unit AttackTarget { get; set; }
     public bool Selected { get; private set; }
-    public int HP { get; private set; }
+    public float HP { get; private set; }
     public bool IsDying { get; private set; }
+    public bool HoldPosition { get; set; }
 
     //TEMP
-    public string CurState { get { return _stateMachine.CurrentStateName; } } 
+    public string CurState { get { return _stateMachine.CurrentStateName; } }
 
-
-
-    private void Start()
+    protected virtual void Start()
     {
         _collider = GetComponent<Collider>();
         _visuals = GetComponent<UnitVisuals>();
         _animator = GetComponentInChildren<Animator>();
-        _healthbar = GetComponentInChildren<Healthbar>();   
+        Healthbar = GetComponentInChildren<Healthbar>();   
 
         _nav = GetComponent<NavMeshAgent>();
         _nav.updateRotation = false;
@@ -56,7 +50,10 @@ public class Unit : MonoBehaviour
         _detectRange.OnEnter += EnemyDetected;
         _detectRange.OnExit += EnemyLost;
 
-        HP = MaxHP;
+        HP = Stats.MaxHP;
+        _nav.speed = Stats.MoveSpeed;
+        _animator.SetFloat("AttackSpeed", Stats.AttackSpeed);
+        Util.Repeat(1, -1, () => Heal(Stats.Regen));
 
         SetUpStateMachine();
 
@@ -69,8 +66,8 @@ public class Unit : MonoBehaviour
         _idleState = new UnitIdle(this, _animator, _nav,_visuals.ActionMarker);
         _moveState = new UnitMove(this, _animator, _nav, _visuals.ActionMarker);
         _attackState = new UnitAttack(this, _animator, _nav,_visuals.ActionMarker);
-        _chaseState = new UnitChase(this, _animator, _nav, _visuals.ActionMarker);
-        _deathState = new UnitDeath(this,_animator, _nav, _visuals.ActionMarker, _collider,_visuals.UiElements,_attackRange.gameObject,_detectRange.gameObject,_healthbar);
+        _chaseState = new UnitChase(this, _animator, _nav, _visuals.ActionMarker, _attackRange);
+        _deathState = new UnitDeath(this,_animator, _nav, _visuals.ActionMarker, _collider,_visuals.UiElements,_attackRange.gameObject,_detectRange.gameObject,Healthbar);
 
         _stateMachine.AddTransition(_idleState,_moveState, () => _nav.velocity != Vector3.zero && _nav.remainingDistance > 0.69f);
         _stateMachine.AddTransition(_moveState, _idleState, () => _moveState.Completed);
@@ -81,7 +78,7 @@ public class Unit : MonoBehaviour
         _stateMachine.TransitionTo(_idleState);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         _stateMachine.Update();
 
@@ -155,17 +152,18 @@ public class Unit : MonoBehaviour
         else Chase(unit);
     }
 
-    public void DealDamageToTarget()
+    public virtual void DealDamageToTarget()
     {
-        if (AttackTarget == null) return;
 
-        AttackTarget.TakeDamage(_damage,this);
     }
-    public void TakeDamage(int amount, Unit sender)
+
+    public void TakeDamage(Unit sender)
     {
         if (IsDying) return;
 
-        HP -= amount;
+        var damage = Stats.CalculateMitigatedDamage(sender.Stats);
+
+        HP -= damage;
         _visuals.DamageImpact(_animator.transform);
         _visuals.Flash();
         _visuals.ShakeHealthbar();
@@ -185,5 +183,18 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void Heal(float amount)
+    {
+        if (IsDying) return;
 
+        HP += amount;
+        if(HP>Stats.MaxHP) { HP = Stats.MaxHP; }
+    }
+
+    public bool ToggleMode()
+    {
+        HoldPosition = !HoldPosition;
+
+        return HoldPosition;
+    }
 }

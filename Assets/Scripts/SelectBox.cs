@@ -1,4 +1,6 @@
+using System.Security;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SelectBox : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class SelectBox : MonoBehaviour
 
     private void Update()
     {
+
         // When Clicked
         if (Input.GetMouseButtonDown(0))
         {
@@ -33,7 +36,6 @@ public class SelectBox : MonoBehaviour
 
             if (_rectTransform.rect.width > 5 || _rectTransform.rect.height > 5)
             {
-                UnitSelectionManager.Instance.DeselectAll();
                 SelectUnits();
             }
 
@@ -67,15 +69,21 @@ public class SelectBox : MonoBehaviour
 
     private void SelectUnits()
     {
-        Vector3 unitHeight = new Vector3(0, 1.2f, 0);
-
         foreach (var unit in UnitSelectionManager.Instance.AllUnits)
         {
-            if (_selectionBox.Contains(_cam.WorldToScreenPoint(unit.transform.position))
-                || _selectionBox.Contains(_cam.WorldToScreenPoint(unit.transform.position + unitHeight)))
+            if (UnitInBounds(unit))
             {
-                UnitSelectionManager.Instance.Select(unit);
+                if(!unit.Selected) UnitSelectionManager.Instance.Select(unit);
             }
+            else UnitSelectionManager.Instance.Deselect(unit);
         }
+    }
+
+    private bool UnitInBounds(Unit unit)
+    {
+        Vector3 unitHeight = new Vector3(0, 1.2f, 0);
+
+        return _selectionBox.Contains(_cam.WorldToScreenPoint(unit.transform.position))
+                || _selectionBox.Contains(_cam.WorldToScreenPoint(unit.transform.position + unitHeight));
     }
 }

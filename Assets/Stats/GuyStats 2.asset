@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2fae34924c7514d9774574a8b6f9b9, type: 3}
+  m_Name: GuyStats 2
+  m_EditorClassIdentifier: 
+  ClassName: "\u03B2ranger"
+  ClassColor: {r: 0.15686275, g: 0.7725491, b: 0.40784317, a: 1}
+  Portrait: {fileID: 21300000, guid: 025f7294c28639349af8e0e8541d6e99, type: 3}
+  MaxHP: 100
+  Regen: 0.2
+  AttackSpeed: 1
+  MoveSpeed: 1
+  MeleeDamage: 0
+  MeleeResist: 10
+  RangedDamage: 20
+  RangedResist: 10
+  MagicDamage: 0
+  MagicResist: 10

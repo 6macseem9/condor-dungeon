@@ -5,10 +5,12 @@ using UnityEngine.AI;
 public class UnitChase : UnitState
 {
     private SpriteRenderer _actionMarker;
+    private Range _attackRange;
 
-    public UnitChase(Unit unit, Animator animator, NavMeshAgent nav, SpriteRenderer actionMarker) : base(unit, animator, nav)
+    public UnitChase(Unit unit, Animator animator, NavMeshAgent nav, SpriteRenderer actionMarker, Range attackRange) : base(unit, animator, nav)
     {
         _actionMarker = actionMarker;
+        _attackRange = attackRange;
     }
     public override void OnEnter()
     {
@@ -25,7 +27,7 @@ public class UnitChase : UnitState
 
         var enemy = _unit.AttackTarget.transform;
         var dir = _transform.position - enemy.position;
-        var dest = enemy.position + dir.normalized;
+        var dest = enemy.position + dir.normalized * (_attackRange.Radius + 0.3f);
         _nav.SetDestination(dest);
     }
     public override void FixedUpdate()

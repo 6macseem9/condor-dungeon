@@ -1,13 +1,18 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitSelectionManager : MonoBehaviour
 {
     public static UnitSelectionManager Instance;
 
     [SerializeField] private float _unitSpread=1;
+
+    [Space(7)]
+    [SerializeField] private StatBlock _statBlock;
 
     public List<Unit> AllUnits {get; private set;}
     private List<Unit> _selectedUnits = new List<Unit>();
@@ -28,6 +33,8 @@ public class UnitSelectionManager : MonoBehaviour
     void Start()
     {
         _camera = Camera.main;
+
+        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
     }
 
     void Update()
@@ -39,12 +46,18 @@ public class UnitSelectionManager : MonoBehaviour
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Unit")))
                 MultiSelect(hit.collider.GetComponent<Unit>());
             else
+            {
                 DeselectAll();
+
+                _statBlock.SetStats(null);
+            }
         }
 
         if (Input.GetMouseButtonDown(1) && _selectedUnits.Count > 0)
@@ -99,12 +112,16 @@ public class UnitSelectionManager : MonoBehaviour
 
         _selectedUnits.Add(unit);
         unit.Select(true);
+
+        _statBlock.SetStats(_selectedUnits);
     }
 
-    private void Deselect(Unit unit)
+    public void Deselect(Unit unit)
     {
         unit.Select(false);
         _selectedUnits.Remove(unit);
+
+        _statBlock.SetStats(_selectedUnits.Count==0 ? null : _selectedUnits);
     }
     public void DeselectAll()
     {
@@ -167,6 +184,20 @@ public class UnitSelectionManager : MonoBehaviour
         _selectedUnits.Remove(unit);
     }
 
+    public void ToggleSelectedUnitMode()
+    {
+        if (_selectedUnits.Count <= 0) return;
+        _selectedUnits[0].ToggleMode();
+    }
+    public void SetSelectedUnitsMode(bool hold)
+    {
+        if (_selectedUnits.Count <= 1) return;
+
+        foreach (var unit in _selectedUnits)
+        {
+            unit.HoldPosition = hold;
+        }
+    }
     //private void OnDrawGizmos()
     //{
     //    var size = OptimalGridSize(3);
@@ -192,6 +223,15 @@ public static class Util
         float timer = 0;
         Tweener tween = DOTween.To(() => timer, x => timer = x, time, time).SetUpdate(realTime);
         tween.onComplete = func;
+        return tween;
+    }
+
+    public static Tweener Repeat(float time, int times, TweenCallback func, bool realTime = false)
+    {
+        float timer = 0;
+        Tweener tween = DOTween.To(() => timer, x => timer = x, time, time).SetUpdate(realTime);
+        tween.SetLoops(times);
+        tween.onStepComplete = func;
         return tween;
     }
 }
