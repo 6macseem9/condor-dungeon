@@ -108,6 +108,8 @@ public class Unit : MonoBehaviour
         Selected = selected;
         _visuals.ShowUiElements(selected);
         _visuals.BounceSelect();
+
+        _visuals.ShowRange(selected);
     }
 
     public void Chase(Unit unit, bool command = false)

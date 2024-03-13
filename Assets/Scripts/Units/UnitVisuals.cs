@@ -11,6 +11,7 @@ public class UnitVisuals : MonoBehaviour
     public SpriteRenderer ActionMarker { get; private set; }
     private SpriteRenderer _selectionRing;
     private Transform _healthbar;
+    private LineRenderer _rangeCircle;
 
     private MeshRenderer[] _meshes;
     private Material _defMaterial;
@@ -32,16 +33,25 @@ public class UnitVisuals : MonoBehaviour
         ActionMarker = sprites[2];
 
         _healthbar = GetComponentInChildren<Healthbar>().transform;
-
+        _rangeCircle = GetComponentInChildren<LineRenderer>();
         _markerSpinLock = ActionMarker.transform.DORotate(new Vector3(90, 0, 45), 0).SetLoops(-1);
         _markerSpinLock.Pause();
         _markerSpin = ActionMarker.transform.DORotate(new Vector3(90, 0, 360), 5, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
         ShowUiElements(false);
     }
+    private void Update()
+    {
+        if(_rangeCircle.enabled && !UnitSelectionManager.Instance.SingleUnitSelected)
+        {
+            _rangeCircle.enabled = false;
+        }
+    }
 
     public void ShowUiElements(bool show)
     {
         UiElements.SetActive(show);
+
+        ShowRange(show);
     }
     public void BounceMarker()
     {
@@ -79,6 +89,16 @@ public class UnitVisuals : MonoBehaviour
     {
         _healthbarShake.Complete();
         _healthbarShake = _healthbar.DOShakePosition(0.2f, 0.25f, 50);
+    }
+    public void ShowRange(bool show)
+    {
+        if (show && UnitSelectionManager.Instance.SingleUnitSelected)
+        {
+            _rangeCircle.enabled = true;
+            return;
+        }
+        
+        _rangeCircle.enabled= false;
     }
     public void Flash()
     {

@@ -19,6 +19,8 @@ public class UnitSelectionManager : MonoBehaviour
 
     private Camera _camera;
 
+    public bool SingleUnitSelected { get { return _selectedUnits.Count == 1; } }
+
     private void Awake()
     {
         if(Instance != null && Instance != this)

@@ -4,36 +4,33 @@ using UnityEngine;
 
 public class RangedUnit : Unit
 {
-    [SerializeField] private Transform _projectile;
-    private Vector3 _projectileDefPos;
+    [SerializeField] private Projectile _projectile;
 
+    private ObjectPool<Projectile> _pool;
 
     protected override void Start()
     {
         base.Start();
 
-        _projectileDefPos = _projectile.localPosition;
-        _projectile.gameObject.SetActive(false);
+        _pool = new ObjectPool<Projectile> (
+            (x) => !x.gameObject.activeSelf,
+            () => Instantiate(_projectile,transform),
+            (x) => { return; },
+            (x) => x.gameObject.SetActive(false)
+        );
     }
 
     protected override void Update()
     {
         base.Update();
-
-        if (AttackTarget == null) return;
-        if (_projectile.gameObject.activeSelf)
-        {
-            _projectile.position = Vector3.MoveTowards(_projectile.position, AttackTarget.transform.position,10 * Time.deltaTime);
-        }
     }
 
     public override void DealDamageToTarget()
     {
         if (AttackTarget == null) return;
 
-        _projectile.localPosition = _projectileDefPos;
-        _projectile.gameObject.SetActive(true);
-
-        //AttackTarget.TakeDamage(this);
+        var proj = _pool.GetObject();
+        var target = AttackTarget;
+        proj.SetTarget(AttackTarget.transform, ()=> target.TakeDamage(this));
     }
 }

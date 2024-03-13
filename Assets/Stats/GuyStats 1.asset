@@ -18,7 +18,7 @@ MonoBehaviour:
   MaxHP: 100
   Regen: 0.2
   AttackSpeed: 10
-  MoveSpeed: 10
+  MoveSpeed: 1
   MeleeDamage: 11
   MeleeResist: 10
   RangedDamage: 0
