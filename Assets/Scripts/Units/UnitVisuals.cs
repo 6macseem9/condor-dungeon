@@ -41,17 +41,17 @@ public class UnitVisuals : MonoBehaviour
     }
     private void Update()
     {
-        if(_rangeCircle.enabled && !UnitSelectionManager.Instance.SingleUnitSelected)
-        {
-            _rangeCircle.enabled = false;
-        }
+        //if(_rangeCircle.enabled && !UnitSelectionManager.Instance.SingleUnitSelected)
+        //{
+        //    _rangeCircle.enabled = false;
+        //}
     }
 
     public void ShowUiElements(bool show)
     {
         UiElements.SetActive(show);
 
-        ShowRange(show);
+        //ShowRange(show);
     }
     public void BounceMarker()
     {

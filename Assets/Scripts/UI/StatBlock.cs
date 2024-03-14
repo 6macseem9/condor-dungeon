@@ -98,7 +98,7 @@ public class StatBlock : MonoBehaviour
 
         for (int i = 0; i < value.Length; i++)
         {
-            _statTexts[i].text = _statTexts[i].text.Substring(0, 2) + value[i];
+            _statTexts[i].text = _statTexts[i].text.Substring(0, 2) + (value[i] == 0 ? "-" : value[i]);
         }
     }
 

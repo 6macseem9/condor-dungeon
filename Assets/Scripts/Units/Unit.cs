@@ -108,8 +108,6 @@ public class Unit : MonoBehaviour
         Selected = selected;
         _visuals.ShowUiElements(selected);
         _visuals.BounceSelect();
-
-        _visuals.ShowRange(selected);
     }
 
     public void Chase(Unit unit, bool command = false)
@@ -157,6 +155,11 @@ public class Unit : MonoBehaviour
     public virtual void DealDamageToTarget()
     {
 
+    }
+
+    public virtual void DealDamageToUnit(Unit unit)
+    {
+        unit.TakeDamage(this);
     }
 
     public void TakeDamage(Unit sender)

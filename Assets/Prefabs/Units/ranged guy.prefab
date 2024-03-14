@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 469915513778476825}
   - component: {fileID: 6734981780013835810}
   - component: {fileID: 8905469579600448466}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2204614741432320672}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lshoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 2206338006035290448}
   - component: {fileID: 8020054968575614862}
   - component: {fileID: 1484085309850626979}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 5348671565723515740}
   - component: {fileID: 5268682061294252996}
   - component: {fileID: 1237134604289016444}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 7721723046185499530}
   - component: {fileID: 774223557934750912}
   - component: {fileID: 8136786397408034978}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 3677010697105734221}
   - component: {fileID: 7826158493466854649}
   - component: {fileID: 6277103346200692352}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2519946615382050510}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lhand2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6475690688887102780}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: guy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -878,7 +878,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039217791867090335}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -977,7 +977,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7021508940519213986}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rshoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1012,7 +1012,7 @@ GameObject:
   - component: {fileID: 2159823091980968751}
   - component: {fileID: 3627222010957567247}
   - component: {fileID: 2948385850080867366}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1127,7 +1127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5573981485807746646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Node-17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1411,7 +1411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8819747196265280066}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lleg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1443,7 +1443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4459009201715964306}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rhand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1628,7 +1628,7 @@ GameObject:
   - component: {fileID: 8516759492452390532}
   - component: {fileID: 6904301779694694657}
   - component: {fileID: 2475534148385952840}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1709,7 +1709,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9168985513274970015}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1743,7 +1743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4166686437818031835}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rleg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1928,7 +1928,7 @@ GameObject:
   - component: {fileID: 771401495243349935}
   - component: {fileID: 8572616539226683526}
   - component: {fileID: 1056258020711293263}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
