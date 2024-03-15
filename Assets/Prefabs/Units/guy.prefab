@@ -526,7 +526,6 @@ GameObject:
   m_Component:
   - component: {fileID: 708538553715572306}
   - component: {fileID: 544032789879711006}
-  - component: {fileID: 4979718870982379337}
   - component: {fileID: 3738564879775324662}
   - component: {fileID: 3762049902249306528}
   - component: {fileID: 2600473680424787523}
@@ -580,19 +579,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 1
---- !u!114 &4979718870982379337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4942716330356226024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07fa5161e5f194b499b297561cd4f898, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Stats>k__BackingField: {fileID: 11400000, guid: 4fb077419aac870428b81425dc703b1c, type: 2}
 --- !u!114 &3738564879775324662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,7 +1152,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4979718870982379337}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MeleeUnit, Assembly-CSharp
         m_MethodName: DealDamageToTarget
         m_Mode: 1

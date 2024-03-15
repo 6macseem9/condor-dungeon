@@ -18,6 +18,8 @@ public class RangedUnit : Unit
             (x) => { return; },
             (x) => x.gameObject.SetActive(false)
         );
+
+        _pool.AddDefault(GetComponentInChildren<Projectile>());
     }
 
     protected override void Update()

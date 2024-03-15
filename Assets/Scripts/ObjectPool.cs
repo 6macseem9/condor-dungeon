@@ -24,6 +24,11 @@ public class ObjectPool<T>
     {
         List.AddRange(objs);
     }
+    public void AddDefault(T obj, bool disable = false)
+    {
+        List.Add(obj);
+        _disable(obj);
+    }
 
     public T GetObject()
     {
