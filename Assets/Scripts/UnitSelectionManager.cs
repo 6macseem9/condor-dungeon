@@ -120,6 +120,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     public void Deselect(Unit unit)
     {
+        Debug.Log("yo");
         unit.Select(false);
         _selectedUnits.Remove(unit);
 

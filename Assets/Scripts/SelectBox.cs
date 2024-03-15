@@ -73,9 +73,12 @@ public class SelectBox : MonoBehaviour
         {
             if (UnitInBounds(unit))
             {
-                if(!unit.Selected) UnitSelectionManager.Instance.Select(unit);
+                if (!unit.Selected) UnitSelectionManager.Instance.Select(unit);
             }
-            else UnitSelectionManager.Instance.Deselect(unit);
+            else
+            {
+                if (unit.Selected) UnitSelectionManager.Instance.Deselect(unit);
+            }
         }
     }
 

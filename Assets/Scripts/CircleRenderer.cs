@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,12 +22,13 @@ public class CircleRenderer : MonoBehaviour
         float width = _lineRenderer.startWidth;
         _lineRenderer.material.mainTextureScale = new Vector2(1f / width, 1.0f);
 
-        _rotation = new Vector3(90, 0, 0);
+        //_rotation = new Vector3(90, 0, 0);
+        transform.DORotate(new Vector3(90, 0, 360), 20, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
     }
     private void Update()
     {
 
-        transform.rotation = Quaternion.Euler(_rotation);
+        //transform.rotation = Quaternion.Euler(_rotation);
     }
 
     void DrawCircle(int steps, float radius)

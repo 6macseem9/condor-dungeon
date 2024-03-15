@@ -4,8 +4,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.Rendering.DebugUI;
 
 public class StatBlock : MonoBehaviour
 {
@@ -31,11 +29,21 @@ public class StatBlock : MonoBehaviour
     private Unit _unit;
     private TextMeshProUGUI[] _statTexts;
     private ObjectPool<StatBlockListItem> _pool;
+    private Button _chaseButton;
+    private Button _holdButton;
+
+    private Tweener _modeShake;
 
     void Start()
     {
         _statTexts = _statsParent.GetComponentsInChildren<TextMeshProUGUI>();
         _chaseMode = _mode.sprite;
+
+        var buttons = _multiGroup.GetComponentsInChildren<Button>();
+        foreach ( var button in buttons )
+        {
+            button.onClick.AddListener(()=>ButtonPress(button.transform));
+        }
 
         _pool = new ObjectPool<StatBlockListItem>(
             (x) => !x.gameObject.activeSelf,
@@ -56,9 +64,16 @@ public class StatBlock : MonoBehaviour
         if (_singleGroup.alpha > 0 && _unit != null && _unit.Healthbar != null)
             _healthbarImage.rectTransform.DOScaleX(_unit.Healthbar.Percent / 100, 0);
     }
+    private void ButtonPress(Transform button)
+    {
+        button.DOScale(0.8f, 0);
+        button.DOScale(1f, 0.2f);
+    }
     public void ToggleMode()
     {
         _mode.sprite = _unit.ToggleMode() ? _holdMode : _chaseMode;
+        _modeShake.Complete();
+        _modeShake = _mode.rectTransform.DOShakeAnchorPos(0.3f,1,30);
     }
     public void SetStats(List<Unit> units)
     {
@@ -73,13 +88,28 @@ public class StatBlock : MonoBehaviour
     }
     private void Show(bool showSingle, bool showMulti)
     {
-        _singleGroup.alpha = showSingle ? 1 : 0;
-        _singleGroup.blocksRaycasts = showSingle;
-        _singleGroup.interactable = showSingle;
+        ShowGroup(_singleGroup, showSingle);
+        ShowGroup(_multiGroup, showMulti);
+    }
 
-        _multiGroup.alpha = showMulti ? 1 : 0;
-        _multiGroup.blocksRaycasts = showMulti;
-        _multiGroup.interactable = showMulti;
+    private void ShowGroup(CanvasGroup group,bool show)
+    {
+        group.transform.SetAsLastSibling();
+
+        group.blocksRaycasts = show;
+        group.interactable = show;
+
+        if (show)
+        {
+            group.alpha = 1;
+            group.transform.DOScale(3, 0.3f).SetEase(Ease.OutElastic, 1);
+        }
+        if(!show && group.transform.localScale != Vector3.zero)
+        {
+            group.transform.DOScale(0, 0f);
+            group.alpha = 0;
+        }
+        
     }
 
     private void SingleSelect(Unit unit)
