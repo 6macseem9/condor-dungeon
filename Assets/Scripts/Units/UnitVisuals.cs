@@ -56,21 +56,22 @@ public class UnitVisuals : MonoBehaviour
     public void BounceMarker()
     {
         ActionMarker.enabled = true;
+        _markerBounce.Kill();
+        _markerSpinLock.Pause();
+        _markerSpin.Play();
 
         ActionMarker.transform.DOScale(1f, 0);
         ActionMarker.transform.DOScale(0.6f, 0.5f).SetEase(Ease.OutElastic);
 
-        _markerSpinLock.Pause();
-        _markerSpin.Play();
-        _markerBounce.Kill();
+        
     }
     public void TargetMarker()
     {
         _markerSpin.Pause();
         _markerSpinLock.Play();
-
         ActionMarker.enabled = true;
 
+        _markerBounce.Kill();
         ActionMarker.transform.DOScale(0.6f, 0);
         _markerBounce = ActionMarker.transform.DOScale(1f, 0.3f).SetEase(Ease.OutCirc).SetLoops(-1, LoopType.Yoyo);
     }

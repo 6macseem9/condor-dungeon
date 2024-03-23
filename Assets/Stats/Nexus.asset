@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b2fae34924c7514d9774574a8b6f9b9, type: 3}
-  m_Name: GuyStats 2
+  m_Name: Nexus
   m_EditorClassIdentifier: 
-  ClassName: "\u03B2ranger"
-  ClassColor: {r: 0.15686275, g: 0.7725491, b: 0.40784317, a: 1}
-  Portrait: {fileID: 21300000, guid: 9f51cd07dab4a284b93dfcecfbdc916c, type: 3}
+  ClassName: structure
+  ClassDescription: 
+  ClassColor: {r: 0.6392157, g: 0.75294125, b: 0.90196085, a: 1}
+  Turnaround: {fileID: 0}
+  Cost: 0
   MaxHP: 100
-  Regen: 0.2
+  Regen: 0.5
   AttackSpeed: 1
-  MoveSpeed: 1
+  MoveSpeed: 0
   MeleeDamage: 0
-  MeleeResist: 10
-  RangedDamage: 20
-  RangedResist: 10
+  MeleeResist: 0
+  RangedDamage: 0
+  RangedResist: 0
   MagicDamage: 0
-  MagicResist: 10
+  MagicResist: 0

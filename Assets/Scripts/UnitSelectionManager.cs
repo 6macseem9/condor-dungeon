@@ -16,6 +16,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     public List<Unit> AllUnits {get; private set;}
     private List<Unit> _selectedUnits = new List<Unit>();
+    private Unit _structure;
 
     private Camera _camera;
 
@@ -112,19 +113,27 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (_selectedUnits.Contains(unit)) return;
 
+        if (unit is StructureUnit)
+        {
+            _structure = unit;
+            unit.Select(true);
+            return;
+        }
+        DeselectStructure();
+
         _selectedUnits.Add(unit);
         unit.Select(true);
-
         _statBlock.SetStats(_selectedUnits);
     }
 
     public void Deselect(Unit unit)
     {
-        Debug.Log("yo");
         unit.Select(false);
         _selectedUnits.Remove(unit);
 
         _statBlock.SetStats(_selectedUnits.Count==0 ? null : _selectedUnits);
+
+        DeselectStructure();
     }
     public void DeselectAll()
     {
@@ -133,6 +142,8 @@ public class UnitSelectionManager : MonoBehaviour
             unit.Select(false);
         }
         _selectedUnits.Clear();
+
+        DeselectStructure();
     }
 
     public List<Vector3> SquareFormation(Vector3 center, Quaternion rotation, Vector2 size, float _spread, float nthOffset = 0)
@@ -201,6 +212,13 @@ public class UnitSelectionManager : MonoBehaviour
             unit.HoldPosition = hold;
         }
     }
+
+    private void DeselectStructure()
+    {
+        if (_structure == null) return;
+        _structure.Select(false);
+        _structure = null;
+    }
     //private void OnDrawGizmos()
     //{
     //    var size = OptimalGridSize(3);
@@ -217,24 +235,4 @@ public class UnitSelectionManager : MonoBehaviour
     //        i++;
     //    }
     //}
-}
-
-public static class Util
-{
-    public static Tweener Delay(float time, TweenCallback func, bool realTime = false)
-    {
-        float timer = 0;
-        Tweener tween = DOTween.To(() => timer, x => timer = x, time, time).SetUpdate(realTime);
-        tween.onComplete = func;
-        return tween;
-    }
-
-    public static Tweener Repeat(float time, int times, TweenCallback func, bool realTime = false)
-    {
-        float timer = 0;
-        Tweener tween = DOTween.To(() => timer, x => timer = x, time, time).SetUpdate(realTime);
-        tween.SetLoops(times);
-        tween.onStepComplete = func;
-        return tween;
-    }
 }

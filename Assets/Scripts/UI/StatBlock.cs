@@ -9,7 +9,7 @@ public class StatBlock : MonoBehaviour
 {
     [Header("Single select")]
     [SerializeField] private CanvasGroup _singleGroup;
-    [SerializeField] private Image _portrait;
+    [SerializeField] private Animator _portrait;
     [SerializeField] private Sprite _multiPortrait;
     [SerializeField] private Image _mode;
     [SerializeField] private Sprite _holdMode;
@@ -102,6 +102,10 @@ public class StatBlock : MonoBehaviour
         if (show)
         {
             group.alpha = 1;
+
+            if (group==_singleGroup) group.transform.DOScale(0, 0f);
+            else group.transform.DOScale(2f, 0f);
+
             group.transform.DOScale(3, 0.3f).SetEase(Ease.OutElastic, 1);
         }
         if(!show && group.transform.localScale != Vector3.zero)
@@ -118,7 +122,7 @@ public class StatBlock : MonoBehaviour
 
         _unit = unit;
         _mode.sprite = _unit.HoldPosition ? _holdMode : _chaseMode;
-        _portrait.sprite = unit.Stats.Portrait;
+        _portrait.ReplaceClip(unit.Stats.Turnaround);
 
         _nameText.text = unit.gameObject.name.ToUpper();
         _classText.text = unit.Stats.ClassName;
@@ -128,6 +132,12 @@ public class StatBlock : MonoBehaviour
 
         for (int i = 0; i < value.Length; i++)
         {
+            if(i==2)
+            {
+                var val = unit.GetAttackPerSecond();
+                _statTexts[i].text = _statTexts[i].text.Substring(0, 2) + (val == 0 ? "-" : val.ToString("0.00"));
+                continue;
+            }
             _statTexts[i].text = _statTexts[i].text.Substring(0, 2) + (value[i] == 0 ? "-" : value[i]);
         }
     }

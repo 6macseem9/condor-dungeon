@@ -6,8 +6,10 @@ using UnityEngine;
 public class Stats : ScriptableObject
 {
     public string ClassName;
+    [TextArea]public string ClassDescription;
     public Color ClassColor;
-    public Sprite Portrait;
+    public AnimationClip Turnaround;
+    public int Cost;
     [Space(7)]
     public int MaxHP;
     public float Regen;

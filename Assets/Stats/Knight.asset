@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b2fae34924c7514d9774574a8b6f9b9, type: 3}
-  m_Name: GuyStats 1
+  m_Name: Knight
   m_EditorClassIdentifier: 
-  ClassName: "\u03B9chort"
-  ClassColor: {r: 1, g: 0, b: 0.26666668, a: 1}
-  Portrait: {fileID: 21300000, guid: 025f7294c28639349af8e0e8541d6e99, type: 3}
+  ClassName: "\u03B1knight"
+  ClassDescription: good tank weak to magic ayaya
+  ClassColor: {r: 0.9450981, g: 0.53333336, b: 0.19215688, a: 1}
+  Turnaround: {fileID: 7400000, guid: d006f20f3fcb64744ba6a724e0902b7b, type: 2}
+  Cost: 0
   MaxHP: 100
-  Regen: 0.2
+  Regen: 1
   AttackSpeed: 1
   MoveSpeed: 1
-  MeleeDamage: 11
+  MeleeDamage: 20
   MeleeResist: 10
   RangedDamage: 0
   RangedResist: 10

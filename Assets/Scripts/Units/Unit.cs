@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,9 +12,9 @@ public class Unit : MonoBehaviour
     private Range _detectRange;
 
     private NavMeshAgent _nav;
-    private Animator _animator;
-    private Collider _collider;
-    private UnitVisuals _visuals;
+    protected Animator _animator;
+    protected Collider _collider;
+    protected UnitVisuals _visuals;
 
     private StateMachine _stateMachine;
     private UnitIdle _idleState;
@@ -22,15 +23,15 @@ public class Unit : MonoBehaviour
     private UnitChase _chaseState;
     private UnitDeath _deathState;
 
-    public Healthbar Healthbar { get; private set; }
+    public Healthbar Healthbar { get; protected set; }
     public Unit AttackTarget { get; set; }
     public bool Selected { get; private set; }
-    public float HP { get; private set; }
-    public bool IsDying { get; private set; }
+    public float HP { get; protected set; }
+    public bool IsDying { get; protected set; }
     public bool HoldPosition { get; set; }
 
     //TEMP
-    public string CurState { get { return _stateMachine.CurrentStateName; } }
+    public string CurState { get { return _stateMachine==null? "structure" : _stateMachine.CurrentStateName; } }
 
     protected virtual void Start()
     {
@@ -89,7 +90,7 @@ public class Unit : MonoBehaviour
             _attackRange.ReTrigger();
         }
     }
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
     }
@@ -103,7 +104,7 @@ public class Unit : MonoBehaviour
 
         _stateMachine.TransitionTo(_moveState);
     }
-    public void Select(bool selected = true)
+    public virtual void Select(bool selected = true)
     {
         Selected = selected;
         _visuals.ShowUiElements(selected);
@@ -162,7 +163,7 @@ public class Unit : MonoBehaviour
         unit.TakeDamage(this);
     }
 
-    public void TakeDamage(Unit sender)
+    public virtual void TakeDamage(Unit sender)
     {
         if (IsDying) return;
 
@@ -201,5 +202,22 @@ public class Unit : MonoBehaviour
         HoldPosition = !HoldPosition;
 
         return HoldPosition;
+    }
+
+    public float GetAttackPerSecond()
+    {
+        if (_animator == null) return 0;
+
+        var clips = _animator.runtimeAnimatorController.animationClips;
+        var clip = clips.First((x) => x.name == "attack");
+
+        return 1 / clip.length * Stats.AttackSpeed;
+    }
+
+    public void Spawn()
+    {
+        transform.DOScale(0, 0);
+
+        transform.DOScale(1,0.5f).SetEase(Ease.OutElastic,1);
     }
 }
