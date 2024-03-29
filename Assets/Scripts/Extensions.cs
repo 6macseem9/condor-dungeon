@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public static class Extensions
 {
@@ -13,6 +14,11 @@ public static class Extensions
             anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(a, clip));
         aoc.ApplyOverrides(anims);
         animator.runtimeAnimatorController = aoc;
+    }
+
+    public static bool IsEnemy(this Unit unit)
+    {
+        return unit.CompareTag("EnemyUnit");
     }
 }
 
@@ -33,5 +39,19 @@ public static class Util
         tween.SetLoops(times);
         tween.onStepComplete = func;
         return tween;
+    }
+
+    public static float DistanceTo(this NavMeshAgent nav, Vector3 destination)
+    {
+        NavMeshPath path = new NavMeshPath();
+        nav.CalculatePath(destination, path);
+        
+        var corners = path.corners;
+        float distance = 0;
+        for (int i= 1; i<corners.Length;i++)
+        {
+            distance += Vector3.Distance(corners[i - 1], corners[i]);
+        }
+        return distance;
     }
 }

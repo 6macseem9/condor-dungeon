@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +11,7 @@ public class UnitSelectionManager : MonoBehaviour
     public static UnitSelectionManager Instance;
 
     [SerializeField] private float _unitSpread=1;
+    [SerializeField] private int _startingGold = 1000;
 
     [Space(7)]
     [SerializeField] private StatBlock _statBlock;
@@ -19,6 +21,7 @@ public class UnitSelectionManager : MonoBehaviour
     private Unit _structure;
 
     private Camera _camera;
+    public int Gold { get; private set; }
 
     public bool SingleUnitSelected { get { return _selectedUnits.Count == 1; } }
 
@@ -38,13 +41,15 @@ public class UnitSelectionManager : MonoBehaviour
         _camera = Camera.main;
 
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+
+        Gold = _startingGold;
     }
 
     void Update()
     {
         //UIDebug.Instance.Show("Selected:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].name, "yellow");
-        
-        UIDebug.Instance.Show("State:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].CurState.Replace("Unit",""), "orange");
+        //UIDebug.Instance.Show("State:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].CurState.Replace("Unit",""), "orange");
+        UIDebug.Instance.Show("Gold:", Gold.ToString(), "yellow", "yellow");
 
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -81,7 +86,6 @@ public class UnitSelectionManager : MonoBehaviour
             
         }
     }
-
     private void MoveGroup(List<Unit> units,Vector3 center)
     {
         var size = OptimalGridSize(units.Count);
@@ -91,6 +95,7 @@ public class UnitSelectionManager : MonoBehaviour
 
         for (int i = 0; i < units.Count; i++)
         {
+            if (units[i].IsEnemy()) continue;
             units[i].MoveTo(positions[i]);
         }
     }
@@ -121,6 +126,9 @@ public class UnitSelectionManager : MonoBehaviour
         }
         DeselectStructure();
 
+        if (unit.IsEnemy()) DeselectAll();
+        else DeselectEnemy();
+
         _selectedUnits.Add(unit);
         unit.Select(true);
         _statBlock.SetStats(_selectedUnits);
@@ -144,6 +152,15 @@ public class UnitSelectionManager : MonoBehaviour
         _selectedUnits.Clear();
 
         DeselectStructure();
+    }
+    public void DeselectEnemy()
+    {
+        if (_selectedUnits.Count == 0) return;
+        var enemy = _selectedUnits.FirstOrDefault((x) => x.IsEnemy());
+        if (enemy == null) return;
+
+        enemy.Select(false);
+        _selectedUnits.Remove(enemy);
     }
 
     public List<Vector3> SquareFormation(Vector3 center, Quaternion rotation, Vector2 size, float _spread, float nthOffset = 0)
@@ -219,6 +236,34 @@ public class UnitSelectionManager : MonoBehaviour
         _structure.Select(false);
         _structure = null;
     }
+
+    public void SelectClass(string name)
+    {
+        List<Unit> units = new List<Unit>(_selectedUnits);
+        DeselectAll();
+        foreach (var unit in units)
+        {
+            if (unit.Stats.ClassName == name)
+                Select(unit);
+        }
+    }
+
+    public void AddGold(int amount)
+    {
+        Gold += amount;
+    }
+    public bool RemoveGold(int amount)
+    {
+        if (amount > Gold)
+        {
+            CursorController.Instance.NotEnoughGold();
+            return false;
+        }
+
+        Gold -= amount;
+        return true;
+    }
+
     //private void OnDrawGizmos()
     //{
     //    var size = OptimalGridSize(3);

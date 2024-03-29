@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class Range : MonoBehaviour
     public delegate void RangeEvent(Unit unit);
     public event RangeEvent OnEnter;
     public event RangeEvent OnExit;
+    public Action OnRetrigger;
 
     public float Radius { get { return _collider == null ? 0 : _collider.radius; } }
 
@@ -34,6 +36,7 @@ public class Range : MonoBehaviour
 
     public void ReTrigger()
     {
+        OnRetrigger?.Invoke();
         _collider.enabled = false;
         _collider.enabled = true;
     }

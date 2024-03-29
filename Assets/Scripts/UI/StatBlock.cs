@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class StatBlock : MonoBehaviour
 {
+    [SerializeField] private int _healCost = 50;
+    [Space(10)]
     [Header("Single select")]
     [SerializeField] private CanvasGroup _singleGroup;
     [SerializeField] private Animator _portrait;
@@ -17,9 +19,13 @@ public class StatBlock : MonoBehaviour
     [SerializeField] private Image _healthbarImage;
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _classText;
+    [SerializeField] private Image _abilityImage;
+    private Tooltip _abilityTooltip;
     [SerializeField] private Transform _statsParent;
+    [SerializeField] private Tooltip _sellTooltip;
+    [SerializeField] private Button _healButton;
     [Space(10)]
-
+    
     [Header("Mutiselect")]
     [SerializeField] private CanvasGroup _multiGroup;
     [SerializeField] private TextMeshProUGUI _countText;
@@ -29,8 +35,6 @@ public class StatBlock : MonoBehaviour
     private Unit _unit;
     private TextMeshProUGUI[] _statTexts;
     private ObjectPool<StatBlockListItem> _pool;
-    private Button _chaseButton;
-    private Button _holdButton;
 
     private Tweener _modeShake;
 
@@ -38,10 +42,12 @@ public class StatBlock : MonoBehaviour
     {
         _statTexts = _statsParent.GetComponentsInChildren<TextMeshProUGUI>();
         _chaseMode = _mode.sprite;
+        _abilityTooltip = _abilityImage.GetComponent<Tooltip>();
 
-        var buttons = _multiGroup.GetComponentsInChildren<Button>();
+        var buttons = GetComponentsInChildren<Button>();
         foreach ( var button in buttons )
         {
+            if (button.CompareTag("Ignore")) continue;
             button.onClick.AddListener(()=>ButtonPress(button.transform));
         }
 
@@ -62,10 +68,15 @@ public class StatBlock : MonoBehaviour
     void Update()
     {
         if (_singleGroup.alpha > 0 && _unit != null && _unit.Healthbar != null)
+        {
             _healthbarImage.rectTransform.DOScaleX(_unit.Healthbar.Percent / 100, 0);
+            _healButton.interactable = _unit.HP != _unit.Stats.MaxHP && !_unit.IsDying;
+        }
+
     }
     private void ButtonPress(Transform button)
     {
+        button.DOKill();
         button.DOScale(0.8f, 0);
         button.DOScale(1f, 0.2f);
     }
@@ -88,6 +99,8 @@ public class StatBlock : MonoBehaviour
     }
     private void Show(bool showSingle, bool showMulti)
     {
+        _hideAfterSell.Kill();
+
         ShowGroup(_singleGroup, showSingle);
         ShowGroup(_multiGroup, showMulti);
     }
@@ -121,8 +134,15 @@ public class StatBlock : MonoBehaviour
         Show(true, false);
 
         _unit = unit;
+        _mode.gameObject.SetActive(!unit.IsEnemy());
         _mode.sprite = _unit.HoldPosition ? _holdMode : _chaseMode;
+
+        var abil = _unit.AbilityController.Ability;
+        _abilityImage.sprite = abil.Icon;
+        _abilityTooltip.SetInfo(abil.Name, abil.Description);
+
         _portrait.ReplaceClip(unit.Stats.Turnaround);
+        _sellTooltip.Description = _sellTooltip.Description.Replace("cost", $"{(int)(_unit.Stats.Cost * 0.75f)}");
 
         _nameText.text = unit.gameObject.name.ToUpper();
         _classText.text = unit.Stats.ClassName;
@@ -166,5 +186,21 @@ public class StatBlock : MonoBehaviour
             var item = _pool.GetObject();
             item.SetInfo(unit.Stats.ClassName, unit.Stats.ClassColor);
         }
+    }
+
+    private Tweener _hideAfterSell;
+    public void SellSelected()
+    {
+        UnitSelectionManager.Instance.AddGold((int)(_unit.Stats.Cost * 0.75f));
+        _unit.Kill();
+        _hideAfterSell= Util.Delay(0.5f, () => ShowGroup(_singleGroup, false));
+    }
+
+    public void HealSelected()
+    {
+        if (_unit.HP == _unit.Stats.MaxHP) return;
+        if (!UnitSelectionManager.Instance.RemoveGold(_healCost)) return;
+        
+        _unit.Heal(9999);
     }
 }

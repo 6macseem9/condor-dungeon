@@ -33,4 +33,8 @@ public class StatBlockListItem : MonoBehaviour
         Count = 1;
         _texts[1].text = "x" + Count;
     }
+    public void  SelectClass()
+    {
+        UnitSelectionManager.Instance.SelectClass(ClassName);
+    }
 }

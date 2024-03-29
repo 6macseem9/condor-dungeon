@@ -114,6 +114,7 @@ public class UnitVisuals : MonoBehaviour
     {
         foreach (var mesh in _meshes)
         {
+            if (mesh.CompareTag("Ignore")) continue;
             mesh.material = mat;
         }
     }

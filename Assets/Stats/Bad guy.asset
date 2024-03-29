@@ -17,11 +17,11 @@ MonoBehaviour:
   ClassColor: {r: 1, g: 0, b: 0.26666668, a: 1}
   Turnaround: {fileID: 7400000, guid: 6466c899b49229749933813ff0251066, type: 2}
   Cost: 0
-  MaxHP: 100
+  MaxHP: 1000
   Regen: 1
-  AttackSpeed: 1.2
-  MoveSpeed: 1
-  MeleeDamage: 20
+  AttackSpeed: 0.5
+  MoveSpeed: 0.1
+  MeleeDamage: 50
   MeleeResist: 10
   RangedDamage: 0
   RangedResist: 10

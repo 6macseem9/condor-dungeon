@@ -1,17 +1,29 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CursorController : MonoBehaviour
 {
+    public static CursorController Instance;
+
     private TooltipController _tooltip;
     private RectTransform _rect;
     private Canvas _canvas;
     [SerializeField] private Image _cursor;
+    [SerializeField] private CanvasGroup _notEnoughText;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(Instance);
+        }
+        else Instance = this;
+    }
     void Start()
     {
         _rect = GetComponent<RectTransform>();
@@ -59,5 +71,11 @@ public class CursorController : MonoBehaviour
 
         //_cursor.sprite = _click;
         //Util.Delay(0.2f, () => _cursor.sprite = _default);
+    }
+
+    public void NotEnoughGold()
+    {
+        _notEnoughText.DOComplete();
+        _notEnoughText.DOFade(1, 0.2f).SetLoops(6, LoopType.Yoyo).SetEase(Ease.Linear);
     }
 }

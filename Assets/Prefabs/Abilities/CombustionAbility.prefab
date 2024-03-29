@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8166313511879766626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1822799948676097947}
+  - component: {fileID: -8561485807151207532}
+  m_Layer: 0
+  m_Name: CombustionAbility
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1822799948676097947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8166313511879766626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7050096693793601}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8561485807151207532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8166313511879766626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc5ed4e7012a8649b9c55f644cfbc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: COMBUSTION
+  Description: every third spell cast is empowered, dealing same damage in a much
+    wider area
+  Icon: {fileID: -1546518853, guid: 0e745cc2d37c1b74085a72aae660f338, type: 3}
+  _maxStacks: 3
+--- !u!1001 &8986557741532847483
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1822799948676097947}
+    m_Modifications:
+    - target: {fileID: 3480275258956662943, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_Name
+      value: FireWave
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+--- !u!4 &7050096693793601 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8984582995210587706, guid: d279d9123c9a7d441b9b5074fff4c58f, type: 3}
+  m_PrefabInstance: {fileID: 8986557741532847483}
+  m_PrefabAsset: {fileID: 0}

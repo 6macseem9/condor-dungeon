@@ -16,7 +16,7 @@ MonoBehaviour:
   ClassDescription: 'uwu '
   ClassColor: {r: 0.15686275, g: 0.7725491, b: 0.40784317, a: 1}
   Turnaround: {fileID: 7400000, guid: 6466c899b49229749933813ff0251066, type: 2}
-  Cost: 0
+  Cost: 100
   MaxHP: 100
   Regen: 0.2
   AttackSpeed: 1

@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class MeleeUnit : Unit
 {
-    public override void DealDamageToTarget()
+    public override void DealDamage()
     {
-        if (AttackTarget == null) return;
-
         AttackTarget.TakeDamage(this);
     }
 }
