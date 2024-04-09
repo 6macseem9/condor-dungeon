@@ -35,6 +35,7 @@ public class StatBlock : MonoBehaviour
     private Unit _unit;
     private TextMeshProUGUI[] _statTexts;
     private ObjectPool<StatBlockListItem> _pool;
+    private Button[] _buttons;
 
     private Tweener _modeShake;
 
@@ -44,8 +45,8 @@ public class StatBlock : MonoBehaviour
         _chaseMode = _mode.sprite;
         _abilityTooltip = _abilityImage.GetComponent<Tooltip>();
 
-        var buttons = GetComponentsInChildren<Button>();
-        foreach ( var button in buttons )
+        _buttons = GetComponentsInChildren<Button>();
+        foreach ( var button in _buttons )
         {
             if (button.CompareTag("Ignore")) continue;
             button.onClick.AddListener(()=>ButtonPress(button.transform));
@@ -70,6 +71,8 @@ public class StatBlock : MonoBehaviour
         if (_singleGroup.alpha > 0 && _unit != null && _unit.Healthbar != null)
         {
             _healthbarImage.rectTransform.DOScaleX(_unit.Healthbar.Percent / 100, 0);
+
+            if (_unit.IsEnemy()) return;
             _healButton.interactable = _unit.HP != _unit.Stats.MaxHP && !_unit.IsDying;
         }
 
@@ -147,6 +150,8 @@ public class StatBlock : MonoBehaviour
         _nameText.text = unit.gameObject.name.ToUpper();
         _classText.text = unit.Stats.ClassName;
         _classText.color = unit.Stats.ClassColor;
+
+        foreach(var button in _buttons) button.interactable = !_unit.IsEnemy();
 
         var value = unit.Stats.GetArray();
 

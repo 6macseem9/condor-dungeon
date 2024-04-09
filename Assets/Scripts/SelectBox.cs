@@ -69,6 +69,8 @@ public class SelectBox : MonoBehaviour
 
     private void SelectUnits()
     {
+        // remove from all units so only unselected are looped through?
+        // PERFORMANCE TERRORIST
         foreach (var unit in UnitSelectionManager.Instance.AllUnits)
         {
             if (UnitInBounds(unit))

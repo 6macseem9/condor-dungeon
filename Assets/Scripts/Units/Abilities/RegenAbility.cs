@@ -21,6 +21,7 @@ public class RegenAbility : Ability
         _defaultRegen = _unit.Stats.Regen;
         _unit.DetectRange.OnEnter += Deactivate;
         _unit.DetectRange.OnExit += Activate;
+        _unit.DetectRange.NoOneDetected += Activate;
 
         Activate();
     }

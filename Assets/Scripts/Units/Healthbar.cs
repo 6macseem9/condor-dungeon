@@ -10,9 +10,12 @@ public class Healthbar : MonoBehaviour
 
     public float Percent { get; private set; }
 
+    private Camera _cam;
+
     private void Start()
     {
         _unit = GetComponentInParent<Unit>();
+        _cam = Camera.main;
 
         var sprites = GetComponentsInChildren<SpriteRenderer>();
         _fg = sprites[0];
@@ -21,7 +24,7 @@ public class Healthbar : MonoBehaviour
 
     private void Update()
     {
-        Quaternion lookRotation = Camera.main.transform.rotation;
+        Quaternion lookRotation = _cam.transform.rotation;
         transform.rotation = lookRotation;
 
         Percent = _unit.HP * 100 / _unit.Stats.MaxHP;

@@ -21,7 +21,7 @@ MonoBehaviour:
   Regen: 1
   AttackSpeed: 0.5
   MoveSpeed: 0.1
-  MeleeDamage: 50
+  MeleeDamage: 1
   MeleeResist: 10
   RangedDamage: 0
   RangedResist: 10

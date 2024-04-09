@@ -15,7 +15,7 @@ MonoBehaviour:
   ClassName: "\u03B2ranger"
   ClassDescription: 'uwu '
   ClassColor: {r: 0.15686275, g: 0.7725491, b: 0.40784317, a: 1}
-  Turnaround: {fileID: 7400000, guid: 6466c899b49229749933813ff0251066, type: 2}
+  Turnaround: {fileID: 7400000, guid: 091f5c2826d44db4181e7a31df88e1f0, type: 2}
   Cost: 100
   MaxHP: 100
   Regen: 0.2

@@ -4902,7 +4902,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 163746b8d30a597409071dbe196eb835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: REGENERATION
-  Description: 3 seconds out of combat increase health regeneration by 50%
+  Name: SECOND WIND
+  Description: staying out of combat for 3 seconds increases health regeneration
+    by 50%
   Icon: {fileID: -503304853, guid: 0e745cc2d37c1b74085a72aae660f338, type: 3}
   _delay: 3
