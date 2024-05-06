@@ -48,6 +48,7 @@ public class CameraController : MonoBehaviour
 
         _newPos += transform.forward * _movementSpeed *Time.deltaTime * verInput;
         _newPos += transform.right * _movementSpeed * Time.deltaTime * horInput;
+        _newPos = _newPos.Clamp(-24, 24);
     }
     void HandleRotationInput()
     {

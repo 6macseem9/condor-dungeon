@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public static class Extensions
 {
@@ -19,6 +20,26 @@ public static class Extensions
     public static bool IsEnemy(this Unit unit)
     {
         return unit.CompareTag("EnemyUnit");
+    }
+
+    public static Vector3 Clamp(this Vector3 vector, float min, float max)
+    {
+        if (vector.x > max) vector.x = max;
+        if (vector.x < min) vector.x = min;
+        if (vector.z > max) vector.z = max;
+        if (vector.z < min) vector.z = min;
+
+        return vector;
+    }
+
+    public static void AddPressAnimation(this Button button)
+    {
+        button.onClick.AddListener(() =>
+        {
+            button.transform.DOKill();
+            button.transform.DOScale(0.8f, 0);
+            button.transform.DOScale(1f, 0.2f);
+        });
     }
 }
 

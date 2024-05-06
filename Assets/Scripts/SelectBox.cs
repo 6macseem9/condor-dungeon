@@ -13,6 +13,8 @@ public class SelectBox : MonoBehaviour
     private Vector2 _startPos;
     private Vector2 _endPos;
 
+    private bool _started;
+
     private void Start()
     {
         _cam = Camera.main;
@@ -22,10 +24,12 @@ public class SelectBox : MonoBehaviour
     private void Update()
     {
 
+        if (!_started && EventSystem.current.IsPointerOverGameObject()) return;
         // When Clicked
         if (Input.GetMouseButtonDown(0))
         {
             _startPos = Input.mousePosition;
+            _started = true;
 
             _selectionBox = new Rect();
         }
@@ -46,6 +50,7 @@ public class SelectBox : MonoBehaviour
         // When Releasing
         if (Input.GetMouseButtonUp(0))
         {
+            _started = false;
             _startPos = Vector2.zero;
             _endPos = Vector2.zero;
         }

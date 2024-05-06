@@ -11,19 +11,22 @@ public class UnitSelectionManager : MonoBehaviour
     public static UnitSelectionManager Instance;
 
     [SerializeField] private float _unitSpread=1;
-    [SerializeField] private int _startingGold = 1000;
+    [SerializeField] private int _startingEXP = 1000;
 
     [Space(7)]
     [SerializeField] private StatBlock _statBlock;
+    [SerializeField] private GroupFormation _formation;
 
     public List<Unit> AllUnits {get; private set;}
     private List<Unit> _selectedUnits = new List<Unit>();
     private Unit _structure;
 
     private Camera _camera;
-    public int Gold { get; private set; }
-
+    public int Experience { get; private set; }
     public bool SingleUnitSelected { get { return _selectedUnits.Count == 1; } }
+
+    public delegate void AllUnitsEvent(List<Unit> units);
+    public event AllUnitsEvent UnitAddedOrRemoved;
 
     private void Awake()
     {
@@ -42,14 +45,14 @@ public class UnitSelectionManager : MonoBehaviour
 
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
-        Gold = _startingGold;
+        Experience = _startingEXP;
     }
 
     void Update()
     {
         //UIDebug.Instance.Show("Selected:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].name, "yellow");
         //UIDebug.Instance.Show("State:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].CurState.Replace("Unit",""), "orange");
-        UIDebug.Instance.Show("Gold:", Gold.ToString(), "yellow", "yellow");
+        UIDebug.Instance.Show("Gold:", Experience.ToString(), "yellow", "yellow");
 
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -88,10 +91,18 @@ public class UnitSelectionManager : MonoBehaviour
     }
     private void MoveGroup(List<Unit> units,Vector3 center)
     {
-        var size = OptimalGridSize(units.Count);
-        var rotation = Quaternion.LookRotation(center - units[0].transform.position, Vector3.up);
+        Vector2Int size = new Vector2Int();
+        switch(_formation.CurrentFormation)
+        {
+            case Formation.Square: size = OptimalGridSize(units.Count); break;
+            case Formation.ThickColumn: size = new Vector2Int(2, Mathf.CeilToInt(units.Count/2f)); break;
+            case Formation.ThickRow: size = new Vector2Int(Mathf.CeilToInt(units.Count / 2f), 2); break;
+            case Formation.Column: size = new Vector2Int(1, units.Count); break;
+            case Formation.Row: size = new Vector2Int(units.Count,1); break;
+        }
 
-        var positions = SquareFormation(center, rotation, size, _unitSpread, units.Count==3? 0.5f: 0);
+        var offset = _formation.CurrentFormation == Formation.Square && units.Count == 3 ? 0.5f : 0;
+        var positions = SquareFormation(center, size, _unitSpread, offset);
 
         for (int i = 0; i < units.Count; i++)
         {
@@ -163,7 +174,7 @@ public class UnitSelectionManager : MonoBehaviour
         _selectedUnits.Remove(enemy);
     }
 
-    public List<Vector3> SquareFormation(Vector3 center, Quaternion rotation, Vector2 size, float _spread, float nthOffset = 0)
+    public List<Vector3> SquareFormation(Vector3 center, Vector2 size, float _spread, float nthOffset = 0)
     {
         var positions = new List<Vector3>();
         var middleOffset = new Vector3(size.x * 0.5f, 0, size.y * 0.5f);
@@ -179,7 +190,7 @@ public class UnitSelectionManager : MonoBehaviour
                 
                 pos *= _spread;
 
-                pos = center + rotation * pos;
+                pos = center + pos;
                 positions.Add(pos);
             }
         }
@@ -208,11 +219,13 @@ public class UnitSelectionManager : MonoBehaviour
     public void AddUnit(Unit unit)
     {
         AllUnits.Add(unit);
+        UnitAddedOrRemoved?.Invoke(AllUnits);
     }
     public void RemoveUnit(Unit unit)
     {
         AllUnits.Remove(unit);
         _selectedUnits.Remove(unit);
+        UnitAddedOrRemoved?.Invoke(AllUnits);
     }
 
     public void ToggleSelectedUnitMode()
@@ -239,28 +252,27 @@ public class UnitSelectionManager : MonoBehaviour
 
     public void SelectClass(string name)
     {
-        List<Unit> units = new List<Unit>(_selectedUnits);
         DeselectAll();
-        foreach (var unit in units)
+        foreach (var unit in AllUnits)
         {
-            if (unit.Stats.ClassName == name)
+            if (unit.Class.ClassName == name)
                 Select(unit);
         }
     }
 
-    public void AddGold(int amount)
+    public void AddEXP(int amount)
     {
-        Gold += amount;
+        Experience += amount;
     }
-    public bool RemoveGold(int amount)
+    public bool RemoveEXP(int amount)
     {
-        if (amount > Gold)
+        if (amount > Experience)
         {
             CursorController.Instance.NotEnoughGold();
             return false;
         }
 
-        Gold -= amount;
+        Experience -= amount;
         return true;
     }
 

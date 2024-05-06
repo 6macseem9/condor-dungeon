@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c38cbdf267caeb47aa1e77b5e718ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Stats>k__BackingField: {fileID: 11400000, guid: 4f0bca6352974c74ba2d49f4264d729b, type: 2}
+  <Class>k__BackingField: {fileID: 11400000, guid: 4f0bca6352974c74ba2d49f4264d729b, type: 2}
   Spell: {fileID: 4364220805006294330}
   <SpellPosition>k__BackingField: {x: 0, y: 0.7, z: 1}
 --- !u!1001 &5755283041413951839

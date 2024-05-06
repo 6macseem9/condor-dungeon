@@ -22,9 +22,9 @@ public class UnitSpawner : MonoBehaviour,IPointerEnterHandler,IPointerExitHandle
     public void SetUnit(Unit unit)
     {
         _unit = unit;
-        _portrait.ReplaceClip(unit.Stats.Turnaround);
-        _tooltip.SetInfo($"<color=#{ColorUtility.ToHtmlStringRGB(unit.Stats.ClassColor)}>{unit.Stats.ClassName.ToUpper()}</color>",
-                         $"<color=#ffeb33>COST: {unit.Stats.Cost}g</color>\n"+ unit.Stats.ClassDescription,0);
+        _portrait.ReplaceClip(unit.Class.Turnaround);
+        _tooltip.SetInfo($"<color=#{ColorUtility.ToHtmlStringRGB(unit.Class.ClassColor)}>{unit.Class.ClassName.ToUpper()}</color>",
+            unit.Class.ClassDescription,0);
     }
 
     public void Spawn()

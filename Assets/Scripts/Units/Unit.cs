@@ -8,7 +8,11 @@ using UnityEngine.Events;
 [DefaultExecutionOrder(1)]
 public class Unit : MonoBehaviour
 {
-    [field: SerializeField] public Stats Stats { get; private set; }
+    [field: SerializeField] public Class Class { get; private set; }
+    public Stats Stats { get { return BonusStats==null? Class.Stats : Class.Stats + BonusStats; } }
+    public Stats BonusStats { get; private set; }
+    public int Level { get; private set; } = 1;
+    public int UpgradeCost { get { return 50 * Level + (int)(50 * Level * 0.5f); } }
 
     protected NavMeshAgent _nav;
     protected Animator _animator;
@@ -31,7 +35,7 @@ public class Unit : MonoBehaviour
     public bool Selected { get; private set; }
     public float HP { get; protected set; }
     public bool IsDying { get; protected set; }
-    public bool HoldPosition { get; set; }
+    public bool HoldPosition { get; set; } = true;
 
     public Action TargetLost { get; set; }
     public Action OnAttack { get; set; }
@@ -50,7 +54,8 @@ public class Unit : MonoBehaviour
         _nav = GetComponent<NavMeshAgent>();
         _nav.updateRotation = false;
 
-        Stats = Instantiate(Stats);
+        Class = Instantiate(Class);
+        BonusStats = new Stats();
 
         var ranges = GetComponentsInChildren<Range>();
         AttackRange = ranges[0];
@@ -61,9 +66,7 @@ public class Unit : MonoBehaviour
         DetectRange.OnExit += EnemyLost;
 
         HP = Stats.MaxHP;
-        _nav.speed = Stats.MoveSpeed;
         _animator.SetFloat("AttackSpeed", Stats.AttackSpeed);
-        Util.Repeat(1, -1, () => Heal(Stats.Regen));
 
         SetUpStateMachine();
 
@@ -231,7 +234,7 @@ public class Unit : MonoBehaviour
         var clips = _animator.runtimeAnimatorController.animationClips;
         var clip = clips.First((x) => x.name.Contains("attack"));
 
-        return 1 / clip.length * Stats.AttackSpeed;
+        return 1 / clip.length * Class.Stats.AttackSpeed;
     }
 
     public void Spawn()
@@ -256,5 +259,19 @@ public class Unit : MonoBehaviour
     public float DistanceTo(Vector3 position)
     {
         return _nav.DistanceTo(position);
+    }
+
+    public void UpgradeStat(int index)
+    {
+        Level++;
+        switch(index)
+        {
+            case 0: BonusStats.MaxHP += (int)(Class.Stats.MaxHP * 0.1f); HP = Stats.MaxHP; break;
+            case 1: BonusStats.AttackSpeed += Class.Stats.AttackSpeed * 0.1f; _animator.SetFloat("AttackSpeed", Stats.AttackSpeed); break;
+            case 2: BonusStats.Strength += 1; break;
+            case 3: BonusStats.Armor += 1; break;
+            case 4: BonusStats.Intellect += 1; break;
+            case 5: BonusStats.Resistance+= 1; break;
+        }
     }
 }

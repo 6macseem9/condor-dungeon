@@ -14,12 +14,13 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _unit = GetComponent<Unit>();
-        _nexusPosition = Vector3.zero;
+        _nexusPosition = new Vector3(0, 0, -6);
 
         _unit.DetectRange.OnEnter += AddNeighbor;
         _unit.DetectRange.OnExit += RemoveNeighbor;
         _unit.DetectRange.OnRetrigger += () => _neighbors.Clear();
 
+        _unit.HoldPosition = false;
         _unit.TargetLost += MoveToNexus;
         MoveToNexus();
     }

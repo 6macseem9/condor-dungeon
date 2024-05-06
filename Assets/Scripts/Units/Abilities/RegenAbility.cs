@@ -12,32 +12,32 @@ public class RegenAbility : Ability
     private float _defaultRegen;
     private Tweener _timer;
 
-    protected override void Start()
-    {
-        base.Start();
+    //protected override void Start()
+    //{
+    //    base.Start();
 
-        _particles = GetComponentInChildren<ParticleSystem>();
+    //    _particles = GetComponentInChildren<ParticleSystem>();
 
-        _defaultRegen = _unit.Stats.Regen;
-        _unit.DetectRange.OnEnter += Deactivate;
-        _unit.DetectRange.OnExit += Activate;
-        _unit.DetectRange.NoOneDetected += Activate;
+    //    _defaultRegen = _unit.Stats.Regen;
+    //    _unit.DetectRange.OnEnter += Deactivate;
+    //    _unit.DetectRange.OnExit += Activate;
+    //    _unit.DetectRange.NoOneDetected += Activate;
 
-        Activate();
-    }
+    //    Activate();
+    //}
 
-    private void Deactivate(Unit unit = null)
-    {
-        _timer.Kill();
-        _unit.Stats.Regen = _defaultRegen;
-        _particles.Stop();
-    }
-    private void Activate(Unit unit=null)
-    {
-        _timer = Util.Delay(_delay, () => 
-        {
-            _unit.Stats.Regen = _unit.Stats.Regen * 1.5f;
-            _particles.Play();
-        }) ;
-    }
+    //private void Deactivate(Unit unit = null)
+    //{
+    //    _timer.Kill();
+    //    _unit.Stats.Regen = _defaultRegen;
+    //    _particles.Stop();
+    //}
+    //private void Activate(Unit unit=null)
+    //{
+    //    _timer = Util.Delay(_delay, () => 
+    //    {
+    //        _unit.Stats.Regen = _unit.Stats.Regen * 1.5f;
+    //        _particles.Play();
+    //    }) ;
+    //}
 }

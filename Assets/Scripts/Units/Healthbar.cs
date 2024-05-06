@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
+[DefaultExecutionOrder(2)]
 public class Healthbar : MonoBehaviour
 {
     private Unit _unit;

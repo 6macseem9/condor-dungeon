@@ -16,14 +16,10 @@ MonoBehaviour:
   ClassDescription: spits fire yo
   ClassColor: {r: 0.27058825, g: 0.5529412, b: 0.9058824, a: 1}
   Turnaround: {fileID: 7400000, guid: f849fe730bb2c8e40b40757276a757ed, type: 2}
-  Cost: 100
-  MaxHP: 100
-  Regen: 0.2
-  AttackSpeed: 1
-  MoveSpeed: 1
-  MeleeDamage: 0
-  MeleeResist: 10
-  RangedDamage: 0
-  RangedResist: 10
-  MagicDamage: 20
-  MagicResist: 10
+  Stats:
+    MaxHP: 100
+    AttackSpeed: 1
+    Strength: 0
+    Armor: 1
+    Intellect: 20
+    Resistance: 10

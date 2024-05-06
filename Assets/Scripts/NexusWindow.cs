@@ -49,7 +49,6 @@ public class NexusWindow : MonoBehaviour
         _availableText.rectTransform.DOShakeAnchorPos(0.3f, 4, 20);
 
         if (AvailableUnits() == 0) return;
-        if (!UnitSelectionManager.Instance.RemoveGold(unit.Stats.Cost)) return;
 
         var instance = Instantiate(unit, GetNextPosition(), Quaternion.identity);
         instance.Spawn();

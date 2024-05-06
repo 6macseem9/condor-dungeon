@@ -7,205 +7,143 @@ using UnityEngine.UI;
 
 public class StatBlock : MonoBehaviour
 {
-    [SerializeField] private int _healCost = 50;
-    [Space(10)]
-    [Header("Single select")]
-    [SerializeField] private CanvasGroup _singleGroup;
     [SerializeField] private Animator _portrait;
-    [SerializeField] private Sprite _multiPortrait;
-    [SerializeField] private Image _mode;
-    [SerializeField] private Sprite _holdMode;
-    private Sprite _chaseMode;
+    [SerializeField] private Image _cover;
+    [SerializeField] private Image _abilityImage;
     [SerializeField] private Image _healthbarImage;
+    [SerializeField] private TextMeshProUGUI _healthbarText;
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _classText;
-    [SerializeField] private Image _abilityImage;
+    [SerializeField] private TextMeshProUGUI _levelText;
+    [SerializeField] private TextMeshProUGUI _upgradeCost;
     private Tooltip _abilityTooltip;
     [SerializeField] private Transform _statsParent;
-    [SerializeField] private Tooltip _sellTooltip;
-    [SerializeField] private Button _healButton;
-    [Space(10)]
-    
-    [Header("Mutiselect")]
-    [SerializeField] private CanvasGroup _multiGroup;
-    [SerializeField] private TextMeshProUGUI _countText;
-    [SerializeField] private Transform _multiParent;
-    [SerializeField] private StatBlockListItem _listItemPrefab;
+    [SerializeField] private Transform _bonusStatsParent;
 
     private Unit _unit;
     private TextMeshProUGUI[] _statTexts;
-    private ObjectPool<StatBlockListItem> _pool;
+    private TextMeshProUGUI[] _bonusStatTexts;
     private Button[] _buttons;
-
-    private Tweener _modeShake;
 
     void Start()
     {
         _statTexts = _statsParent.GetComponentsInChildren<TextMeshProUGUI>();
-        _chaseMode = _mode.sprite;
+        _bonusStatTexts = _bonusStatsParent.GetComponentsInChildren<TextMeshProUGUI>();
+
         _abilityTooltip = _abilityImage.GetComponent<Tooltip>();
 
         _buttons = GetComponentsInChildren<Button>();
         foreach ( var button in _buttons )
         {
             if (button.CompareTag("Ignore")) continue;
-            button.onClick.AddListener(()=>ButtonPress(button.transform));
+            button.AddPressAnimation();
         }
 
-        _pool = new ObjectPool<StatBlockListItem>(
-            (x) => !x.gameObject.activeSelf,
-            () => Instantiate(_listItemPrefab, _multiParent),
-            (x) => x.gameObject.SetActive(true),
-            (x) => x.gameObject.SetActive(false)
-        );
-
-        var items = _multiParent.GetComponentsInChildren<StatBlockListItem>();
-        foreach ( var item in items ) { item.gameObject.SetActive(false); }
-        _pool.AddDefault(items);
-
-        Show(false, false);
+        Unselect("NO UNIT SELECTED");
     }
 
     void Update()
     {
-        if (_singleGroup.alpha > 0 && _unit != null && _unit.Healthbar != null)
+        if (_unit != null && _unit.Healthbar != null)
         {
-            _healthbarImage.rectTransform.DOScaleX(_unit.Healthbar.Percent / 100, 0);
-
-            if (_unit.IsEnemy()) return;
-            _healButton.interactable = _unit.HP != _unit.Stats.MaxHP && !_unit.IsDying;
+            _healthbarImage.rectTransform.DOScaleX(_unit.Healthbar.Percent / 100 *3, 0);
+            _healthbarText.text = _unit.HP + "/" + _unit.Stats.MaxHP;
         }
 
-    }
-    private void ButtonPress(Transform button)
-    {
-        button.DOKill();
-        button.DOScale(0.8f, 0);
-        button.DOScale(1f, 0.2f);
-    }
-    public void ToggleMode()
-    {
-        _mode.sprite = _unit.ToggleMode() ? _holdMode : _chaseMode;
-        _modeShake.Complete();
-        _modeShake = _mode.rectTransform.DOShakeAnchorPos(0.3f,1,30);
     }
     public void SetStats(List<Unit> units)
     {
         if (units == null)
         {
-            Show(false, false);
+            Unselect("NO UNIT SELECTED");
             return;
         }
 
-        if (units.Count == 1) SingleSelect(units[0]);
-        else MultiSelect(units);
-    }
-    private void Show(bool showSingle, bool showMulti)
-    {
-        _hideAfterSell.Kill();
-
-        ShowGroup(_singleGroup, showSingle);
-        ShowGroup(_multiGroup, showMulti);
+        if (units.Count == 1) Select(units[0]);
+        else Unselect("GROUP SELECTED");
     }
 
-    private void ShowGroup(CanvasGroup group,bool show)
+    private void Select(Unit unit)
     {
-        group.transform.SetAsLastSibling();
-
-        group.blocksRaycasts = show;
-        group.interactable = show;
-
-        if (show)
-        {
-            group.alpha = 1;
-
-            if (group==_singleGroup) group.transform.DOScale(0, 0f);
-            else group.transform.DOScale(2f, 0f);
-
-            group.transform.DOScale(3, 0.3f).SetEase(Ease.OutElastic, 1);
-        }
-        if(!show && group.transform.localScale != Vector3.zero)
-        {
-            group.transform.DOScale(0, 0f);
-            group.alpha = 0;
-        }
-        
-    }
-
-    private void SingleSelect(Unit unit)
-    {
-        Show(true, false);
-
         _unit = unit;
-        _mode.gameObject.SetActive(!unit.IsEnemy());
-        _mode.sprite = _unit.HoldPosition ? _holdMode : _chaseMode;
+        _cover.enabled = false;
 
         var abil = _unit.AbilityController.Ability;
         _abilityImage.sprite = abil.Icon;
         _abilityTooltip.SetInfo(abil.Name, abil.Description);
 
-        _portrait.ReplaceClip(unit.Stats.Turnaround);
-        _sellTooltip.Description = _sellTooltip.Description.Replace("cost", $"{(int)(_unit.Stats.Cost * 0.75f)}");
+        _portrait.ReplaceClip(unit.Class.Turnaround);
+
+        _levelText.text = unit.Level.ToString();
+        _upgradeCost.text = "#" + unit.UpgradeCost;
 
         _nameText.text = unit.gameObject.name.ToUpper();
-        _classText.text = unit.Stats.ClassName;
-        _classText.color = unit.Stats.ClassColor;
+        _classText.text = unit.Class.ClassName;
+        _classText.color = unit.Class.ClassColor;
 
-        foreach(var button in _buttons) button.interactable = !_unit.IsEnemy();
 
-        var value = unit.Stats.GetArray();
+        DisplayStats(_statTexts, unit.Class.Stats,true);
+        DisplayStats(_bonusStatTexts, unit.BonusStats, false) ;
 
-        for (int i = 0; i < value.Length; i++)
+        if(_unit.IsEnemy()) foreach (var button in _buttons) button.interactable = false;
+    }
+
+    private void Unselect(string message)
+    {
+        _unit = null;
+        _cover.enabled = true;
+
+        _nameText.text = "<color=#a3c0e6>" + message;
+        _classText.text = "";
+    }
+
+    private void DisplayStats(TextMeshProUGUI[] texts, Stats stats, bool icons)
+    {
+        var value = stats.GetArray();
+
+        for (int i = 0; i < value.Count; i++)
         {
-            if(i==2)
+            if (i == 1)
             {
-                var val = unit.GetAttackPerSecond();
-                _statTexts[i].text = _statTexts[i].text.Substring(0, 2) + (val == 0 ? "-" : val.ToString("0.00"));
+                var val = icons? _unit.GetAttackPerSecond() : _unit.GetAttackPerSecond() * value[i];
+                texts[i].text = (icons ? texts[i].text.Substring(0, 2) : "") 
+                    + (val==0? val :  val.ToString("0.00"));
                 continue;
             }
-            _statTexts[i].text = _statTexts[i].text.Substring(0, 2) + (value[i] == 0 ? "-" : value[i]);
-        }
-    }
 
-    private void MultiSelect(List<Unit> units)
-    {
-        Show(false, true);
-        _countText.text = "x" + units.Count + " units";
-        _unit = null;
-
-        _pool.DisableAll();
-
-        foreach (Unit unit in units)
-        {
-            if (_pool.List.Exists((x) => x.ClassName == unit.Stats.ClassName))
+            if(icons)
             {
-                var text = _pool.List.Find((x) => x.ClassName == unit.Stats.ClassName);
-
-                if (text.gameObject.activeSelf) 
-                {
-                    text.Increment();
-                    continue;
-                }
+                _buttons[i].interactable = value[i] != 0;
             }
-
-            var item = _pool.GetObject();
-            item.SetInfo(unit.Stats.ClassName, unit.Stats.ClassColor);
+            texts[i].text = (icons? texts[i].text.Substring(0, 2) : "") + value[i];
         }
     }
 
-    private Tweener _hideAfterSell;
-    public void SellSelected()
+    public void UpgradeStat(int index)
     {
-        UnitSelectionManager.Instance.AddGold((int)(_unit.Stats.Cost * 0.75f));
-        _unit.Kill();
-        _hideAfterSell= Util.Delay(0.5f, () => ShowGroup(_singleGroup, false));
+        if (UnitSelectionManager.Instance.RemoveEXP(_unit.UpgradeCost))
+        {
+            _upgradeCost.rectTransform.DOComplete();
+            _upgradeCost.rectTransform.DOShakeAnchorPos(0.3f, 4, 20);
+
+            _unit.UpgradeStat(index);
+            Select(_unit);
+        }
     }
 
-    public void HealSelected()
-    {
-        if (_unit.HP == _unit.Stats.MaxHP) return;
-        if (!UnitSelectionManager.Instance.RemoveGold(_healCost)) return;
+    //private Tweener _hideAfterSell;
+    //public void SellSelected()
+    //{
+    //    UnitSelectionManager.Instance.AddGold((int)(_unit.Stats.Cost * 0.75f));
+    //    _unit.Kill();
+    //    _hideAfterSell= Util.Delay(0.5f, () => ShowGroup(_singleGroup, false));
+    //}
+
+    //public void HealSelected()
+    //{
+    //    if (_unit.HP == _unit.Stats.MaxHP) return;
+    //    if (!UnitSelectionManager.Instance.RemoveGold(_healCost)) return;
         
-        _unit.Heal(9999);
-    }
+    //    _unit.Heal(9999);
+    //}
 }

@@ -16,14 +16,10 @@ MonoBehaviour:
   ClassDescription: 
   ClassColor: {r: 0.6392157, g: 0.75294125, b: 0.90196085, a: 1}
   Turnaround: {fileID: 0}
-  Cost: 0
-  MaxHP: 100
-  Regen: 0.5
-  AttackSpeed: 1
-  MoveSpeed: 0
-  MeleeDamage: 0
-  MeleeResist: 0
-  RangedDamage: 0
-  RangedResist: 0
-  MagicDamage: 0
-  MagicResist: 0
+  Stats:
+    MaxHP: 100
+    AttackSpeed: 1
+    Strength: 0
+    Armor: 0
+    Intellect: 0
+    Resistance: 0

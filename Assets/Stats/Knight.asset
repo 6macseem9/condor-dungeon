@@ -12,18 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2fae34924c7514d9774574a8b6f9b9, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
-  ClassName: "\u03B1knight"
+  ClassName: "\u03B4knight"
   ClassDescription: good tank weak to magic ayaya
   ClassColor: {r: 0.9450981, g: 0.53333336, b: 0.19215688, a: 1}
   Turnaround: {fileID: 7400000, guid: d006f20f3fcb64744ba6a724e0902b7b, type: 2}
-  Cost: 100
-  MaxHP: 100
-  Regen: 1
-  AttackSpeed: 1
-  MoveSpeed: 1
-  MeleeDamage: 20
-  MeleeResist: 10
-  RangedDamage: 0
-  RangedResist: 10
-  MagicDamage: 0
-  MagicResist: 10
+  Stats:
+    MaxHP: 100
+    AttackSpeed: 1
+    Strength: 20
+    Armor: 10
+    Intellect: 0
+    Resistance: 10

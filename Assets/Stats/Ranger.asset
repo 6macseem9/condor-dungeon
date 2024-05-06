@@ -14,16 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ClassName: "\u03B2ranger"
   ClassDescription: 'uwu '
-  ClassColor: {r: 0.15686275, g: 0.7725491, b: 0.40784317, a: 1}
+  ClassColor: {r: 0.9450981, g: 0.5294118, b: 0.19607845, a: 1}
   Turnaround: {fileID: 7400000, guid: 091f5c2826d44db4181e7a31df88e1f0, type: 2}
-  Cost: 100
-  MaxHP: 100
-  Regen: 0.2
-  AttackSpeed: 1
-  MoveSpeed: 1
-  MeleeDamage: 0
-  MeleeResist: 10
-  RangedDamage: 20
-  RangedResist: 10
-  MagicDamage: 0
-  MagicResist: 10
+  Stats:
+    MaxHP: 100
+    AttackSpeed: 1
+    Strength: 25
+    Armor: 10
+    Intellect: 0
+    Resistance: 10

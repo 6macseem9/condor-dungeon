@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a71dcfa41d9f3654a80c02e1eb220934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Stats>k__BackingField: {fileID: 11400000, guid: a8c181bc42e7843428dfd824a741c919, type: 2}
+  <Class>k__BackingField: {fileID: 11400000, guid: a8c181bc42e7843428dfd824a741c919, type: 2}
   _projectile: {fileID: 121325880593124845, guid: 1e4827dbd5bae424286de14aa1dd4fdc, type: 3}
 --- !u!1001 &6195017017301979472
 PrefabInstance:

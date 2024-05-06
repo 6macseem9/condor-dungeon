@@ -17,8 +17,7 @@ public class StructureUnit : Unit
         _animator = GetComponentInChildren<Animator>();
         Healthbar = GetComponentInChildren<Healthbar>();
 
-        HP = Stats.MaxHP;
-        Util.Repeat(1, -1, () => Heal(Stats.Regen));
+        HP = 100;
     }
 
     protected override void Update()

@@ -16,14 +16,10 @@ MonoBehaviour:
   ClassDescription: bad guy
   ClassColor: {r: 1, g: 0, b: 0.26666668, a: 1}
   Turnaround: {fileID: 7400000, guid: 6466c899b49229749933813ff0251066, type: 2}
-  Cost: 0
-  MaxHP: 1000
-  Regen: 1
-  AttackSpeed: 0.5
-  MoveSpeed: 0.1
-  MeleeDamage: 1
-  MeleeResist: 10
-  RangedDamage: 0
-  RangedResist: 10
-  MagicDamage: 0
-  MagicResist: 10
+  Stats:
+    MaxHP: 100
+    AttackSpeed: 1
+    Strength: 1
+    Armor: 10
+    Intellect: 0
+    Resistance: 10
