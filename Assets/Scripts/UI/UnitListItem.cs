@@ -12,32 +12,31 @@ public class UnitListItem : MonoBehaviour
 
     public string ClassName { get; private set; }
     public Color ClassColor { get { return _texts[0].color; } }
-    public int Count { get; private set; }
+
+    private Unit _unit;
+    private UnitSelectionManager _selectionManager;
 
     private void Awake()
     {
         _texts = GetComponentsInChildren<TextMeshProUGUI>();
-        Count = 1;
 
         _button = GetComponentInChildren<Button>();
         _button.AddPressAnimation();
     }
-    public void SetInfo(string name, Color color)
+    private void Start()
     {
-        ClassName = name;
-        _texts[0].text = FormatText(name);
-        _texts[0].color = color;
-        ResetCount();
+        _selectionManager = UnitSelectionManager.Instance;
     }
-    public void Increment()
+    public void SetInfo(Unit unit)
     {
-        Count++;
-        _texts[1].text = FormatText("x" + Count);
-    }
-    public void ResetCount()
-    {
-        Count = 1;
-        _texts[1].text = FormatText("x"+Count);
+        _unit = unit;
+        _unit.OnLevelUp += UpdateLevel;
+        _unit.OnSelect += ShowSelected;
+
+        ClassName = unit.Class.ClassName;
+        _texts[0].text = FormatText(ClassName);
+        _texts[0].color = unit.Class.ClassColor;
+        _texts[1].text = FormatText("1");
     }
 
     private string FormatText(string text)
@@ -46,6 +45,25 @@ public class UnitListItem : MonoBehaviour
     }
     public void  SelectClass()
     {
-        UnitSelectionManager.Instance.SelectClass(ClassName);
+        if (_unit is null) return;
+
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
+            _selectionManager.SelectClass(ClassName);
+            return;
+        }
+
+        if(!Input.GetKey(KeyCode.LeftShift))_selectionManager.DeselectAll();
+        _selectionManager.Select(_unit);
+    }
+
+    private void ShowSelected(bool show)
+    {
+        _texts[0].color = show? new Color(0.172549f,1,0) :_unit.Class.ClassColor;
+    }
+
+    private void UpdateLevel(int level)
+    {
+        _texts[1].text = FormatText(level.ToString());
     }
 }

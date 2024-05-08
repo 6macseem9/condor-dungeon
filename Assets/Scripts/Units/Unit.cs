@@ -39,7 +39,8 @@ public class Unit : MonoBehaviour
 
     public Action TargetLost { get; set; }
     public Action OnAttack { get; set; }
-
+    public Action<bool> OnSelect { get; set; }
+    public Action<int> OnLevelUp { get; set; }
     //TEMP
     public string CurState { get { return _stateMachine==null? "structure" : _stateMachine.CurrentStateName; } }
 
@@ -124,6 +125,8 @@ public class Unit : MonoBehaviour
         Selected = selected;
         _visuals.ShowUiElements(selected);
         _visuals.BounceSelect();
+
+        OnSelect?.Invoke(selected);
     }
 
     public void Chase(Unit unit, bool command = false)
@@ -264,7 +267,8 @@ public class Unit : MonoBehaviour
     public void UpgradeStat(int index)
     {
         Level++;
-        switch(index)
+        OnLevelUp?.Invoke(Level);
+        switch (index)
         {
             case 0: BonusStats.MaxHP += (int)(Class.Stats.MaxHP * 0.1f); HP = Stats.MaxHP; break;
             case 1: BonusStats.AttackSpeed += Class.Stats.AttackSpeed * 0.1f; _animator.SetFloat("AttackSpeed", Stats.AttackSpeed); break;

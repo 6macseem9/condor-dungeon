@@ -7,21 +7,21 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class Enemy : MonoBehaviour
 {
     private Unit _unit;
-    private Vector3 _nexusPosition;
+    private Vector3 _targerPosition;
 
     private List<Unit> _neighbors = new List<Unit>();
 
     private void Start()
     {
         _unit = GetComponent<Unit>();
-        _nexusPosition = new Vector3(0, 0, -6);
+        _targerPosition = new Vector3(transform.position.x, transform.position.y, -3);
 
         _unit.DetectRange.OnEnter += AddNeighbor;
         _unit.DetectRange.OnExit += RemoveNeighbor;
         _unit.DetectRange.OnRetrigger += () => _neighbors.Clear();
 
         _unit.HoldPosition = false;
-        _unit.TargetLost += MoveToNexus;
+        //_unit.TargetLost += MoveToNexus;
         MoveToNexus();
     }
 
@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
 
     private void MoveToNexus()
     {
-        _unit.MoveTo(_nexusPosition);
+        _unit.MoveTo(_targerPosition);
     }
 
     private void AddNeighbor(Unit unit)

@@ -113,6 +113,13 @@ public class UnitSelectionManager : MonoBehaviour
 
     private void MultiSelect(Unit unit)
     {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            DeselectAll();
+            SelectClass(unit.Class.ClassName);
+            return;
+        }
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             if(unit.Selected)
