@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,48 @@ public static class Extensions
             button.transform.DOScale(1f, 0.2f);
         });
     }
+    public static float DistanceTo(this NavMeshAgent nav, Vector3 destination)
+    {
+        NavMeshPath path = new NavMeshPath();
+        nav.CalculatePath(destination, path);
+
+        var corners = path.corners;
+        float distance = 0;
+        for (int i = 1; i < corners.Length; i++)
+        {
+            distance += Vector3.Distance(corners[i - 1], corners[i]);
+        }
+        return distance;
+    }
+    public static T[] Slice<T>(this T[] source, int index, int length)
+    {
+        T[] slice = new T[length];
+        Array.Copy(source, index, slice, 0, length);
+        return slice;
+    }
+
+    public static bool Contains<T>(this List<T> haystack, List<T> needles)
+    {
+        foreach (T needle in needles)
+        {
+            if (!haystack.Contains(needle))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static string Print<T>(this List<T> list)
+    {
+        string res = "[";
+        foreach (T item in list)
+        {
+            res += item.ToString();
+            res += ", ";
+        }
+        return res + "]";
+    }
 }
 
 public static class Util
@@ -60,19 +103,5 @@ public static class Util
         tween.SetLoops(times);
         tween.onStepComplete = func;
         return tween;
-    }
-
-    public static float DistanceTo(this NavMeshAgent nav, Vector3 destination)
-    {
-        NavMeshPath path = new NavMeshPath();
-        nav.CalculatePath(destination, path);
-        
-        var corners = path.corners;
-        float distance = 0;
-        for (int i= 1; i<corners.Length;i++)
-        {
-            distance += Vector3.Distance(corners[i - 1], corners[i]);
-        }
-        return distance;
     }
 }
