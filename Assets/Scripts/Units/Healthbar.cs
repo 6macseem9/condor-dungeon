@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [DefaultExecutionOrder(2)]
@@ -32,8 +33,8 @@ public class Healthbar : MonoBehaviour
         _fg.size = new Vector2(Percent/100f, _fg.size.y);
     }
 
-    public void FadeOut()
+    public void FadeOut(bool fade = true)
     {
-        _bg.DOFade(0, 0);
+        _bg.DOFade(fade ? 0 : 1, 0);
     }
 }

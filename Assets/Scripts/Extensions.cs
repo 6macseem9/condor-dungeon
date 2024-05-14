@@ -18,11 +18,6 @@ public static class Extensions
         animator.runtimeAnimatorController = aoc;
     }
 
-    public static bool IsEnemy(this Unit unit)
-    {
-        return unit.CompareTag("EnemyUnit");
-    }
-
     public static Vector3 Clamp(this Vector3 vector, float min, float max)
     {
         if (vector.x > max) vector.x = max;

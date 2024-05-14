@@ -25,33 +25,29 @@ public class UnitDeath : UnitState
     {
         _animator.Play("death");
 
-        _nav.enabled = false;
         _collider.enabled = false;
-        _uiElements.SetActive(false);
         _attackRange.SetActive(false);
         _detectRange.SetActive(false);
         _healthbar.FadeOut();
-        _actionMarker.transform.DOKill();
 
-        UnitSelectionManager.Instance.RemoveUnit(_unit);
-        Util.Delay(0.05f, () => WaitForAnimFinish());
-    }
-    public override void Update()
-    {
+        if(_unit.IsEnemy)
+        {
+            _nav.enabled = false;
+            _collider.enabled = false;
+            _uiElements.SetActive(false);
+            _actionMarker.transform.DOKill();
+
+            Util.Delay(0.05f, () => WaitForAnimFinish());
+        }
 
     }
-    public override void FixedUpdate()
-    {
-
-    }
-    public override void OnExit()
-    {
-        
-    }
-
     private void WaitForAnimFinish()
     {
         var animDuration = _animator.GetCurrentAnimatorStateInfo(0).length;
-        _transform.DOMoveY(-2, 2).SetEase(Ease.InExpo).SetDelay(animDuration).onComplete = () => MonoBehaviour.Destroy(_unit.gameObject);
+        _transform.DOMoveY(-2, 2).SetEase(Ease.InExpo).SetDelay(animDuration).onComplete = () =>
+        {
+            BattleController.Instance.DecreaseEnemyCount();
+            MonoBehaviour.Destroy(_unit.gameObject);
+        };
     }
 }

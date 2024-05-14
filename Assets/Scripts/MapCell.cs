@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MapCell : MonoBehaviour
+public class MapCell : MonoBehaviour, IPointerClickHandler
 {
     public List<MapTile> Options { get; set; } = new List<MapTile>();
     public (int,int) Position { get; set; }
     public MapTile Tile { get; set; }
-    
+    public Room Room { get; set; }
+
     private int _closedPassages;
     private int _connectedThreshold = 1;
     public bool IsCollapsed { get; private set; }
@@ -21,26 +23,26 @@ public class MapCell : MonoBehaviour
     public bool IsClosed { get { return Tile is null ? false : _closedPassages >= Tile.Passages.Count; } }
 
     private Image _tileImage;
-    private Image _contentImage;
+    private Image _iconImage;
     private Sprite _emptyTileSprite;
 
-    //temp
-    private TextMeshProUGUI _textMeshProUGUI;
-    [TextArea(10,10)]public string textoptions;
+    private RectTransform _rectTransform;
 
     void Start()
     {
+        _rectTransform = GetComponent<RectTransform>();
+
         var images = GetComponentsInChildren<Image>();
         _tileImage = images[0];
-        _contentImage = images[1];
+        _iconImage = images[1];
 
         _emptyTileSprite = _tileImage.sprite;
-        _textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void SetTile(MapTile tile)
     {
         Tile = tile;
+
         _tileImage.sprite = tile.Sprite;
         _tileImage.transform.DORotate(new Vector3(0, 0, -tile.Angle),0);
         IsCollapsed = true;
@@ -83,7 +85,7 @@ public class MapCell : MonoBehaviour
     public void ResetCell(List<MapTile> options)
     {
         _tileImage.sprite = _emptyTileSprite;
-        _contentImage.sprite = _emptyTileSprite;
+        _iconImage.sprite = _emptyTileSprite;
         _tileImage.transform.rotation = Quaternion.identity;
         IsCollapsed = false;
         _closedPassages = 0;
@@ -104,18 +106,31 @@ public class MapCell : MonoBehaviour
         return Tile.Passages.Contains(passage);
     }
 
-    public void SetContent(Sprite content)
+    public void SetRoom(Room room)
     {
-        _contentImage.sprite = content;
+        Room = room;
+        _iconImage.sprite = room is null ? _emptyTileSprite : room.Icon;
+        if(room is not null) Room.InitiateRoom(cell: this);
     }
 
-    private void Update()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        _textMeshProUGUI.text = Entropy.ToString();
-        textoptions = "";
-        foreach(var option in Options)
-        {
-            textoptions += option.Sprite.ToString().Replace("(UnityEngine.Sprite)", "    ") + option.Angle + "\n";
-        }
+        MapController.Instance.MovePlayerToCell(this);
+    }
+
+    public bool HasPassageToCell(MapCell cell)
+    {
+        var neighbours = MapController.Instance.GetNeighbors(Position);
+        if (!neighbours.Contains(cell)) return false;
+
+        return cell.HasPassageFor(neighbours.IndexOf(cell));
+    }
+
+    public bool IsCellNear(MapCell cell)
+    {
+        var x = Mathf.Abs(Position.Item1 - cell.Position.Item1);
+        var y = Mathf.Abs(Position.Item2 - cell.Position.Item2);
+
+        return x + y == 1;
     }
 }

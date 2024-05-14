@@ -7,22 +7,41 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class MapGenerator : MonoBehaviour
+public class MapController : MonoBehaviour
 {
+    public static MapController Instance;
+
+    [SerializeField] private GameObject _raycastBlock;
+    [SerializeField] private RectTransform _cover;
+    [SerializeField] private Transform _player;
+    [SerializeField] private Image _cantMove;
+    private MapCell _currentPlayerCell;
+    private List<Image> _playerDirections = new List<Image>();
+
+    [Space(5)]
     [SerializeField] private int RoomLimit;
     [Space(5)]
     [SerializeField] private MapTile _startingTile;
     [Space(5)]
     [SerializeField] private List<MapTile> _tiles;
     [Space(5)]
-    [SerializeField] private Sprite _battleSprite;
-    [SerializeField] private Sprite _rewardSprite;
+    [SerializeField] private List<Room> _rooms;
 
-    private Dictionary<(int,int),MapCell> _allCells = new Dictionary<(int, int), MapCell>();
+    private Dictionary<(int, int), MapCell> _allCells = new Dictionary<(int, int), MapCell>();
 
-
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(Instance);
+        }
+        else Instance = this;
+    }
     private void Start()
     {
+        _playerDirections = _player.GetComponentsInChildren<Image>().ToList();
+        _playerDirections.RemoveAt(0);
+
         _tiles.AddRange(GetRotatedTiles());
 
         var cells = GetComponentsInChildren<MapCell>();
@@ -37,12 +56,16 @@ public class MapGenerator : MonoBehaviour
         }
 
         SetupMap();
+        Util.Delay(0.1f,()=>GenerateMap());
     }
 
     private void SetupMap()
     {
-        _allCells[(3, 3)].Options = new List<MapTile>() { _startingTile };
-        _allCells[(3, 3)].MarkAsStartingCell();
+        var startCell = _allCells[(3, 3)];
+        startCell.Options = new List<MapTile>() { _startingTile };
+        startCell.MarkAsStartingCell();
+
+        _currentPlayerCell = startCell;
 
         for (int i = 0; i < 8; i++)
         {
@@ -57,11 +80,11 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public async void GenerateMap()
+    public void GenerateMap()
     {
-        for (int j = 0; j < RoomLimit; j++)
+        for (int j = 0; j < RoomLimit+1; j++)
         {
-            var cell =  GetLowestEntropyCell();
+            var cell = GetLowestEntropyCell();
             if (cell is null)
             {
                 ResetMap();
@@ -77,14 +100,12 @@ public class MapGenerator : MonoBehaviour
                 if (neighbours[i] is null) continue;
                 neighbours[i].UpdateOptions(i, cell.Tile.Passages.Contains(i));
             }
-
-            await Task.Delay(200);
         }
 
         CloseOpenPassages();
     }
 
-    private List<MapCell> GetNeighbors((int,int) pos)
+    public List<MapCell> GetNeighbors((int, int) pos)
     {
         List<MapCell> cells = new List<MapCell>
         {
@@ -119,7 +140,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        int rand = UnityEngine.Random.Range(0, minCells.Count);
+        int rand = Random.Range(0, minCells.Count);
         return minCells.Count == 0 ? null : minCells[rand];
     }
 
@@ -140,7 +161,7 @@ public class MapGenerator : MonoBehaviour
 
     public void ResetMap()
     {
-        foreach(var cell in _allCells.Values)
+        foreach (var cell in _allCells.Values)
         {
             cell.ResetCell(options: _tiles);
         }
@@ -148,16 +169,16 @@ public class MapGenerator : MonoBehaviour
         SetupMap();
     }
 
-    private async void CloseOpenPassages()
+    private void CloseOpenPassages()
     {
-        var openCells = _allCells.Values.Where((x)=>x.IsCollapsed && !x.IsClosed);
+        var openCells = _allCells.Values.Where((x) => x.IsCollapsed && !x.IsClosed);
 
         foreach (var cell in openCells)
         {
             var neighbors = GetNeighbors(cell.Position);
 
             List<int> neededPassages = new List<int>();
-            for (int i = 0;i < neighbors.Count;i++)
+            for (int i = 0; i < neighbors.Count; i++)
             {
                 if (neighbors[i] is not null && neighbors[i].HasPassageFor(i)) neededPassages.Add(i);
             }
@@ -167,23 +188,81 @@ public class MapGenerator : MonoBehaviour
             );
 
             cell.SetTile(tile);
-
-            await Task.Delay(200);
         }
+
         FillRooms();
+        UpdatePlayerDirections(withReset: true);
     }
 
-    private async void FillRooms()
+    private void FillRooms()
     {
-        var cells = _allCells.Values.Where((x)=> x.IsCollapsed && x.Position!=(3,3)).OrderBy(x=>Random.value).ToList();
+        var cells = _allCells.Values.Where((x) => x.IsCollapsed && x.Position != (3, 3)).OrderBy(x => Random.value).ToList();
 
-        for(int i =0; i< cells.Count;i++)
+        for (int i = 0; i < cells.Count; i++)
         {
-            if (i >= cells.Count/2) 
-                cells[i].SetContent(_rewardSprite);
+            if (i < cells.Count / 2)
+            {
+                if (i < 2)
+                    cells[i].SetRoom(_rooms[1]/*Cages*/);
+                else
+                    cells[i].SetRoom(_rooms[Random.Range(2, 5)]);
+            }
             else
-                cells[i].SetContent(_battleSprite);
-            await Task.Delay(200);
+                cells[i].SetRoom(_rooms[0]/*Battle*/);
+        }
+    }
+
+    public void MovePlayerToCell(MapCell cell)
+    {
+        if (!cell.IsCollapsed) return;
+        if (!_currentPlayerCell.HasPassageToCell(cell)) return;
+
+        _raycastBlock.SetActive(true);
+
+        _playerDirections.ForEach(x => x.DOFade(0, 0.1f));
+
+        Util.Delay(0.3f, () =>
+        {
+            if (_currentPlayerCell.Room is not null) _currentPlayerCell.Room.Exit();
+            _currentPlayerCell = cell;
+            if (_currentPlayerCell.Room is not null) _currentPlayerCell.Room.Enter();
+        });
+
+        _cover.DOAnchorPos(new Vector2(0, -1484), 0.9f).onComplete = ()=> _cover.DOAnchorPos(new Vector2(0, 1484), 0);
+        _player.DOMove(cell.transform.position, 1).onComplete = () =>
+        {
+            _raycastBlock.SetActive(false);
+            UpdatePlayerDirections();
+        };
+    }
+
+    public void SetCanMove(bool canMove)
+    {
+        if(!canMove)
+        {
+            _cantMove.enabled = true;
+            _cantMove.DOFade(0, 0);
+            _cantMove.DOFade(1, 0.7f).SetEase(Ease.Flash,15,1);
+        }
+        else
+        {
+            _cantMove.DOFade(0, 0.7f).SetEase(Ease.Flash, 15, 1)
+                .onComplete = ()=> _cantMove.enabled = false;
+        }
+    }
+
+    public void ClearCurrentRoom()
+    {
+        _currentPlayerCell.SetRoom(null);
+    }
+
+    private void UpdatePlayerDirections(bool withReset = false)
+    {
+        if(withReset) _playerDirections.ForEach(x => x.DOFade(0, 0f));
+
+        foreach (var pass in _currentPlayerCell.Tile.Passages)
+        {
+            _playerDirections[pass].DOFade(1, 0.2f);
         }
     }
 }

@@ -3,20 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleController : MonoBehaviour
 {
+    public static BattleController Instance;
+
     [SerializeField] private BattleSequence _battleSequence;
     [SerializeField] private Vector3[] _spawnPositions;
+    [SerializeField] private Button _startButton;
     
     private Spawner[] _spawners;
     private int _currentBattle = 0;
 
+    private int _enemyCount;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(Instance);
+        }
+        else Instance = this;
+    }
     private void Start()
     {
         _spawners = GetComponentsInChildren<Spawner>();
 
-        RandomizeSpawnPositions();
+        ShowSpawners(false);
+        
     }
 
     private void RandomSpawn(Unit[] units)
@@ -47,12 +62,14 @@ public class BattleController : MonoBehaviour
     }
     public void StartBattle()
     {
-        //UnitSelectionManager.Instance.PauseInput();
+        UnitSelectionManager.Instance.PauseUnitControl(true);
+        UnitSelectionManager.Instance.StopAllUnits();
 
         foreach (var spawner in _spawners)
             spawner.ShowIcon(false);
 
         var battle = _battleSequence.Sequence[_currentBattle];
+        _enemyCount = battle.Amount;
 
         var step = 0;
         var skips = 0;
@@ -70,8 +87,49 @@ public class BattleController : MonoBehaviour
             Debug.Log(step);
             RandomSpawn(battle.Enemies);
 
-            if(step == battle.Amount) 
+            if(step == battle.Amount)
+            {
+                ShowSpawners(false);
                 loop.Kill();
+            }
         };
+    }
+
+    public void InitializeBattle()
+    {
+        RandomizeSpawnPositions();
+        _startButton.gameObject.SetActive(true);
+
+        ShowSpawners(true);
+    }
+
+    private void ShowSpawners(bool show)
+    {
+        foreach (Spawner spawner in _spawners)
+        {
+            spawner.gameObject.SetActive(show);
+            if(show==false) spawner.ShowIcon(true);
+        }
+    }
+
+    public void DecreaseEnemyCount()
+    {
+        _enemyCount--;
+        if(_enemyCount==0)
+        {
+            Victory();
+        }
+    }
+
+    private void Victory()
+    {
+        MapController.Instance.SetCanMove(true);
+        MapController.Instance.ClearCurrentRoom();
+        UnitSelectionManager.Instance.PauseUnitControl(false);
+
+        foreach (var unit in UnitSelectionManager.Instance.AllUnits)
+        {
+            unit.FullHeal();
+        }
     }
 }

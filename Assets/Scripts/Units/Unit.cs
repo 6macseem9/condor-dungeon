@@ -13,22 +13,27 @@ public class Unit : MonoBehaviour
     public Stats BonusStats { get; private set; }
     public int Level { get; private set; } = 1;
     public int UpgradeCost { get { return 50 * Level + (int)(50 * Level * 0.5f); } }
+    public bool IsEnemy { get { return CompareTag("EnemyUnit"); } }
 
+    #region Components
     protected NavMeshAgent _nav;
     protected Animator _animator;
     protected Collider _collider;
     protected UnitVisuals _visuals;
+    #endregion
 
+    #region StateMachine & states
     private StateMachine _stateMachine;
     private UnitIdle _idleState;
     private UnitMove _moveState;
     private UnitAttack _attackState;
     private UnitChase _chaseState;
-    private UnitDeath _deathState;
+    private UnitDeath _unitDeathState;
+    #endregion
 
+    #region Combat Components
     public Range AttackRange { get; private set; }
     public Range DetectRange { get; private set; }
-
     public Healthbar Healthbar { get; protected set; }
     public AbilityController AbilityController { get; private set; }
     public Unit AttackTarget { get; set; }
@@ -36,11 +41,15 @@ public class Unit : MonoBehaviour
     public float HP { get; protected set; }
     public bool IsDying { get; protected set; }
     public bool HoldPosition { get; set; } = true;
+    #endregion
 
+    #region Actions
     public Action TargetLost { get; set; }
     public Action OnAttack { get; set; }
     public Action<bool> OnSelect { get; set; }
     public Action<int> OnLevelUp { get; set; }
+    #endregion
+
     //TEMP
     public string CurState { get { return _stateMachine==null? "structure" : _stateMachine.CurrentStateName; } }
 
@@ -58,6 +67,7 @@ public class Unit : MonoBehaviour
         Class = Instantiate(Class);
         BonusStats = new Stats();
 
+        #region Range init
         var ranges = GetComponentsInChildren<Range>();
         AttackRange = ranges[0];
         DetectRange = ranges[1];
@@ -65,14 +75,15 @@ public class Unit : MonoBehaviour
         AttackRange.OnExit += EnemyLeftAttackRange;
         DetectRange.OnEnter += EnemyDetected;
         DetectRange.OnExit += EnemyLost;
+        #endregion
 
         HP = Stats.MaxHP;
         _animator.SetFloat("AttackSpeed", Stats.AttackSpeed);
 
         SetUpStateMachine();
 
-        if (this.IsEnemy()) return;
-        UnitSelectionManager.Instance.AddUnit(this);
+        if (!IsEnemy)
+            UnitSelectionManager.Instance.AddUnit(this);
     }
     private void SetUpStateMachine()
     {
@@ -82,13 +93,13 @@ public class Unit : MonoBehaviour
         _moveState = new UnitMove(this, _animator, _nav, _visuals.ActionMarker);
         _attackState = new UnitAttack(this, _animator, _nav,_visuals.ActionMarker);
         _chaseState = new UnitChase(this, _animator, _nav, _visuals.ActionMarker, AttackRange);
-        _deathState = new UnitDeath(this,_animator, _nav, _visuals.ActionMarker, _collider,_visuals.UiElements,AttackRange.gameObject,DetectRange.gameObject,Healthbar);
+        _unitDeathState = new UnitDeath(this,_animator, _nav, _visuals.ActionMarker, _collider,_visuals.UiElements,AttackRange.gameObject,DetectRange.gameObject,Healthbar);
 
         _stateMachine.AddTransition(_idleState,_moveState, () => _nav.velocity != Vector3.zero && _nav.remainingDistance > 0.69f);
         _stateMachine.AddTransition(_moveState, _idleState, () => _moveState.Completed);
         _stateMachine.AddTransition(_attackState, _idleState, () => AttackTarget==null);
         _stateMachine.AddTransition(_chaseState, _idleState, () => AttackTarget == null);
-        _stateMachine.AddNode(_deathState);
+        _stateMachine.AddNode(_unitDeathState);
 
         _stateMachine.TransitionTo(_idleState);
     }
@@ -111,6 +122,7 @@ public class Unit : MonoBehaviour
         _stateMachine.FixedUpdate();
     }
 
+    #region Commands
     public void MoveTo(Vector3 position)
     {
         _nav.SetDestination(position);
@@ -140,9 +152,13 @@ public class Unit : MonoBehaviour
         _visuals.TargetMarker();
         _stateMachine.TransitionTo(_chaseState);
     }
-    
+    #endregion
+
+    #region Detection
     private void EnemyDetected(Unit unit)
     {
+        if (unit.IsDying) return;
+
         if (AttackTarget == null)
         {
             Chase(unit);
@@ -158,6 +174,8 @@ public class Unit : MonoBehaviour
     }
     private void EnemyInAttackRange(Unit unit)
     {
+        if (unit.IsDying) return;
+
         if (_stateMachine.CurrentStateName == nameof(UnitMove)) return;
         if (AttackTarget != unit) return;
 
@@ -171,7 +189,9 @@ public class Unit : MonoBehaviour
         if (HoldPosition) _stateMachine.TransitionTo(_idleState); 
         else Chase(unit);
     }
+    #endregion
 
+    #region Damage / Heal
     public void DealDamageToTarget()
     {
         if (AttackTarget == null) return;
@@ -204,7 +224,7 @@ public class Unit : MonoBehaviour
         {
             HP = 0;
             IsDying = true;
-            _stateMachine.TransitionTo(_deathState);
+            _stateMachine.TransitionTo(_unitDeathState);
             return;
         }
 
@@ -223,6 +243,27 @@ public class Unit : MonoBehaviour
         if(HP>Stats.MaxHP) { HP = Stats.MaxHP; }
     }
 
+    public void FullHeal()
+    {
+        HP = Stats.MaxHP;
+
+        if(IsDying)
+        {
+            IsDying = false;
+
+            _collider.enabled =true;
+            AttackRange.gameObject.SetActive(true);
+            DetectRange.gameObject.SetActive(true);
+            Healthbar.FadeOut(false);
+
+            _stateMachine.TransitionTo(_idleState);
+            _animator.Play("idle");
+            Spawn();
+        }
+    }
+    #endregion
+
+    #region Misc
     public bool ToggleMode()
     {
         HoldPosition = !HoldPosition;
@@ -247,21 +288,10 @@ public class Unit : MonoBehaviour
         transform.DOScale(1,0.5f).SetEase(Ease.OutElastic,1);
     }
 
-    public void Kill()
-    {
-        HP = 0;
-        IsDying = true;
-        _stateMachine.TransitionTo(_deathState);
-    }
-
     public float DistanceTo(Unit unit)
     {
         if (unit == null) return 0;
         return _nav.DistanceTo(unit.transform.position);
-    }
-    public float DistanceTo(Vector3 position)
-    {
-        return _nav.DistanceTo(position);
     }
 
     public void UpgradeStat(int index)
@@ -278,4 +308,5 @@ public class Unit : MonoBehaviour
             case 5: BonusStats.Resistance+= 1; break;
         }
     }
+    #endregion
 }

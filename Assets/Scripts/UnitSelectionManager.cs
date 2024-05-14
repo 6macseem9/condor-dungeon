@@ -22,8 +22,10 @@ public class UnitSelectionManager : MonoBehaviour
     private Unit _structure;
 
     private Camera _camera;
-    public int Experience { get; private set; }
+    public int Gold { get; private set; }
     public bool SingleUnitSelected { get { return _selectedUnits.Count == 1; } }
+
+    private bool _canControlUnits = true;
 
     public delegate void AllUnitsEvent(List<Unit> units);
     public event AllUnitsEvent UnitAddedOrRemoved;
@@ -45,14 +47,14 @@ public class UnitSelectionManager : MonoBehaviour
 
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
-        Experience = _startingEXP;
+        Gold = _startingEXP;
     }
 
     void Update()
     {
         //UIDebug.Instance.Show("Selected:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].name, "yellow");
         //UIDebug.Instance.Show("State:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].CurState.Replace("Unit",""), "orange");
-        UIDebug.Instance.Show("Gold:", Experience.ToString(), "yellow", "yellow");
+        UIDebug.Instance.Show("Gold:", Gold.ToString(), "yellow", "yellow");
 
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -71,7 +73,7 @@ public class UnitSelectionManager : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1) && _selectedUnits.Count > 0)
+        if (_canControlUnits && Input.GetMouseButtonDown(1) && _selectedUnits.Count > 0)
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Unit"))
                 && hit.collider.CompareTag("EnemyUnit"))
@@ -106,7 +108,7 @@ public class UnitSelectionManager : MonoBehaviour
 
         for (int i = 0; i < units.Count; i++)
         {
-            if (units[i].IsEnemy()) continue;
+            if (units[i].IsEnemy) continue;
             units[i].MoveTo(positions[i]);
         }
     }
@@ -144,7 +146,7 @@ public class UnitSelectionManager : MonoBehaviour
         }
         DeselectStructure();
 
-        if (unit.IsEnemy()) DeselectAll();
+        if (unit.IsEnemy) DeselectAll();
         else DeselectEnemy();
 
         _selectedUnits.Add(unit);
@@ -174,7 +176,7 @@ public class UnitSelectionManager : MonoBehaviour
     public void DeselectEnemy()
     {
         if (_selectedUnits.Count == 0) return;
-        var enemy = _selectedUnits.FirstOrDefault((x) => x.IsEnemy());
+        var enemy = _selectedUnits.FirstOrDefault((x) => x.IsEnemy);
         if (enemy == null) return;
 
         enemy.Select(false);
@@ -267,20 +269,33 @@ public class UnitSelectionManager : MonoBehaviour
         }
     }
 
-    public void AddEXP(int amount)
+    public void AddGold(int amount)
     {
-        Experience += amount;
+        Gold += amount;
     }
-    public bool RemoveEXP(int amount)
+    public bool RemoveGold(int amount)
     {
-        if (amount > Experience)
+        if (amount > Gold)
         {
             CursorController.Instance.NotEnoughGold();
             return false;
         }
 
-        Experience -= amount;
+        Gold -= amount;
         return true;
+    }
+
+    public void PauseUnitControl(bool pause)
+    {
+        _canControlUnits = !pause;
+    }
+    public void StopAllUnits()
+    {
+        foreach(var unit in AllUnits)
+        {
+            
+            unit.MoveTo(unit.transform.position);
+        }
     }
 
     //private void OnDrawGizmos()

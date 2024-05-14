@@ -85,7 +85,7 @@ public class StatBlock : MonoBehaviour
         DisplayStats(_statTexts, unit.Class.Stats,true);
         DisplayStats(_bonusStatTexts, unit.BonusStats, false) ;
 
-        if(_unit.IsEnemy()) foreach (var button in _buttons) button.interactable = false;
+        if(_unit.IsEnemy) foreach (var button in _buttons) button.interactable = false;
     }
 
     private void Unselect(string message)
@@ -121,7 +121,7 @@ public class StatBlock : MonoBehaviour
 
     public void UpgradeStat(int index)
     {
-        if (UnitSelectionManager.Instance.RemoveEXP(_unit.UpgradeCost))
+        if (UnitSelectionManager.Instance.RemoveGold(_unit.UpgradeCost))
         {
             _upgradeCost.rectTransform.DOComplete();
             _upgradeCost.rectTransform.DOShakeAnchorPos(0.3f, 4, 20);
