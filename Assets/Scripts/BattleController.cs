@@ -11,7 +11,13 @@ public class BattleController : MonoBehaviour
 
     [SerializeField] private BattleSequence _battleSequence;
     [SerializeField] private Vector3[] _spawnPositions;
-    [SerializeField] private Button _startButton;
+    [Space(5)]
+    [SerializeField] private CanvasGroup _startButtonGroup;
+    [SerializeField] private RectTransform _startButton;
+    [SerializeField] private RectTransform _skull;
+    [SerializeField] private RectTransform _sword;
+    [Space(5)]
+    [SerializeField] private BattleIntro _battleIntro;
     
     private Spawner[] _spawners;
     private int _currentBattle = 0;
@@ -31,7 +37,8 @@ public class BattleController : MonoBehaviour
         _spawners = GetComponentsInChildren<Spawner>();
 
         ShowSpawners(false);
-        
+        _startButton.GetComponentInChildren<Button>().AddPressAnimation();
+        _sword.GetComponentInChildren<Button>().AddPressAnimation();
     }
 
     private void RandomSpawn(Unit[] units)
@@ -62,6 +69,7 @@ public class BattleController : MonoBehaviour
     }
     public void StartBattle()
     {
+        StartButtonAnimation();
         UnitSelectionManager.Instance.PauseUnitControl(true);
         UnitSelectionManager.Instance.StopAllUnits();
 
@@ -97,8 +105,12 @@ public class BattleController : MonoBehaviour
 
     public void InitializeBattle()
     {
+        _battleIntro.Intro();
+
         RandomizeSpawnPositions();
-        _startButton.gameObject.SetActive(true);
+        _startButtonGroup.gameObject.SetActive(true);
+        _startButtonGroup.blocksRaycasts = true;
+        _startButtonGroup.interactable = true;
 
         ShowSpawners(true);
     }
@@ -123,13 +135,49 @@ public class BattleController : MonoBehaviour
 
     private void Victory()
     {
-        MapController.Instance.SetCanMove(true);
         MapController.Instance.ClearCurrentRoom();
-        UnitSelectionManager.Instance.PauseUnitControl(false);
+        _battleIntro.Victory(OnRegainControl: ()=>
+        {
+            MapController.Instance.SetCanMove(true);
+            UnitSelectionManager.Instance.PauseUnitControl(false);
+            HideStartBattleButton();
+            MapController.Instance.UpdateBatlleCount(add: 1);
+        });
 
         foreach (var unit in UnitSelectionManager.Instance.AllUnits)
         {
             unit.FullHeal();
         }
+    }
+
+    private void StartButtonAnimation()
+    {
+        _sword.DOAnchorPosY(38.25F, 0.5f).SetEase(Ease.InBack).onComplete=()=>
+        {
+            _skull.DOAnchorPosY(3.3f, 0.3f).SetEase(Ease.OutBack,0.8f);
+            _startButton.DOAnchorPosY(-24f, 0.3f).SetEase(Ease.OutCirc);
+            _sword.DOAnchorPosY(17.35f, 0.3f).SetEase(Ease.OutBack);
+        };
+    }
+
+    public void HideStartBattleButton()
+    {
+        _startButtonGroup.DOFade(0, 0.7f).SetEase(Ease.Flash, 15, 1)
+                .onComplete = () =>
+                {
+                    _startButtonGroup.gameObject.SetActive(false);
+                    _startButtonGroup.DOFade(1, 0);
+                    _skull.DOAnchorPosY(24.33f, 0);
+                    _startButton.DOAnchorPosY(0f, 0);
+                    _sword.DOAnchorPosY(59.25f, 0);
+                };
+    }
+
+    public (int,int) GetBattleReward()
+    {
+        var gold = Random.Range(50, 151);
+        var keys = Random.Range(1, 101) <= 10 ? Random.Range(1, 101) <= 30 ? 2 : 1 : 0;
+
+        return (gold, keys);
     }
 }

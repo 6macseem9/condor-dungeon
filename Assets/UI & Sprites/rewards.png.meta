@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d33ee2cefd8df5745bbc2427c6c94065
+guid: 7bd598abb6f75e643a5b6b927c4833e3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: start_battle2_0
+      name: rewards_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 31
-        height: 19
+        y: 14
+        width: 68
+        height: 49
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6e3692348558bd4da1ed80f4314caf4
-      internalID: -752458861
+      spriteID: abcfaaa8e88746d43a78e08fbd021567
+      internalID: 250639864
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: start_battle2_1
+      name: rewards_1
       rect:
         serializedVersion: 2
-        x: 8
-        y: 49
-        width: 15
-        height: 40
+        x: 9
+        y: 5
+        width: 36
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,29 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54ea451ca6f3a0b48bd19f1ee68dab86
-      internalID: 1310293125
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: start_battle2_2
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 20
-        width: 23
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2235102be3c61284782bc14f1b3162e8
-      internalID: 200766374
+      spriteID: 62611c17d1fa7ea4faf263eb02ed76a4
+      internalID: 1219930168
       vertices: []
       indices: 
       edges: []
@@ -183,9 +162,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      start_battle2_0: -752458861
-      start_battle2_1: 1310293125
-      start_battle2_2: 200766374
+      rewards_0: 250639864
+      rewards_1: 1219930168
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

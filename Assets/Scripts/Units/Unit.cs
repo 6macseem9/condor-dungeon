@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     public int Level { get; private set; } = 1;
     public int UpgradeCost { get { return 50 * Level + (int)(50 * Level * 0.5f); } }
     public bool IsEnemy { get { return CompareTag("EnemyUnit"); } }
+    public bool IsMoving { get { return _stateMachine.CurrentStateName=="UnitMove"; } }
 
     #region Components
     protected NavMeshAgent _nav;

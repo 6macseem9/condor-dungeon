@@ -11,7 +11,6 @@ public class UnitSelectionManager : MonoBehaviour
     public static UnitSelectionManager Instance;
 
     [SerializeField] private float _unitSpread=1;
-    [SerializeField] private int _startingEXP = 1000;
 
     [Space(7)]
     [SerializeField] private StatBlock _statBlock;
@@ -22,7 +21,6 @@ public class UnitSelectionManager : MonoBehaviour
     private Unit _structure;
 
     private Camera _camera;
-    public int Gold { get; private set; }
     public bool SingleUnitSelected { get { return _selectedUnits.Count == 1; } }
 
     private bool _canControlUnits = true;
@@ -46,16 +44,10 @@ public class UnitSelectionManager : MonoBehaviour
         _camera = Camera.main;
 
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
-
-        Gold = _startingEXP;
     }
 
     void Update()
     {
-        //UIDebug.Instance.Show("Selected:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].name, "yellow");
-        //UIDebug.Instance.Show("State:", _selectedUnits.Count == 0 ? "null" : _selectedUnits[0].CurState.Replace("Unit",""), "orange");
-        UIDebug.Instance.Show("Gold:", Gold.ToString(), "yellow", "yellow");
-
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -269,21 +261,7 @@ public class UnitSelectionManager : MonoBehaviour
         }
     }
 
-    public void AddGold(int amount)
-    {
-        Gold += amount;
-    }
-    public bool RemoveGold(int amount)
-    {
-        if (amount > Gold)
-        {
-            CursorController.Instance.NotEnoughGold();
-            return false;
-        }
-
-        Gold -= amount;
-        return true;
-    }
+    
 
     public void PauseUnitControl(bool pause)
     {
@@ -293,8 +271,8 @@ public class UnitSelectionManager : MonoBehaviour
     {
         foreach(var unit in AllUnits)
         {
-            
-            unit.MoveTo(unit.transform.position);
+            if (unit.IsMoving)
+                unit.MoveTo(unit.transform.position);
         }
     }
 

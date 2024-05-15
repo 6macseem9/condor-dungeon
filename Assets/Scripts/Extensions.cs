@@ -91,10 +91,10 @@ public static class Util
         return tween;
     }
 
-    public static Tweener Repeat(float time, int times, TweenCallback func, bool realTime = false)
+    public static Tweener Repeat(float interval, int times, TweenCallback func, bool realTime = false)
     {
         float timer = 0;
-        Tweener tween = DOTween.To(() => timer, x => timer = x, time, time).SetUpdate(realTime);
+        Tweener tween = DOTween.To(() => timer, x => timer = x, interval, interval).SetUpdate(realTime);
         tween.SetLoops(times);
         tween.onStepComplete = func;
         return tween;

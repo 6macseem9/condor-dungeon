@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,14 +12,6 @@ public class MapController : MonoBehaviour
 {
     public static MapController Instance;
 
-    [SerializeField] private GameObject _raycastBlock;
-    [SerializeField] private RectTransform _cover;
-    [SerializeField] private Transform _player;
-    [SerializeField] private Image _cantMove;
-    private MapCell _currentPlayerCell;
-    private List<Image> _playerDirections = new List<Image>();
-
-    [Space(5)]
     [SerializeField] private int RoomLimit;
     [Space(5)]
     [SerializeField] private MapTile _startingTile;
@@ -26,6 +19,24 @@ public class MapController : MonoBehaviour
     [SerializeField] private List<MapTile> _tiles;
     [Space(5)]
     [SerializeField] private List<Room> _rooms;
+
+    [Space(10)]
+
+    [SerializeField] private GameObject _raycastBlock;
+    [SerializeField] private RectTransform _cover;
+    [SerializeField] private Transform _player;
+    [SerializeField] private Image _cantMove;
+    [Space(5)]
+    [SerializeField] private Image _fillableSkull;
+    [SerializeField] private Image _fillableCables;
+    [SerializeField] private Image _frame;
+    [SerializeField] private TextMeshProUGUI _battlesLeft;
+    [SerializeField] private TextMeshProUGUI _battlesTotal;
+    [SerializeField] private Button _descendButton;
+
+    private int _battleCount;
+    private MapCell _currentPlayerCell;
+    private List<Image> _playerDirections = new List<Image>();
 
     private Dictionary<(int, int), MapCell> _allCells = new Dictionary<(int, int), MapCell>();
 
@@ -41,6 +52,8 @@ public class MapController : MonoBehaviour
     {
         _playerDirections = _player.GetComponentsInChildren<Image>().ToList();
         _playerDirections.RemoveAt(0);
+
+        _descendButton.AddPressAnimation();
 
         _tiles.AddRange(GetRotatedTiles());
 
@@ -192,6 +205,7 @@ public class MapController : MonoBehaviour
 
         FillRooms();
         UpdatePlayerDirections(withReset: true);
+        UpdateBatlleCount();
     }
 
     private void FillRooms()
@@ -264,5 +278,23 @@ public class MapController : MonoBehaviour
         {
             _playerDirections[pass].DOFade(1, 0.2f);
         }
+    }
+
+    public void UpdateBatlleCount(int add = 0)
+    {
+        _battleCount += add;
+        _battlesLeft.text = _battleCount.ToString();
+
+        float total = RoomLimit / 2;
+        _battlesTotal.text = total.ToString();
+
+        float percent = _battleCount / total;
+        _fillableSkull.DOFillAmount(percent,1f).SetEase(Ease.OutCirc);
+        _fillableCables.DOFillAmount(percent, 1f).SetEase(Ease.OutCirc);
+
+        _descendButton.gameObject.SetActive(_battleCount == total);
+        var col = _battleCount == total ? new Color(163f / 255f, 192f / 255f, 230f / 255f) : new Color(98f / 255f, 117f / 255f, 186f / 255f);
+        _frame.color = col;
+        _battlesLeft.color = col;
     }
 }

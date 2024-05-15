@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d33ee2cefd8df5745bbc2427c6c94065
+guid: d88c03a8679d0c541a818f5da355f868
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: start_battle2_0
+      name: gold_and_keys_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 1
+        y: 2
         width: 31
-        height: 19
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6e3692348558bd4da1ed80f4314caf4
-      internalID: -752458861
+      spriteID: bd91f4b1b6f5d7c4b8253d0ea7e5733b
+      internalID: 1007375321
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: start_battle2_1
+      name: gold_and_keys_1
       rect:
         serializedVersion: 2
-        x: 8
-        y: 49
-        width: 15
-        height: 40
+        x: 33
+        y: 1
+        width: 18
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,29 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54ea451ca6f3a0b48bd19f1ee68dab86
-      internalID: 1310293125
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: start_battle2_2
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 20
-        width: 23
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2235102be3c61284782bc14f1b3162e8
-      internalID: 200766374
+      spriteID: 172ee2d84e27ef140b245c6753cf6e21
+      internalID: 496559876
       vertices: []
       indices: 
       edges: []
@@ -183,9 +162,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      start_battle2_0: -752458861
-      start_battle2_1: 1310293125
-      start_battle2_2: 200766374
+      gold_and_keys_0: 1007375321
+      gold_and_keys_1: 496559876
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

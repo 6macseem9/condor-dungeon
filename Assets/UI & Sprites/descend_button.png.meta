@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d33ee2cefd8df5745bbc2427c6c94065
+guid: 101784d5d98049e4ca04861904ce23cb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,64 +110,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: start_battle2_0
+      name: descend_button_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 31
-        height: 19
+        y: 3
+        width: 11
+        height: 9
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6e3692348558bd4da1ed80f4314caf4
-      internalID: -752458861
+      spriteID: 857171a8bf0f72d45a705919e3ca3b9c
+      internalID: 218060452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: start_battle2_1
+      name: descend_button_1
       rect:
         serializedVersion: 2
-        x: 8
-        y: 49
+        x: 12
+        y: 1
         width: 15
-        height: 40
+        height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54ea451ca6f3a0b48bd19f1ee68dab86
-      internalID: 1310293125
+      spriteID: 48a3b01ac02cede4681d65942034d832
+      internalID: 935195460
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: start_battle2_2
+      name: descend_button_2
       rect:
         serializedVersion: 2
-        x: 4
-        y: 20
-        width: 23
-        height: 28
+        x: 28
+        y: 0
+        width: 34
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2235102be3c61284782bc14f1b3162e8
-      internalID: 200766374
+      spriteID: a688ac4166aa47843ac65821527c05c7
+      internalID: 2146854158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descend_button_3
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 6
+        width: 32
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f9cd969c47d1034dbcf9b22b61f7a24
+      internalID: -1813285341
       vertices: []
       indices: 
       edges: []
@@ -183,9 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      start_battle2_0: -752458861
-      start_battle2_1: 1310293125
-      start_battle2_2: 200766374
+      descend_button_0: 218060452
+      descend_button_1: 935195460
+      descend_button_2: 2146854158
+      descend_button_3: -1813285341
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

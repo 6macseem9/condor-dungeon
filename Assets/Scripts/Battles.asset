@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sequence:
   - Enemies:
-    - {fileID: 9065598625832041072, guid: ffb160f25bafcbe469a57ac62928efd9, type: 3}
-    Amount: 5
+    - {fileID: -6072615579535240551, guid: 8075b09af3354974786fe940bd79b503, type: 3}
+    Amount: 1
     Interval: 1
     SkipChance: 50
   - Enemies:
-    - {fileID: 9065598625832041072, guid: ffb160f25bafcbe469a57ac62928efd9, type: 3}
+    - {fileID: -6072615579535240551, guid: 8075b09af3354974786fe940bd79b503, type: 3}
     Amount: 10
     Interval: 0.5
     SkipChance: 25
   - Enemies:
-    - {fileID: 9065598625832041072, guid: ffb160f25bafcbe469a57ac62928efd9, type: 3}
+    - {fileID: -6072615579535240551, guid: 8075b09af3354974786fe940bd79b503, type: 3}
     Amount: 15
     Interval: 0.25
     SkipChance: 5
