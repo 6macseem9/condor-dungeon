@@ -54,6 +54,8 @@ public class Unit : MonoBehaviour
     //TEMP
     public string CurState { get { return _stateMachine==null? "structure" : _stateMachine.CurrentStateName; } }
 
+    [SerializeField] private bool _addToList;
+
     protected virtual void Start()
     {
         _collider = GetComponent<Collider>();
@@ -83,7 +85,7 @@ public class Unit : MonoBehaviour
 
         SetUpStateMachine();
 
-        if (!IsEnemy)
+        if (!IsEnemy && _addToList)
             UnitSelectionManager.Instance.AddUnit(this);
     }
     private void SetUpStateMachine()
@@ -308,6 +310,12 @@ public class Unit : MonoBehaviour
             case 4: BonusStats.Intellect += 1; break;
             case 5: BonusStats.Resistance+= 1; break;
         }
+    }
+
+    public void EnableCollider(bool enable)
+    {
+        _collider.enabled = enable;
+        _nav.enabled = enable;
     }
     #endregion
 }

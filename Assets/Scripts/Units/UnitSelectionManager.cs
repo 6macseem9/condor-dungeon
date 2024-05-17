@@ -16,6 +16,9 @@ public class UnitSelectionManager : MonoBehaviour
     [SerializeField] private StatBlock _statBlock;
     [SerializeField] private GroupFormation _formation;
 
+    [Space(7)]
+    public List<Unit> UnitDB;
+
     public List<Unit> AllUnits {get; private set;}
     private List<Unit> _selectedUnits = new List<Unit>();
     private Unit _structure;
@@ -159,6 +162,7 @@ public class UnitSelectionManager : MonoBehaviour
     {
         foreach (var unit in _selectedUnits)
         {
+            if (unit == null) continue;
             unit.Select(false);
         }
         _selectedUnits.Clear();

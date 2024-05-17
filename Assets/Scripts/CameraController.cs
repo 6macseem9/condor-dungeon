@@ -26,6 +26,8 @@ public class CameraController : MonoBehaviour
         _newPos = transform.position;
         _newRotation = transform.rotation;
         _newZoom = _cameraTransform.localPosition;
+
+        Camera.main.eventMask = LayerMask.GetMask("RoomObject");
     }
 
     void LateUpdate()

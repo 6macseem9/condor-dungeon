@@ -84,7 +84,7 @@ public class StatBlock : MonoBehaviour
         DisplayStats(_statTexts, unit.Class.Stats,true);
         DisplayStats(_bonusStatTexts, unit.BonusStats, false) ;
 
-        if (_unit.IsEnemy) foreach (var button in _buttons) button.interactable = false;
+        foreach (var button in _buttons) button.gameObject.SetActive(!_unit.IsEnemy);
     }
 
     private void Unselect(string message)
@@ -102,16 +102,17 @@ public class StatBlock : MonoBehaviour
 
         for (int i = 0; i < value.Count; i++)
         {
-            if (i == 1)
-            {
-                var val = icons? _unit.GetAttackPerSecond() : _unit.GetAttackPerSecond() * value[i];
-                texts[i].text = (icons ? texts[i].text.Substring(0, 2) : "") 
-                    + (val==0? val :  val.ToString("0.00"));
-                continue;
-            }
-
             if(icons)
             {
+                if (i == 1)
+                {
+                    var val = icons ? _unit.GetAttackPerSecond() : _unit.GetAttackPerSecond() * value[i];
+                    texts[i].text = (icons ? texts[i].text.Substring(0, 2) : "")
+                        + (val == 0 ? val : val.ToString("0.00"));
+                    _buttons[i].interactable = value[i] != 0;
+                    continue;
+                }
+
                 _buttons[i].interactable = value[i] != 0;
             }
             texts[i].text = (icons? texts[i].text.Substring(0, 2) : "") + value[i];

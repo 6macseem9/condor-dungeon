@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +11,7 @@ public class Tooltip : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     [TextArea] public string Description;
     public float Delay = 0.3f;
     public bool Dynamic;
+    public bool NotUI;
 
     private Tweener _timer;
     private bool _focused;
@@ -42,5 +44,15 @@ public class Tooltip : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         _timer.Kill();
         _focused = false;
         TooltipController.Instance.HideTooltip();
+    }
+
+    private void OnMouseEnter()
+    {
+        if (NotUI) OnPointerEnter(null);
+    }
+
+    private void OnMouseExit()
+    {
+        if (NotUI) OnPointerExit(null);
     }
 }

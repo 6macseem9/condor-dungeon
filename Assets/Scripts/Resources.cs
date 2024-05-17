@@ -54,7 +54,7 @@ public class Resources : MonoBehaviour
     {
         if (amount > Gold)
         {
-            CursorController.Instance.NotEnoughGold();
+            CursorController.Instance.NotEnoughResource(NotEnough.Gold);
             return false;
         }
 
@@ -76,7 +76,7 @@ public class Resources : MonoBehaviour
     {
         if (amount > Keys)
         {
-            Debug.LogError("гпнах NOT ENOUGH KEYS!!!");
+            CursorController.Instance.NotEnoughResource(NotEnough.Keys);
             return false;
         }
 

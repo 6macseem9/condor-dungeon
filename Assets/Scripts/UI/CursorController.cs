@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum NotEnough { Gold, Keys, Inventory }
 public class CursorController : MonoBehaviour
 {
     public static CursorController Instance;
@@ -14,7 +15,11 @@ public class CursorController : MonoBehaviour
     private RectTransform _rect;
     private Canvas _canvas;
     [SerializeField] private Image _cursor;
-    [SerializeField] private CanvasGroup _notEnoughText;
+    [SerializeField] private CanvasGroup _notEnoughGroup;
+    private Image _notEnoughGold;
+    private Image _notEnoughKeys;
+    private Image _InventoryFull;
+
 
     private void Awake()
     {
@@ -29,6 +34,11 @@ public class CursorController : MonoBehaviour
         _rect = GetComponent<RectTransform>();
         _canvas = GetComponentInParent<Canvas>();
         _tooltip = GetComponentInChildren<TooltipController>();
+
+        var images = _notEnoughGroup.GetComponentsInChildren<Image>();
+        _notEnoughGold = images[0];
+        _notEnoughKeys = images[1];
+        _InventoryFull = images[2];
 
         //Cursor.visible = false;
     }
@@ -73,9 +83,13 @@ public class CursorController : MonoBehaviour
         //Util.Delay(0.2f, () => _cursor.sprite = _default);
     }
 
-    public void NotEnoughGold()
+    public void NotEnoughResource(NotEnough resource)
     {
-        _notEnoughText.DOComplete();
-        _notEnoughText.DOFade(1, 0.2f).SetLoops(6, LoopType.Yoyo).SetEase(Ease.Linear);
+        _notEnoughGold.enabled = resource == NotEnough.Gold;
+        _notEnoughKeys.enabled = resource == NotEnough.Keys;
+        _InventoryFull.enabled = resource == NotEnough.Inventory;
+
+        _notEnoughGroup.DOComplete();
+        _notEnoughGroup.DOFade(1, 0.2f).SetLoops(6, LoopType.Yoyo).SetEase(Ease.OutCirc);
     }
 }

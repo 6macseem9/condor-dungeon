@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b2fae34924c7514d9774574a8b6f9b9, type: 3}
-  m_Name: Ranger
+  m_Name: Bad guy
   m_EditorClassIdentifier: 
-  ClassName: "\u03B2ranger"
-  ClassDescription: 'uwu '
-  ClassColor: {r: 0.9450981, g: 0.5294118, b: 0.19607845, a: 1}
-  Turnaround: {fileID: 7400000, guid: 091f5c2826d44db4181e7a31df88e1f0, type: 2}
+  ClassName: "\u03B9chort"
+  ClassDescription: bad guy
+  ClassColor: {r: 1, g: 0, b: 0.26666668, a: 1}
+  Turnaround: {fileID: 7400000, guid: 6466c899b49229749933813ff0251066, type: 2}
   Stats:
-    MaxHP: 90
+    MaxHP: 60
     AttackSpeed: 1
-    Strength: 35
-    Armor: 5
+    Strength: 20
+    Armor: 10
     Intellect: 0
-    Resistance: 5
+    Resistance: 10
+    DangerLevel: 10

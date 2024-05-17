@@ -5,11 +5,21 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+[System.Serializable]
+public class EnemyDanger
+{
+    public Unit Unit;
+    public int DangerLevel;
+}
+
 public class BattleController : MonoBehaviour
 {
     public static BattleController Instance;
 
-    [SerializeField] private BattleSequence _battleSequence;
+    [SerializeField] private EnemyDanger[] _enemies;
+    [SerializeField] private int[] _battlesDanger;
+    [Space(5)]
     [SerializeField] private Vector3[] _spawnPositions;
     [Space(5)]
     [SerializeField] private CanvasGroup _startButtonGroup;
@@ -17,7 +27,7 @@ public class BattleController : MonoBehaviour
     [SerializeField] private RectTransform _skull;
     [SerializeField] private RectTransform _sword;
     [Space(5)]
-    [SerializeField] private BattleIntro _battleIntro;
+    [SerializeField] private BattleIntroAndRewards _battleIntro;
     
     private Spawner[] _spawners;
     private int _currentBattle = 0;
@@ -41,9 +51,8 @@ public class BattleController : MonoBehaviour
         _sword.GetComponentInChildren<Button>().AddPressAnimation();
     }
 
-    private void RandomSpawn(Unit[] units)
+    private void RandomSpawn(Unit unit)
     {
-        var unit = units[Random.Range(0, units.Length)];
         var spawner = _spawners[Random.Range(0, _spawners.Length)];
 
         var instance = Instantiate(unit, spawner.SpawnPoint, Quaternion.Euler(0,180,0));
@@ -67,42 +76,14 @@ public class BattleController : MonoBehaviour
             used.Add(rand);
         }
     }
-    public void StartBattle()
+    private void ShowSpawners(bool show)
     {
-        StartButtonAnimation();
-        UnitSelectionManager.Instance.PauseUnitControl(true);
-        UnitSelectionManager.Instance.StopAllUnits();
-
-        foreach (var spawner in _spawners)
-            spawner.ShowIcon(false);
-
-        var battle = _battleSequence.Sequence[_currentBattle];
-        _enemyCount = battle.Amount;
-
-        var step = 0;
-        var skips = 0;
-        var loop = Util.Repeat(battle.Interval, -1, () => { });
-        loop.onStepComplete = () =>
+        foreach (Spawner spawner in _spawners)
         {
-            if(step!=0 && skips<2 && Random.Range(1,101) <= battle.SkipChance)
-            {
-                skips++;
-                Debug.Log("skip " + skips);
-                return;
-            }
-            step++;
-            skips = 0;
-            Debug.Log(step);
-            RandomSpawn(battle.Enemies);
-
-            if(step == battle.Amount)
-            {
-                ShowSpawners(false);
-                loop.Kill();
-            }
-        };
+            spawner.gameObject.SetActive(show);
+            if (show == false) spawner.ShowIcon(true);
+        }
     }
-
     public void InitializeBattle()
     {
         _battleIntro.Intro();
@@ -114,16 +95,67 @@ public class BattleController : MonoBehaviour
 
         ShowSpawners(true);
     }
-
-    private void ShowSpawners(bool show)
+    public void StartBattle()
     {
-        foreach (Spawner spawner in _spawners)
+        StartButtonAnimation();
+        UnitSelectionManager.Instance.PauseUnitControl(true);
+        UnitSelectionManager.Instance.StopAllUnits();
+
+        foreach (var spawner in _spawners)
+            spawner.ShowIcon(false);
+
+        var danger = _battlesDanger[_currentBattle];
+        var enemies = ChooseEnemiesForBattle(100).OrderBy(x=>Random.value).ToList();
+        _enemyCount = enemies.Count;
+
+        var interval = 1;
+        var skip = 50;
+
+        var step = -1;
+        var skips = 0;
+        var loop = Util.Repeat(interval, -1, () => { });
+        loop.onStepComplete = () =>
         {
-            spawner.gameObject.SetActive(show);
-            if(show==false) spawner.ShowIcon(true);
+            if(step!=0 && skips<2 && Random.Range(1,101) <= skip)
+            {
+                skips++;
+                Debug.Log("skip " + skips);
+                return;
+            }
+            step++;
+            skips = 0;
+            Debug.Log(step);
+            RandomSpawn(enemies[step]);
+
+            if(step == enemies.Count-1)
+            {
+                ShowSpawners(false);
+                loop.Kill();
+            }
+        };
+    }
+    public List<Unit> ChooseEnemiesForBattle(int danger)
+    {
+        List<Unit> enemies = new List<Unit>();
+        int remainingDanger = danger;
+
+        while (remainingDanger > 0)
+        {
+            EnemyDanger enemy = GetRandomValidMonster(remainingDanger);
+            enemies.Add(enemy.Unit);
+            remainingDanger -= enemy.DangerLevel;
         }
+
+        return enemies;
     }
 
+    private EnemyDanger GetRandomValidMonster(int dangerLevel)
+    {
+        List<EnemyDanger> validMonsters = _enemies.Where(x => x.DangerLevel <= dangerLevel).ToList();
+        return validMonsters[Random.Range(0, validMonsters.Count)];
+    }
+
+    #region Victory and UI
     public void DecreaseEnemyCount()
     {
         _enemyCount--;
@@ -136,6 +168,8 @@ public class BattleController : MonoBehaviour
     private void Victory()
     {
         MapController.Instance.ClearCurrentRoom();
+        //_currentBattle++;
+
         _battleIntro.Victory(OnRegainControl: ()=>
         {
             MapController.Instance.SetCanMove(true);
@@ -180,4 +214,5 @@ public class BattleController : MonoBehaviour
 
         return (gold, keys);
     }
+    #endregion
 }

@@ -19,7 +19,7 @@ MonoBehaviour:
   Stats:
     MaxHP: 100
     AttackSpeed: 1
-    Strength: 20
-    Armor: 10
+    Strength: 18
+    Armor: 15
     Intellect: 0
-    Resistance: 10
+    Resistance: 12

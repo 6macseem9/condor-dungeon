@@ -26,12 +26,10 @@ public class MapCell : MonoBehaviour, IPointerClickHandler
     private Image _iconImage;
     private Sprite _emptyTileSprite;
 
-    private RectTransform _rectTransform;
+    private GameObject _roomObject;
 
     void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
-
         var images = GetComponentsInChildren<Image>();
         _tileImage = images[0];
         _iconImage = images[1];
@@ -84,6 +82,12 @@ public class MapCell : MonoBehaviour, IPointerClickHandler
     }
     public void ResetCell(List<MapTile> options)
     {
+        if (Room != null)
+        {
+            Room.DestroyObject();
+            SetRoom(null);
+        }
+
         _tileImage.sprite = _emptyTileSprite;
         _iconImage.sprite = _emptyTileSprite;
         _tileImage.transform.rotation = Quaternion.identity;
@@ -91,6 +95,11 @@ public class MapCell : MonoBehaviour, IPointerClickHandler
         _closedPassages = 0;
         Options = options;
         Tile = null;
+    }
+
+    public void ResetIcon()
+    {
+        _iconImage.sprite = _emptyTileSprite;
     }
 
     public void MarkAsStartingCell()
@@ -108,9 +117,11 @@ public class MapCell : MonoBehaviour, IPointerClickHandler
 
     public void SetRoom(Room room)
     {
-        Room = room;
         _iconImage.sprite = room is null ? _emptyTileSprite : room.Icon;
-        if(room is not null) Room.InitiateRoom(cell: this);
+        if (room is null) { Room = null; return; }
+
+        Room = room.InitiateRoom();
+        if(Room.RoomObject != null) Room.RoomObject.name = Position.ToString();
     }
 
     public void OnPointerClick(PointerEventData eventData)

@@ -176,8 +176,11 @@ public class MapController : MonoBehaviour
     {
         foreach (var cell in _allCells.Values)
         {
+            
             cell.ResetCell(options: _tiles);
         }
+
+        _player.DOMove(_allCells[(3, 3)].transform.position, 0);
 
         SetupMap();
     }
@@ -269,6 +272,10 @@ public class MapController : MonoBehaviour
     {
         _currentPlayerCell.SetRoom(null);
     }
+    public void RemoveCurrentRoomIcon()
+    {
+        _currentPlayerCell.ResetIcon();
+    }
 
     private void UpdatePlayerDirections(bool withReset = false)
     {
@@ -280,9 +287,9 @@ public class MapController : MonoBehaviour
         }
     }
 
-    public void UpdateBatlleCount(int add = 0)
+    public void UpdateBatlleCount(int add = -1)
     {
-        _battleCount += add;
+        _battleCount = add==-1? 0 : _battleCount+add;
         _battlesLeft.text = _battleCount.ToString();
 
         float total = RoomLimit / 2;
@@ -296,5 +303,12 @@ public class MapController : MonoBehaviour
         var col = _battleCount == total ? new Color(163f / 255f, 192f / 255f, 230f / 255f) : new Color(98f / 255f, 117f / 255f, 186f / 255f);
         _frame.color = col;
         _battlesLeft.color = col;
+    }
+
+    public void Descend()
+    {
+        ResetMap();
+        RoomLimit += 2;
+        GenerateMap();
     }
 }
