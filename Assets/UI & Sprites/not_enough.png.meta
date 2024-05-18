@@ -114,11 +114,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 23
+        y: 34
         width: 50
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -135,11 +135,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 12
+        y: 23
         width: 52
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -156,8 +156,50 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 1
+        y: 12
         width: 57
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a763fb7e7b97728418482b1e2a0562c2
+      internalID: 1134818658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: discard_button
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 36
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee4406cfecdd174792e98659c5ad51c
+      internalID: 629617549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: not_enough_3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 53
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -166,8 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a763fb7e7b97728418482b1e2a0562c2
-      internalID: 1134818658
+      spriteID: d52cf786d37e0d549af0d97c3f9957b1
+      internalID: -1991144822
       vertices: []
       indices: 
       edges: []
@@ -183,9 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      discard_button: 629617549
       not_enough_0: -1448065337
       not_enough_1: 1010432180
       not_enough_2: 1134818658
+      not_enough_3: -1991144822
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

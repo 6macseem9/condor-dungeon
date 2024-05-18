@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum NotEnough { Gold, Keys, Inventory }
+public enum NotEnough { Gold, Keys, Inventory, Combat }
 public class CursorController : MonoBehaviour
 {
     public static CursorController Instance;
@@ -19,7 +19,7 @@ public class CursorController : MonoBehaviour
     private Image _notEnoughGold;
     private Image _notEnoughKeys;
     private Image _InventoryFull;
-
+    private Image _notInCombat;
 
     private void Awake()
     {
@@ -39,6 +39,7 @@ public class CursorController : MonoBehaviour
         _notEnoughGold = images[0];
         _notEnoughKeys = images[1];
         _InventoryFull = images[2];
+        _notInCombat = images[3];
 
         //Cursor.visible = false;
     }
@@ -88,6 +89,7 @@ public class CursorController : MonoBehaviour
         _notEnoughGold.enabled = resource == NotEnough.Gold;
         _notEnoughKeys.enabled = resource == NotEnough.Keys;
         _InventoryFull.enabled = resource == NotEnough.Inventory;
+        _notInCombat.enabled = resource == NotEnough.Combat;
 
         _notEnoughGroup.DOComplete();
         _notEnoughGroup.DOFade(1, 0.2f).SetLoops(6, LoopType.Yoyo).SetEase(Ease.OutCirc);

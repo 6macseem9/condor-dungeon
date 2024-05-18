@@ -7,6 +7,8 @@ public class Loot : MonoBehaviour
 {
     [SerializeField] private bool _gold;
     [SerializeField] private bool _keys;
+    [SerializeField] bool _clearRoom;
+    [SerializeField] private GameObject _objectToDisable;
 
     private bool _looted;
 
@@ -15,10 +17,14 @@ public class Loot : MonoBehaviour
         if (_looted) return;
         if (_gold && _keys) { Debug.LogWarning("GOLD AND KEYS IN ONE LOOT"); return; }
 
-            _looted = true;
-        transform.DOShakeRotation(0.5f,20,15);
+        _objectToDisable.SetActive(false);
+        _looted = true;
+
+        transform.DOScale(1.5f, 0);
+        transform.DOScale(1, 0.3f).SetEase(Ease.OutCirc);
+        //transform.DOShakeRotation(0.5f,20,15);
 
         BattleIntroAndRewards.Instance.PopOutReward(_gold ? 100:0, _keys?1:0);
-        MapController.Instance.RemoveCurrentRoomIcon();
+        if(_clearRoom) MapController.Instance.RemoveCurrentRoomIcon();
     }
 }

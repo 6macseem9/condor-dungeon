@@ -36,7 +36,7 @@ public class UnitListItem : MonoBehaviour
         ClassName = unit.Class.ClassName;
         _texts[0].text = FormatText(ClassName);
         _texts[0].color = unit.Class.ClassColor;
-        _texts[1].text = FormatText("1");
+        _texts[1].text = FormatText(_unit.Level.ToString());
     }
 
     private string FormatText(string text)

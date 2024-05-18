@@ -22,7 +22,7 @@ public class UnitList : MonoBehaviour
         );
 
         var items = GetComponentsInChildren<UnitListItem>();
-        foreach (var item in items) { item.gameObject.SetActive(false); }
+        foreach (var item in items) item.gameObject.SetActive(false);
         _pool.AddDefault(items);
     }
 

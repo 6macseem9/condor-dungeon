@@ -29,6 +29,8 @@ public class BattleController : MonoBehaviour
     [Space(5)]
     [SerializeField] private BattleIntroAndRewards _battleIntro;
     
+    public bool InCombat { get; private set; }
+
     private Spawner[] _spawners;
     private int _currentBattle = 0;
 
@@ -97,6 +99,7 @@ public class BattleController : MonoBehaviour
     }
     public void StartBattle()
     {
+        InCombat = true;
         StartButtonAnimation();
         UnitSelectionManager.Instance.PauseUnitControl(true);
         UnitSelectionManager.Instance.StopAllUnits();
@@ -167,8 +170,14 @@ public class BattleController : MonoBehaviour
 
     private void Victory()
     {
+        InCombat = false;
         MapController.Instance.ClearCurrentRoom();
         //_currentBattle++;
+
+        foreach (var unit in UnitSelectionManager.Instance.AllUnits)
+        {
+            unit.FullHeal();
+        }
 
         _battleIntro.Victory(OnRegainControl: ()=>
         {
@@ -178,10 +187,7 @@ public class BattleController : MonoBehaviour
             MapController.Instance.UpdateBatlleCount(add: 1);
         });
 
-        foreach (var unit in UnitSelectionManager.Instance.AllUnits)
-        {
-            unit.FullHeal();
-        }
+        
     }
 
     private void StartButtonAnimation()

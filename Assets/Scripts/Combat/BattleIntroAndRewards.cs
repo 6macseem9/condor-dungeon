@@ -22,6 +22,7 @@ public class BattleIntroAndRewards : MonoBehaviour
     [Space(5)]
     [SerializeField] private RectTransform _resutls;
     [SerializeField] private Image _keysImage;
+    [SerializeField] private TextMeshProUGUI _itemText;
     [SerializeField] private TextMeshProUGUI _goldText;
     [SerializeField] private TextMeshProUGUI _keysText;
     [SerializeField] private TextMeshProUGUI _darkGoldText;
@@ -157,17 +158,29 @@ public class BattleIntroAndRewards : MonoBehaviour
                     Resources.Instance.AddKeys(keys);
                 };
     }
+    public void RecieveItem(Vector2 startPos, Item item)
+    {
+        _itemText.rectTransform.DOAnchorPos(startPos, 0);
+        _itemText.transform.DOScale(3.5f, 0.3f).SetLoops(2, LoopType.Yoyo).SetDelay(0.25f).SetEase(Ease.OutCirc).onComplete = () =>
+                _itemText.rectTransform.DOAnchorPos(new Vector2(797.5f, 50), 0.5f).SetDelay(0.25f).SetEase(Ease.OutCubic).onComplete = () =>
+                {
+                    _itemText.enabled = false;
+                    Inventory.Instance.AddItem(item);
+                };
+    }
 
-    public void PopOutReward(int gold = 0, int keys = 0)
+    public void PopOutReward(int gold = 0, int keys = 0, Item item = null)
     {
         TextMeshProUGUI text = _goldText;
         if (keys != 0) text = _keysText;
+        if (item!=null) text = _itemText;
 
         text.transform.DOMove(CursorController.Instance.transform.position, 0);
         text.transform.DOScale(0, 0);
 
         if (gold != 0) text.text = "#" + gold;
         if (keys != 0) text.text = _keysText.text.Substring(0, 1) + keys;
+        if (item != null) { text.text = item.Name; text.color = item.Color; }
 
         text.enabled = true;
         text.transform.DOScale(3, 0.4f);
@@ -177,6 +190,7 @@ public class BattleIntroAndRewards : MonoBehaviour
         {
             if (gold!=0) RecieveGold(text.rectTransform.anchoredPosition, gold);
             if (keys != 0) RecieveKeys(text.rectTransform.anchoredPosition, keys);
+            if (item != null) RecieveItem(text.rectTransform.anchoredPosition, item);
         }
         );
     }

@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class Cage : MonoBehaviour
 {
     [SerializeField] private Transform _cageObject;
-    [SerializeField] private string _prompt;
+    [SerializeField] private Transform _shadow;
 
     private Tooltip _tooltip;
     private Unit _unit;
@@ -21,21 +21,21 @@ public class Cage : MonoBehaviour
         _collider = GetComponent<Collider>();   
         _obstacle = GetComponent<NavMeshObstacle>();
 
-        Util.Delay(0.1f, () =>
+        Util.Delay(0.01f, () =>
         {
             var db = UnitSelectionManager.Instance.UnitDB;
             var unit = db[Random.Range(0, db.Count)];
 
             _unit = Instantiate(unit, transform.position, Quaternion.Euler(0, 180, 0));
             _unit.transform.parent = transform;
-            Util.Delay(0.1f, () => 
+            Util.Delay(0.01f, () => 
             {
                 _unit.EnableCollider(false);
                 _obstacle.carving = true;
             } );
 
             _tooltip.Title = $"<color=#{unit.Class.ClassColor.ToHexString()}>" + _unit.Class.ClassName.ToUpper();
-            _tooltip.Description = _unit.Class.ClassDescription + "\n\n" + _prompt;
+            _tooltip.Description = _unit.Class.ClassDescription + "\n\n<color=#a3c0e6>} CLICK TO UNLOCK WITH {1";
         });
 
         
@@ -54,6 +54,7 @@ public class Cage : MonoBehaviour
         _obstacle.carving = false;
         _collider.enabled = false;
         _cageObject.DOMoveY(5, 2f).SetEase(Ease.OutCirc);
+        _shadow.DOScale(1.8f,2f).SetEase(Ease.OutCirc);
 
         _unit.transform.parent = null;
         Util.Delay(0.05f,()=>_unit.EnableCollider(true));

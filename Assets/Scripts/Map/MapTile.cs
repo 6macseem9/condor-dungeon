@@ -19,10 +19,6 @@ public class MapTile
     [SerializeField] private bool _south2;
     [SerializeField] private bool _west3;
 
-    [Space(10)]
-    public int RewardChance;
-    public int BattleChance;
-
     public List<int> Passages
     {
         get
@@ -48,9 +44,6 @@ public class MapTile
         tile._west3 = _south2;
 
         tile.Angle = Angle + 90;
-
-        tile.RewardChance = RewardChance;
-        tile.BattleChance = BattleChance;
 
         return tile;
     }
