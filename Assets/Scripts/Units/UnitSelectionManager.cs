@@ -3,13 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+[System.Serializable]
+public class UnitPosition
+{
+    public Unit Unit;
+    public Vector3 Position;
+}
 
 public class UnitSelectionManager : MonoBehaviour
 {
     public static UnitSelectionManager Instance;
 
+    [SerializeField] private List<UnitPosition> _startingUnits;
     [SerializeField] private float _unitSpread=1;
 
     [Space(7)]
@@ -226,13 +235,6 @@ public class UnitSelectionManager : MonoBehaviour
         AllUnits.Add(unit);
         UnitAddedOrRemoved?.Invoke(AllUnits);
     }
-    public void RemoveUnit(Unit unit)
-    {
-        AllUnits.Remove(unit);
-        _selectedUnits.Remove(unit);
-        UnitAddedOrRemoved?.Invoke(AllUnits);
-    }
-
     public void ToggleSelectedUnitMode()
     {
         if (_selectedUnits.Count <= 0) return;
@@ -265,8 +267,6 @@ public class UnitSelectionManager : MonoBehaviour
         }
     }
 
-    
-
     public void PauseUnitControl(bool pause)
     {
         _canControlUnits = !pause;
@@ -277,6 +277,23 @@ public class UnitSelectionManager : MonoBehaviour
         {
             if (unit.IsMoving)
                 unit.MoveTo(unit.transform.position);
+        }
+    }
+
+    public void SpawnStartUnits()
+    {
+        foreach(var unit in AllUnits)
+        {
+            Destroy(unit.gameObject);
+        }
+        AllUnits.Clear();
+        UnitAddedOrRemoved?.Invoke(AllUnits);
+
+        foreach (var entry in _startingUnits)
+        {
+            var unit = Instantiate(entry.Unit);
+            unit.transform.position = entry.Position;
+            AddUnit(unit);
         }
     }
 

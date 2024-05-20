@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1789526041926500478}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.5}
+  m_LocalPosition: {x: 0, y: 0, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -258,7 +258,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cageObject: {fileID: 4088566335478631052}
   _shadow: {fileID: 3788522403005564362}
-  _prompt: "click to unlock using <color=#a3c0e6>\u03BB1</color>"
 --- !u!65 &3222609052450671891
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -453,7 +452,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cageObject: {fileID: 5528911377454334146}
   _shadow: {fileID: 541418106870305689}
-  _prompt: "click to unlock using <color=#a3c0e6>\u03BB1</color>"
 --- !u!65 &3742469136622998652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -564,7 +562,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cageObject: {fileID: 5278737564660189450}
   _shadow: {fileID: 3316157872380324329}
-  _prompt: "click to unlock using <color=#a3c0e6>\u03BB1</color>"
 --- !u!65 &1662458605061147432
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -820,7 +817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1893034857052683251, guid: 24b15a2748552d74d94f0a567ac22b98, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.65
+      value: 4.23
       objectReference: {fileID: 0}
     - target: {fileID: 1893034857052683251, guid: 24b15a2748552d74d94f0a567ac22b98, type: 3}
       propertyPath: m_LocalPosition.y

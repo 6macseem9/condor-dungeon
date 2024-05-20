@@ -51,7 +51,7 @@ public class Cage : MonoBehaviour
 
     private void Unlock()
     {
-        _obstacle.carving = false;
+        _obstacle.enabled = false;
         _collider.enabled = false;
         _cageObject.DOMoveY(5, 2f).SetEase(Ease.OutCirc);
         _shadow.DOScale(1.8f,2f).SetEase(Ease.OutCirc);

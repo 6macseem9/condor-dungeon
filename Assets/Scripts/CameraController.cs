@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class CameraController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _rotationLerp;
     [SerializeField] private float _zoomSpeed;
     [SerializeField] private float _zoomLerp;
+    [Space(5)]
+    [SerializeField] private Transform _background;
 
     private Vector3 _newPos;
     private Quaternion _newRotation;
@@ -18,10 +21,12 @@ public class CameraController : MonoBehaviour
     private Vector3 _rotateCurrent;
 
     private Transform _cameraTransform;
-     
-    void Start()
+    private PixelPerfectCamera _pixelPerfect;
+
+    private void Start()
     {
         _cameraTransform = Camera.main.transform;
+        _pixelPerfect = _cameraTransform.GetComponent<PixelPerfectCamera>();
 
         _newPos = transform.position;
         _newRotation = transform.rotation;
@@ -30,7 +35,7 @@ public class CameraController : MonoBehaviour
         Camera.main.eventMask = LayerMask.GetMask("RoomObject");
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         HandleMovementInput();
         HandleRotationInput();
@@ -43,7 +48,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, _newRotation, _rotationLerp * Time.deltaTime);
     }
 
-    void HandleMovementInput()
+    private void HandleMovementInput()
     {
         var horInput = Input.GetAxis("Horizontal");
         var verInput = Input.GetAxis("Vertical");
@@ -52,7 +57,7 @@ public class CameraController : MonoBehaviour
         _newPos += transform.right * _movementSpeed * Time.deltaTime * horInput;
         _newPos = _newPos.Clamp(-24, 24);
     }
-    void HandleRotationInput()
+    private void HandleRotationInput()
     {
         if(Input.GetKey(KeyCode.E))
         {
@@ -63,7 +68,7 @@ public class CameraController : MonoBehaviour
             _newRotation *= Quaternion.Euler(Vector3.up * -_rotationSpeed * Time.deltaTime);
         }    
     }
-    void HandleZoomInput()
+    private void HandleZoomInput()
     {
         if (Input.mouseScrollDelta.y!=0)
         {
@@ -73,7 +78,7 @@ public class CameraController : MonoBehaviour
         _newZoom = new Vector3(0, Mathf.Clamp(_newZoom.y, 8, 300), Mathf.Clamp(_newZoom.z, -300, -8));
         _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition, _newZoom, _zoomLerp * Time.deltaTime);
     }
-    void HandleMousePan()
+    private void HandleMousePan()
     {
         if (Input.GetKey(KeyCode.LeftShift)) return;
 
@@ -102,7 +107,7 @@ public class CameraController : MonoBehaviour
             }
         }
     }
-    void HandleMouseRotation()
+    private void HandleMouseRotation()
     {
         if (!Input.GetKey(KeyCode.LeftShift)) return;
 
@@ -121,5 +126,22 @@ public class CameraController : MonoBehaviour
             var x = Mathf.Clamp(difference.x, -20, 20);
             _newRotation *= Quaternion.Euler(Vector3.up * (-x / 5f));
         }
+    }
+
+    public void ResetCamera()
+    {
+        _newPos = new Vector3(3.3f, 0, 0.3f);
+        _newRotation = Quaternion.identity;
+        _newZoom = new Vector3(0, 58, - 58);
+
+        _background.localPosition = new Vector3(-28, 0, 600);
+    }
+
+    public void SetPixelization(float value)
+    {
+        _pixelPerfect.enabled = value==0? false : true;
+        if (value == 0) return;
+        _pixelPerfect.refResolutionX = 640 / (int)value;
+        _pixelPerfect.refResolutionY = 360 / (int)value;
     }
 }

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +7,15 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Random = UnityEngine.Random;
 
 public class MapController : MonoBehaviour
 {
     public static MapController Instance;
 
-    [SerializeField] private int RoomLimit;
+    [SerializeField] private int _roomLimitStart;
+    [SerializeField] private int _roomLimitIncrease;
+    private int _roomLimit;
     [Space(5)]
     [SerializeField] private MapTile _startingTile;
     [Space(5)]
@@ -33,6 +36,7 @@ public class MapController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _battlesLeft;
     [SerializeField] private TextMeshProUGUI _battlesTotal;
     [SerializeField] private Button _descendButton;
+    [SerializeField] private TextMeshProUGUI _floorNumber;
 
     private int _battleCount;
     private MapCell _currentPlayerCell;
@@ -68,8 +72,8 @@ public class MapController : MonoBehaviour
             _allCells.Add((x, y), cells[i]);
         }
 
-        SetupMap();
-        Util.Delay(0.1f,()=>GenerateMap());
+        //SetupMap();
+        //Util.Delay(0.1f,()=>GenerateMap());
     }
 
     private void SetupMap()
@@ -95,7 +99,7 @@ public class MapController : MonoBehaviour
 
     public void GenerateMap()
     {
-        for (int j = 0; j < RoomLimit+1; j++)
+        for (int j = 0; j < _roomLimit+1; j++)
         {
             var cell = GetLowestEntropyCell();
             if (cell is null)
@@ -245,7 +249,7 @@ public class MapController : MonoBehaviour
             if (_currentPlayerCell.Room is not null) _currentPlayerCell.Room.Enter();
         });
 
-        _cover.DOAnchorPos(new Vector2(0, -1484), 0.9f).onComplete = ()=> _cover.DOAnchorPos(new Vector2(0, 1484), 0);
+        _cover.DOAnchorPos(new Vector2(-910, -1484), 0.9f).onComplete = ()=> _cover.DOAnchorPos(new Vector2(-910, 1484), 0);
         _player.DOMove(cell.transform.position, 1).onComplete = () =>
         {
             _raycastBlock.SetActive(false);
@@ -292,7 +296,7 @@ public class MapController : MonoBehaviour
         _battleCount = add==-1? 0 : _battleCount+add;
         _battlesLeft.text = _battleCount.ToString();
 
-        float total = RoomLimit / 2;
+        float total = _roomLimit / 2;
         _battlesTotal.text = total.ToString();
 
         float percent = _battleCount / total;
@@ -305,10 +309,12 @@ public class MapController : MonoBehaviour
         _battlesLeft.color = col;
     }
 
-    public void Descend()
+    public void Descend(bool reset = false)
     {
+        _floorNumber.text = reset ? "1" : $"{int.Parse(_floorNumber.text)+1}";
+        _roomLimit = reset ? _roomLimitStart : _roomLimit + _roomLimitIncrease;
+
         ResetMap();
-        RoomLimit += 2;
         GenerateMap();
     }
 }

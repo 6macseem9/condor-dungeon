@@ -79,6 +79,13 @@ public static class Extensions
         }
         return res + "]";
     }
+
+    public static void ShowCompletely(this CanvasGroup canv,bool show)
+    {
+        canv.alpha = show ? 1 : 0;
+        canv.blocksRaycasts = show;
+        canv.interactable = show;
+    }
 }
 
 public static class Util
