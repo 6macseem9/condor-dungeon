@@ -51,7 +51,47 @@ MonoBehaviour:
   _cap: {fileID: 5532913927566570434}
   _possibleItems:
   - Item: {fileID: 11400000, guid: 1802895cb52d23c4aa1910d19ef7a727, type: 2}
+    Probability: 170
+  - Item: {fileID: 11400000, guid: 41814d3192e42f34f8cf13561b8adca8, type: 2}
     Probability: 100
+  - Item: {fileID: 11400000, guid: 17274e761a564dd48a3d3c0cad5befc4, type: 2}
+    Probability: 45
+  - Item: {fileID: 11400000, guid: bfb56daa9a12b0248b29ca3dae4f1e31, type: 2}
+    Probability: 15
+  - Item: {fileID: 11400000, guid: 9636c31d270a9774882db672e7f409b7, type: 2}
+    Probability: 24
+  - Item: {fileID: 11400000, guid: b403cfb601fa5af41ba4f1ae8f50fcab, type: 2}
+    Probability: 24
+  - Item: {fileID: 11400000, guid: 6acb0aa6528398c4f9a8062d584716be, type: 2}
+    Probability: 24
+  - Item: {fileID: 11400000, guid: 1f250e47db21a5f4eb4d0b85f8097c7f, type: 2}
+    Probability: 24
+  - Item: {fileID: 11400000, guid: 07e9c4fc97ad22847901cdf702256681, type: 2}
+    Probability: 24
+  - Item: {fileID: 11400000, guid: 88a157a44c04d40449ae4ff637d5847e, type: 2}
+    Probability: 150
+  - Item: {fileID: 11400000, guid: 27fa98fbef3d853449f928db9b552266, type: 2}
+    Probability: 45
+  - Item: {fileID: 11400000, guid: 2342faa46810e4b409c1f27e47039001, type: 2}
+    Probability: 5
+  - Item: {fileID: 11400000, guid: 76685b49a183d2943a7cee93340fbd11, type: 2}
+    Probability: 50
+  - Item: {fileID: 11400000, guid: aed43ba25b006af4d886711d1c11c5bc, type: 2}
+    Probability: 50
+  - Item: {fileID: 11400000, guid: a194233f2ddb78e499ead6a4c9cfdcf3, type: 2}
+    Probability: 50
+  - Item: {fileID: 11400000, guid: 41ddf4c0b9dda2d41acb778099f4844a, type: 2}
+    Probability: 50
+  - Item: {fileID: 11400000, guid: 995b85f0c1feccb468daa0bf65674ea6, type: 2}
+    Probability: 30
+  - Item: {fileID: 11400000, guid: 8ebc963bd413fc34785f452a5c3c4a0c, type: 2}
+    Probability: 30
+  - Item: {fileID: 11400000, guid: 7ae2555ef19d6ec478cf1097cd02f2ab, type: 2}
+    Probability: 30
+  - Item: {fileID: 11400000, guid: 3e20bacb525be9648b28a9d1c2f9cb85, type: 2}
+    Probability: 30
+  - Item: {fileID: 11400000, guid: 26b8b73e868dc844780effa8b8d7862e, type: 2}
+    Probability: 30
 --- !u!65 &7889261076095626984
 BoxCollider:
   m_ObjectHideFlags: 0

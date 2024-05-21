@@ -10,7 +10,7 @@ public class Unit : MonoBehaviour
 {
     [field: SerializeField] public Class Class { get; private set; }
     public Stats Stats { get { return BonusStats==null? Class.Stats : Class.Stats + BonusStats; } }
-    public Stats BonusStats { get; private set; }
+    public Stats BonusStats { get; set; }
     public int Level { get; private set; } = 1;
     public int UpgradeCost { get { return 50 * Level + (int)(50 * Level * 0.5f); } }
     public bool IsEnemy { get { return CompareTag("EnemyUnit"); } }
@@ -341,6 +341,11 @@ public class Unit : MonoBehaviour
     {
         _collider.enabled = enable;
         _nav.enabled = enable;
+    }
+
+    public void UpdateAttackSpeed()
+    {
+        _animator.SetFloat("AttackSpeed", Stats.AttackSpeed);
     }
     #endregion
 }

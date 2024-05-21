@@ -9,6 +9,7 @@ public class Item : ScriptableObject
     public Color Color = Color.white;
     [TextArea] public string Description;
     public bool CombatOnly;
+    public bool NoActivation;
 
     public virtual void Initiate()
     {
@@ -18,5 +19,8 @@ public class Item : ScriptableObject
     {
 
     }
+    public virtual void OnDiscard()
+    {
 
+    }
 }

@@ -34,7 +34,7 @@ public class ItemUI : MonoBehaviour,IPointerClickHandler
         _text.text = $"<font=\"6pxBG SDF\"><mark=#36354d>{item.Name}</mark></font>";
         _text.color = item.Color;
         _tooltip.Title = $"<color=#{item.Color.ToHexString()}>" + item.Name;
-        _tooltip.Description = item.Description+"\n\n<color=#a3c0e6>} CLICK TO USE ";
+        _tooltip.Description = item.Description+ (_item.NoActivation ? "\n\n<color=#222533>passive effect" : "\n\n<color=#a3c0e6>} CLICK TO USE ");
 
         _canvasGroup.DOFade(1, 0.2f).onComplete = () =>
         {
@@ -45,6 +45,8 @@ public class ItemUI : MonoBehaviour,IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (_item.NoActivation) return;
+
         if(_item.CombatOnly && !BattleController.Instance.InCombat)
         {
             CursorController.Instance.NotEnoughResource(NotEnough.Combat);
@@ -65,6 +67,7 @@ public class ItemUI : MonoBehaviour,IPointerClickHandler
 
     public void Discard()
     {
+        _item.OnDiscard();
         _canvasGroup.interactable = false;
         _canvasGroup.blocksRaycasts = false;
         TooltipController.Instance.HideTooltip();

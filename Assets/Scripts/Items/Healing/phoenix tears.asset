@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: phoenix tears
   m_EditorClassIdentifier: 
   Name: "\u03BC phoenix tears"
-  Color: {r: 1, g: 0.63529414, b: 0.078431375, a: 1}
-  Description: "resurrect and restore 100% of <color=#a7f547>\u03B7 VITALITY</color>
+  Color: {r: 1, g: 0.7843138, b: 0.14509805, a: 1}
+  Description: "resurrect and restore 100% of <color=#a7f547>\u03B7vitality</color>
     to all units"
   CombatOnly: 1
   HealPercent: 100

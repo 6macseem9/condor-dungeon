@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7ee5d68893a934abed5d95070cd660, type: 3}
+  m_Name: health draught
+  m_EditorClassIdentifier: 
+  Name: "\u03BE health draught"
+  Color: {r: 0.6, g: 0.90196085, b: 0.37254903, a: 1}
+  Description: "restore 75% of <color=#a7f547>\u03B7vitality</color> to all units"
+  CombatOnly: 1
+  HealPercent: 75

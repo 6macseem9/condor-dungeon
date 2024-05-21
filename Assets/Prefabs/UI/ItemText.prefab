@@ -119,7 +119,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<font=\"6pxBG SDF\"><mark=#36354d>\u03BE small potion</mark></font>"
+  m_text: "<font=\"6pxBG SDf\"><mark=#36354d>\u03BE small potiox</mark></font>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2486f19830fd1e246b91bd741624831c, type: 2}
   m_sharedMaterial: {fileID: -4995563928308110522, guid: 2486f19830fd1e246b91bd741624831c, type: 2}

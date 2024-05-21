@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f7ee5d68893a934abed5d95070cd660, type: 3}
-  m_Name: health vial
+  m_Script: {fileID: 11500000, guid: 4dadd50df844b9349b1eb60e593afe58, type: 3}
+  m_Name: inferno sphere
   m_EditorClassIdentifier: 
-  Name: "\u03BE health vial"
-  Color: {r: 0.96470594, g: 0.5058824, b: 0.5294118, a: 1}
-  Description: "restore 25% of <color=#a7f547>\u03B7 VITALITY</color> to all units"
+  Name: "\u03BF inferno sphere"
+  Color: {r: 1, g: 0.3137255, b: 0, a: 1}
+  Description: "deal 60 <color=#c516e2>\u03C0true damage</color> to all enemies on
+    screen"
   CombatOnly: 1
-  HealPercent: 25
+  Damage: 60

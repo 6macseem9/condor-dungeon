@@ -26,7 +26,7 @@ public class UnitList : MonoBehaviour
         _pool.AddDefault(items);
     }
 
-    public void UpdateList(List<Unit> units)
+    public void UpdateList(List<Unit> units, Unit addedUnit)
     {
         _countText.text = units.Count + "/" + 25;
         _pool.DisableAll();

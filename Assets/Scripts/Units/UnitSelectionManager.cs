@@ -38,7 +38,7 @@ public class UnitSelectionManager : MonoBehaviour
     private bool _canControlUnits = true;
     private int _deadUnits;
 
-    public delegate void AllUnitsEvent(List<Unit> units);
+    public delegate void AllUnitsEvent(List<Unit> allUnits, Unit addedUnit);
     public event AllUnitsEvent UnitAddedOrRemoved;
 
     private void Awake()
@@ -234,7 +234,7 @@ public class UnitSelectionManager : MonoBehaviour
     public void AddUnit(Unit unit)
     {
         AllUnits.Add(unit);
-        UnitAddedOrRemoved?.Invoke(AllUnits);
+        UnitAddedOrRemoved?.Invoke(AllUnits, unit);
     }
     public void ToggleSelectedUnitMode()
     {
@@ -289,7 +289,7 @@ public class UnitSelectionManager : MonoBehaviour
             Destroy(unit.gameObject);
         }
         AllUnits.Clear();
-        UnitAddedOrRemoved?.Invoke(AllUnits);
+        UnitAddedOrRemoved?.Invoke(AllUnits, null);
 
         foreach (var entry in _startingUnits)
         {
@@ -312,6 +312,12 @@ public class UnitSelectionManager : MonoBehaviour
     {
         _deadUnits = 0;
         AllUnits.ForEach(unit => unit.FullHeal());
+    }
+    public void UpdateSelectedUnitStats()
+    {
+        if (_selectedUnits.Count != 1) return;
+
+        _statBlock.SetStats(_selectedUnits);
     }
 
     //private void OnDrawGizmos()

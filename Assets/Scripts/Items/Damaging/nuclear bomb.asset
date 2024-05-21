@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dadd50df844b9349b1eb60e593afe58, type: 3}
+  m_Name: nuclear bomb
+  m_EditorClassIdentifier: 
+  Name: "\u03BF nuclear bomb"
+  Color: {r: 1, g: 0, b: 0.2509804, a: 1}
+  Description: "deal <color=#ff0040>999999</color> <color=#c516e2>\u03C0true damage</color>
+    to all enemies on screen\n\n<color=#222533>LEGALIZE NUCLEAR BOMBS"
+  CombatOnly: 1
+  Damage: 999999

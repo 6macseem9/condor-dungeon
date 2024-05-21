@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f7ee5d68893a934abed5d95070cd660, type: 3}
-  m_Name: health potion
+  m_Name: health vial
   m_EditorClassIdentifier: 
-  Name: "\u03BE health potion"
-  Color: {r: 0.9607844, g: 0.33333334, b: 0.3647059, a: 1}
-  Description: "restore 50% of <color=#a7f547>\u03B7 VITALITY</color> to all units"
+  Name: "\u03BE health vial"
+  Color: {r: 0.20000002, g: 0.59607846, b: 0.29411766, a: 1}
+  Description: "restore 25% of <color=#a7f547>\u03B7vitality</color> to all units"
   CombatOnly: 1
-  HealPercent: 50
+  HealPercent: 25
