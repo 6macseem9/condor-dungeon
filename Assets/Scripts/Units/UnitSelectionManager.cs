@@ -36,6 +36,7 @@ public class UnitSelectionManager : MonoBehaviour
     public bool SingleUnitSelected { get { return _selectedUnits.Count == 1; } }
 
     private bool _canControlUnits = true;
+    private int _deadUnits;
 
     public delegate void AllUnitsEvent(List<Unit> units);
     public event AllUnitsEvent UnitAddedOrRemoved;
@@ -51,14 +52,14 @@ public class UnitSelectionManager : MonoBehaviour
         AllUnits = new List<Unit>();
     }
 
-    void Start()
+    private void Start()
     {
         _camera = Camera.main;
 
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
     }
 
-    void Update()
+    private void Update()
     {
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -282,6 +283,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     public void SpawnStartUnits()
     {
+        AllUnits.AddRange(FindObjectsOfType<Unit>().Where(x=>x.IsEnemy));
         foreach(var unit in AllUnits)
         {
             Destroy(unit.gameObject);
@@ -294,7 +296,23 @@ public class UnitSelectionManager : MonoBehaviour
             var unit = Instantiate(entry.Unit);
             unit.transform.position = entry.Position;
             AddUnit(unit);
+            return;
         }
+    }
+
+    public void UnitDied()
+    {
+        _deadUnits++;
+        if(_deadUnits==AllUnits.Count)
+        {
+            Util.Delay(2,()=> WinAndLoss.Instance.YouDied());
+        }
+    }
+
+    public void FullHeal()
+    {
+        _deadUnits = 0;
+        AllUnits.ForEach(unit => unit.FullHeal());
     }
 
     //private void OnDrawGizmos()

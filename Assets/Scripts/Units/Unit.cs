@@ -85,6 +85,8 @@ public class Unit : MonoBehaviour
 
         SetUpStateMachine();
 
+        gameObject.name = NameGenerator.GetRandomName();
+
         if (!IsEnemy && _addToList)
             UnitSelectionManager.Instance.AddUnit(this);
     }

@@ -27,7 +27,7 @@ public class BattleController : MonoBehaviour
     [SerializeField] private RectTransform _skull;
     [SerializeField] private RectTransform _sword;
     [Space(5)]
-    [SerializeField] private BattleIntroAndRewards _battleIntro;
+    [SerializeField] private BattleIntroAndResults _battleIntro;
     
     public bool InCombat { get; private set; }
 
@@ -174,10 +174,7 @@ public class BattleController : MonoBehaviour
         MapController.Instance.ClearCurrentRoom();
         //_currentBattle++;
 
-        foreach (var unit in UnitSelectionManager.Instance.AllUnits)
-        {
-            unit.FullHeal();
-        }
+        UnitSelectionManager.Instance.FullHeal();
 
         _battleIntro.Victory(OnRegainControl: ()=>
         {

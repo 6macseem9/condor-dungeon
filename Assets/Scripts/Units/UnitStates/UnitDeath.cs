@@ -38,8 +38,10 @@ public class UnitDeath : UnitState
             _actionMarker.transform.DOKill();
 
             Util.Delay(0.05f, () => WaitForAnimFinish());
+            return;
         }
 
+        UnitSelectionManager.Instance.UnitDied();
     }
     private void WaitForAnimFinish()
     {

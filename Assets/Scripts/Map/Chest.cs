@@ -34,7 +34,7 @@ public class Chest : MonoBehaviour
         }
 
         _looted = true;
-        BattleIntroAndRewards.Instance.PopOutReward(item: GetRandomItem());
+        BattleIntroAndResults.Instance.PopOutReward(item: GetRandomItem());
         _cap.DOLocalRotate(new Vector3(120, 0, 0), 0.5f).SetEase(Ease.OutBack);
         MapController.Instance.RemoveCurrentRoomIcon();
     }

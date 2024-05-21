@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1e5aed30c1c3b8140a8c5f2842d67b8b
+guid: 48bd2e6d0bfc27441a48ac9eb61fff05
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,97 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: not_enough_0
+      name: you died_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 34
-        width: 50
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9b1d8e9ee4e98624b8bd9ae239db40e8
-      internalID: -1448065337
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: not_enough_1
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 23
-        width: 52
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 42a71b0ef02ffeb419cd9c2020350093
-      internalID: 1010432180
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: not_enough_2
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 12
-        width: 57
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a763fb7e7b97728418482b1e2a0562c2
-      internalID: 1134818658
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: discard_button
-      rect:
-        serializedVersion: 2
-        x: 55
-        y: 36
-        width: 3
-        height: 3
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ee4406cfecdd174792e98659c5ad51c
-      internalID: 629617549
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: not_enough_3
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 1
+        x: 185
+        y: 143
         width: 53
-        height: 8
+        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +124,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d52cf786d37e0d549af0d97c3f9957b1
-      internalID: -1991144822
+      spriteID: f8523cd89df5d3446b587927c9ad195b
+      internalID: -902108408
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: not_enough_4
+      name: you died_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 44
-        width: 54
-        height: 8
+        x: 158
+        y: 100
+        width: 101
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9593887121646d14785fb5007974a48a
+      internalID: -788829525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: you died_2
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 13
+        width: 120
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 633b1e4d89bd39d41919d3d59dd66cc0
+      internalID: 700473130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: endings_0
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 216
+        width: 230
+        height: 136
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a769867929245ef4a9cc8bfaf0c876d8
-      internalID: 1728106877
+      spriteID: ffd58868fccc63d4883167509bd47149
+      internalID: 680457101
       vertices: []
       indices: 
       edges: []
@@ -246,12 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      discard_button: 629617549
-      not_enough_0: -1448065337
-      not_enough_1: 1010432180
-      not_enough_2: 1134818658
-      not_enough_3: -1991144822
-      not_enough_4: 1728106877
+      endings_0: 680457101
+      you died_0: -902108408
+      you died_1: -788829525
+      you died_2: 700473130
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

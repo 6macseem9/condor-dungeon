@@ -43,9 +43,24 @@ public class Cage : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (UnitSelectionManager.Instance.AllUnits.Count==25)
+        {
+            CursorController.Instance.NotEnoughResource(NotEnough.UnitList);
+
+            transform.DOScale(1.5f, 0);
+            transform.DOScale(1, 0.3f).SetEase(Ease.OutCirc);
+
+            return;
+        }
+
         if(Resources.Instance.RemoveKeys(1))
         {
             Unlock();
+        }
+        else
+        {
+            transform.DOScale(1.5f, 0);
+            transform.DOScale(1, 0.3f).SetEase(Ease.OutCirc);
         }
     }
 

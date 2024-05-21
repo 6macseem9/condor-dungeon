@@ -24,7 +24,7 @@ public class Loot : MonoBehaviour
         transform.DOScale(1, 0.3f).SetEase(Ease.OutCirc);
         //transform.DOShakeRotation(0.5f,20,15);
 
-        BattleIntroAndRewards.Instance.PopOutReward(_gold ? 100:0, _keys?1:0);
+        BattleIntroAndResults.Instance.PopOutReward(_gold ? 100:0, _keys?1:0);
         if(_clearRoom) MapController.Instance.RemoveCurrentRoomIcon();
     }
 }

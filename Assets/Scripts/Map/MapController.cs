@@ -38,6 +38,8 @@ public class MapController : MonoBehaviour
     [SerializeField] private Button _descendButton;
     [SerializeField] private TextMeshProUGUI _floorNumber;
 
+    public int CurrentFloor { get { return int.Parse(_floorNumber.text); } }
+
     private int _battleCount;
     private MapCell _currentPlayerCell;
     private List<Image> _playerDirections = new List<Image>();
@@ -312,6 +314,13 @@ public class MapController : MonoBehaviour
     public void Descend(bool reset = false)
     {
         _floorNumber.text = reset ? "1" : $"{int.Parse(_floorNumber.text)+1}";
+
+        if (CurrentFloor == 6)
+        {
+            WinAndLoss.Instance.DungeonCleared();
+            return;
+        }
+
         _roomLimit = reset ? _roomLimitStart : _roomLimit + _roomLimitIncrease;
 
         ResetMap();

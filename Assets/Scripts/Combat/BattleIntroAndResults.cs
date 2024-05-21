@@ -5,9 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleIntroAndRewards : MonoBehaviour
+public class BattleIntroAndResults : MonoBehaviour
 {
-    public static BattleIntroAndRewards Instance;
+    public static BattleIntroAndResults Instance;
 
     [SerializeField] private Image _text;
     [SerializeField] private Image _topSword;
@@ -51,6 +51,7 @@ public class BattleIntroAndRewards : MonoBehaviour
     public void Intro()
     {
         _text.sprite = _battleText;
+        _text.DOFade(1, 0f);
         _topSword.sprite = _battleSword;
         _botSword.sprite = _battleSword;
         _swordGroup.gameObject.SetActive(true);
@@ -193,5 +194,15 @@ public class BattleIntroAndRewards : MonoBehaviour
             if (item != null) RecieveItem(text.rectTransform.anchoredPosition, item);
         }
         );
+    }
+
+    public void ReturnToDefaultPositions()
+    {
+        _topSword.rectTransform.DOAnchorPosX(95.8f, 0);
+        _botSword.rectTransform.DOAnchorPosX(-95.8f, 0);
+        _topSword.rectTransform.DORotate(new Vector3(0, 0, 0), 0);
+        _botSword.rectTransform.DORotate(new Vector3(0, 0, 0), 0);
+        _swordGroup.gameObject.SetActive(false);
+        _swordGroup.DOAnchorPosY(0, 0);
     }
 }

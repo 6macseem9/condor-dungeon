@@ -45,14 +45,21 @@ public class MainMenu : MonoBehaviour
             _camera.ResetCamera();
 
             _hud.ShowCompletely(true);
+
+            WinAndLoss.Instance.ResetUI();
+
+            MapController.Instance.SetCanMove(true);
+            UnitSelectionManager.Instance.PauseUnitControl(false);
+            BattleController.Instance.HideStartBattleButton();
+            BattleIntroAndResults.Instance.ReturnToDefaultPositions();
         });
     }
 
-    public void OpenPauseMenu()
+    public void OpenPauseMenu(bool canContinue = true)
     {
         _background.enabled = true;
 
-        _continueButton.interactable = true;
+        _continueButton.interactable = canContinue;
         _continueButton.onClick.RemoveAllListeners();
         _continueButton.onClick.AddListener(ClosePauseMenu);
 
