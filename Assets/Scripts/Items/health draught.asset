@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f7ee5d68893a934abed5d95070cd660, type: 3}
-  m_Name: Potion
+  m_Name: health draught
   m_EditorClassIdentifier: 
-  Name: "\u03BE potion"
-  Color: {r: 1, g: 0.42352945, b: 0.4784314, a: 1}
-  Description: restore 25% health to every unit
-  CombatOnly: 0
+  Name: "\u03BE health draught"
+  Color: {r: 0.9176471, g: 0.19607845, b: 0.23529413, a: 1}
+  Description: "restore 75% of <color=#a7f547>\u03B7 VITALITY</color> to all units"
+  CombatOnly: 1
+  HealPercent: 75

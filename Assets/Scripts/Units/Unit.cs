@@ -240,12 +240,35 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public virtual void TakeDamage(int trueDamage)
+    {
+        if (IsDying) return;
+
+        HP -= trueDamage;
+        _visuals.DamageImpact(_animator.transform);
+        _visuals.Flash();
+        _visuals.ShakeHealthbar();
+
+        if (HP <= 0)
+        {
+            HP = 0;
+            IsDying = true;
+            _stateMachine.TransitionTo(_unitDeathState);
+            return;
+        }
+    }
+
     public void Heal(float amount)
     {
         if (IsDying) return;
 
         HP += amount;
         if(HP>Stats.MaxHP) { HP = Stats.MaxHP; }
+    }
+
+    public void HealPercent(int percent)
+    {
+        Heal(percent * Stats.MaxHP / 100);
     }
 
     public void FullHeal()

@@ -296,7 +296,6 @@ public class UnitSelectionManager : MonoBehaviour
             var unit = Instantiate(entry.Unit);
             unit.transform.position = entry.Position;
             AddUnit(unit);
-            return;
         }
     }
 

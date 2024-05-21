@@ -6,6 +6,8 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
 
+    [SerializeField] private List<Item> _startingItems;
+
     private ObjectPool<ItemUI> _pool;
 
     public bool HasSpace { get {  return _pool.List.Exists(x => x.gameObject.activeSelf == false); } }
@@ -30,6 +32,8 @@ public class Inventory : MonoBehaviour
         var items = GetComponentsInChildren<ItemUI>();
         foreach (var item in items) item.gameObject.SetActive(false);
         _pool.AddDefault(items);
+
+        _startingItems.ForEach(x=>AddItem(x));
     }
 
     public void AddItem(Item item)
