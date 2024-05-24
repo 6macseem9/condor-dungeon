@@ -30,7 +30,6 @@ public class UnitSelectionManager : MonoBehaviour
 
     public List<Unit> AllUnits {get; private set;}
     private List<Unit> _selectedUnits = new List<Unit>();
-    private Unit _structure;
 
     private Camera _camera;
     public bool SingleUnitSelected { get { return _selectedUnits.Count == 1; } }
@@ -61,6 +60,8 @@ public class UnitSelectionManager : MonoBehaviour
 
     private void Update()
     {
+        if (_selectedUnits.Count == 1) UIDebug.Instance.Show("state:", _selectedUnits[0].CurState,"yellow");
+
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -143,14 +144,6 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (_selectedUnits.Contains(unit)) return;
 
-        if (unit is StructureUnit)
-        {
-            _structure = unit;
-            unit.Select(true);
-            return;
-        }
-        DeselectStructure();
-
         if (unit.IsEnemy) DeselectAll();
         else DeselectEnemy();
 
@@ -165,8 +158,6 @@ public class UnitSelectionManager : MonoBehaviour
         _selectedUnits.Remove(unit);
 
         _statBlock.SetStats(_selectedUnits.Count==0 ? null : _selectedUnits);
-
-        DeselectStructure();
     }
     public void DeselectAll()
     {
@@ -176,8 +167,6 @@ public class UnitSelectionManager : MonoBehaviour
             unit.Select(false);
         }
         _selectedUnits.Clear();
-
-        DeselectStructure();
     }
     public void DeselectEnemy()
     {
@@ -249,13 +238,6 @@ public class UnitSelectionManager : MonoBehaviour
         {
             unit.HoldPosition = hold;
         }
-    }
-
-    private void DeselectStructure()
-    {
-        if (_structure == null) return;
-        _structure.Select(false);
-        _structure = null;
     }
 
     public void SelectClass(string name)

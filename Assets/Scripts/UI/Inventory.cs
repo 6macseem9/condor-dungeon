@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -47,5 +48,10 @@ public class Inventory : MonoBehaviour
         {
             CursorController.Instance.NotEnoughResource(NotEnough.Inventory);
         }
+    }
+
+    public void ClearInventory()
+    {
+        _pool.List.ForEach(x => { if (x.gameObject.activeSelf) x.Discard(); });
     }
 }

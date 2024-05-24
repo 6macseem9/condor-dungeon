@@ -7,6 +7,7 @@ public enum SpellType { Appear, Wave }
 public class Spell : MonoBehaviour
 {
     [SerializeField] private SpellType _type;
+    [SerializeField] private float _collisionDelay;
     [SerializeField] private float _duration;
     [SerializeField] private Ease _ease;
 
@@ -23,7 +24,8 @@ public class Spell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!other.CompareTag("EnemyUnit")) return;
+        if(_unit.IsEnemy && !other.CompareTag("FriendlyUnit")) return;
+        if (!_unit.IsEnemy && !other.CompareTag("EnemyUnit")) return;
 
         var target = other.GetComponent<Unit>();
         _unit.DealDamageToUnit(target);
@@ -33,11 +35,14 @@ public class Spell : MonoBehaviour
     {
         _particles.Play();
 
-        switch(_type)
+        Util.Delay(_collisionDelay, () =>
         {
-            case SpellType.Appear: Appear(); break;
-            case SpellType.Wave: Wave(); break;
-        }
+            switch (_type)
+            {
+                case SpellType.Appear: Appear(); break;
+                case SpellType.Wave: Wave(); break;
+            }
+        });
     }
 
     private void Appear()

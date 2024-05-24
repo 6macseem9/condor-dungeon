@@ -17,4 +17,5 @@ MonoBehaviour:
   Description: "deal <color=#ff0040>999999</color> <color=#c516e2>\u03C0true damage</color>
     to all enemies on screen\n\n<color=#222533>LEGALIZE NUCLEAR BOMBS"
   CombatOnly: 1
+  NoActivation: 0
   Damage: 999999

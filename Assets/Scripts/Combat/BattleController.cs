@@ -35,6 +35,7 @@ public class BattleController : MonoBehaviour
     private int _currentBattle = 0;
 
     private int _enemyCount;
+    private Tweener _loop;
 
     private void Awake()
     {
@@ -108,7 +109,7 @@ public class BattleController : MonoBehaviour
             spawner.ShowIcon(false);
 
         var danger = _battlesDanger[_currentBattle];
-        var enemies = ChooseEnemiesForBattle(100).OrderBy(x=>Random.value).ToList();
+        var enemies = ChooseEnemiesForBattle(danger).OrderBy(x=>Random.value).ToList();
         _enemyCount = enemies.Count;
 
         var interval = 1;
@@ -116,8 +117,8 @@ public class BattleController : MonoBehaviour
 
         var step = -1;
         var skips = 0;
-        var loop = Util.Repeat(interval, -1, () => { });
-        loop.onStepComplete = () =>
+        _loop = Util.Repeat(interval, -1, () => { });
+        _loop.onStepComplete = () =>
         {
             if(step!=0 && skips<2 && Random.Range(1,101) <= skip)
             {
@@ -133,7 +134,7 @@ public class BattleController : MonoBehaviour
             if(step == enemies.Count-1)
             {
                 ShowSpawners(false);
-                loop.Kill();
+                _loop.Kill();
             }
         };
     }
@@ -216,6 +217,19 @@ public class BattleController : MonoBehaviour
         var keys = Random.Range(1, 101) <= 10 ? Random.Range(1, 101) <= 30 ? 2 : 1 : 0;
 
         return (gold, keys);
+    }
+
+    public void ResetEverything()
+    {
+        HideStartBattleButton();
+        MapController.Instance.SetCanMove(true);
+        UnitSelectionManager.Instance.PauseUnitControl(false);
+        InCombat = false;
+
+        ShowSpawners(false);
+        _loop.Kill();
+
+        _currentBattle = 0;
     }
     #endregion
 }

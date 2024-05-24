@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,9 +13,10 @@ public class Unit : MonoBehaviour
     public Stats Stats { get { return BonusStats==null? Class.Stats : Class.Stats + BonusStats; } }
     public Stats BonusStats { get; set; }
     public int Level { get; private set; } = 1;
-    public int UpgradeCost { get { return 50 * Level + (int)(50 * Level * 0.5f); } }
     public bool IsEnemy { get { return CompareTag("EnemyUnit"); } }
     public bool IsMoving { get { return _stateMachine.CurrentStateName=="UnitMove"; } }
+    public int UpgradeCost { get { return LevelCost * Level + (int)(LevelCost * Level * 0.5f); } }
+    public int LevelCost { get; set; } = 50;
 
     #region Components
     protected NavMeshAgent _nav;
@@ -49,12 +51,12 @@ public class Unit : MonoBehaviour
     public Action OnAttack { get; set; }
     public Action<bool> OnSelect { get; set; }
     public Action<int> OnLevelUp { get; set; }
+
+    public Func<int,int> HandleDamage;
     #endregion
 
     //TEMP
     public string CurState { get { return _stateMachine==null? "structure" : _stateMachine.CurrentStateName; } }
-
-    [SerializeField] private bool _addToList;
 
     protected virtual void Start()
     {
@@ -87,8 +89,8 @@ public class Unit : MonoBehaviour
 
         gameObject.name = NameGenerator.GetRandomName();
 
-        if (!IsEnemy && _addToList)
-            UnitSelectionManager.Instance.AddUnit(this);
+        //if (!IsEnemy)
+        //    UnitSelectionManager.Instance.AddUnit(this);
     }
     private void SetUpStateMachine()
     {
@@ -219,11 +221,16 @@ public class Unit : MonoBehaviour
         if (IsDying) return;
 
         var damage = Stats.CalculateMitigatedDamage(sender.Stats);
+        if (HandleDamage is not null)
+        {
+            damage = HandleDamage(damage);
+            if (damage == 0) return;
+        }
 
         HP -= damage;
-        _visuals.DamageImpact(_animator.transform);
         _visuals.Flash();
         _visuals.ShakeHealthbar();
+        _visuals.DamageImpact(_animator.transform);
 
         if (HP <= 0)
         {

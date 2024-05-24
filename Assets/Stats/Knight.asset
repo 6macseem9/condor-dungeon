@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   ClassName: "\u03B4knight"
-  ClassDescription: good tank weak to magic ayaya
+  ClassDescription: "melee unit with high <color=#f58931>\u03B4armor</color> that
+    gets bonuses if other <color=#f58931>\u03B4knights</color> are present"
   ClassColor: {r: 0.9450981, g: 0.53333336, b: 0.19215688, a: 1}
   Turnaround: {fileID: 7400000, guid: d006f20f3fcb64744ba6a724e0902b7b, type: 2}
   Stats:

@@ -1,7 +1,9 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro.EditorUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +12,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Image _background;
     [SerializeField] private CanvasGroup _hud;
     [SerializeField] private DescendTransition _transition;
-    [SerializeField] private Transform _level;
     [SerializeField] private CameraController _camera;
     [SerializeField] private Button _continueButton;
     [Space(7)]
@@ -22,7 +23,7 @@ public class MainMenu : MonoBehaviour
     {
         _canvGroup = GetComponent<CanvasGroup>();
 
-        _level.DORotate(new Vector3(0, 360, 0), 10, RotateMode.FastBeyond360).SetLoops(-1).SetEase(Ease.Linear);
+        _camera.transform.DORotate(new Vector3(0, -360, 0), 10, RotateMode.FastBeyond360).SetLoops(-1).SetEase(Ease.Linear);
     }
 
     // Update is called once per frame
@@ -38,20 +39,18 @@ public class MainMenu : MonoBehaviour
         {
             _canvGroup.ShowCompletely(false);
 
-            _level.DOKill();
-            _level.DORotate(Vector3.zero, 0);
-
-            UnitSelectionManager.Instance.SpawnStartUnits();
+            _camera.transform.DOKill();
+            _camera.transform.DORotate(Vector3.zero, 0);
             _camera.ResetCamera();
 
             _hud.ShowCompletely(true);
 
             WinAndLoss.Instance.ResetUI();
-
-            MapController.Instance.SetCanMove(true);
-            UnitSelectionManager.Instance.PauseUnitControl(false);
-            BattleController.Instance.HideStartBattleButton();
+            BattleController.Instance.ResetEverything();
+            UnitSelectionManager.Instance.SpawnStartUnits();
             BattleIntroAndResults.Instance.ReturnToDefaultPositions();
+            Inventory.Instance.ClearInventory();
+            Resources.Instance.ResetResources();
         });
     }
 

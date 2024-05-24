@@ -8,6 +8,8 @@ public class Resources : MonoBehaviour
 {
     public static Resources Instance;
 
+    [SerializeField] private int _startingGold;
+
     [SerializeField] private RectTransform _gold;
     [SerializeField] private RectTransform _keys;
 
@@ -39,7 +41,7 @@ public class Resources : MonoBehaviour
         _goldPos = _gold.anchoredPosition;
         _keysPos = _keys.anchoredPosition;
 
-        Gold = 9999;
+        Gold = _startingGold;
         SetVisualGold(Gold);
     }
 
@@ -120,14 +122,16 @@ public class Resources : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        UIDebug.Instance.Show("actual gold:", Gold.ToString(), "yellow");
-    }
-
     private void ShakeTransform(RectTransform transform, Vector2 defPos)
     {
         transform.anchoredPosition = defPos;
         transform.DOShakeAnchorPos(0.3f, 1, 30).onComplete = () => { transform.anchoredPosition = defPos; };
+    }
+
+    public void ResetResources()
+    {
+        Gold = _startingGold;
+        Keys = 0;
+        UpdateTexts();
     }
 }

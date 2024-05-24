@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\u03B2 elven bow"
   Color: {r: 0.654902, g: 0.9607844, b: 0.2784314, a: 1}
-  Description: "while this item is in your inventory all units gain 0.1 <color=#a7f547>\u03B9attack
-    speed</color>"
+  Description: "while this item is in your inventory all units gain <color=#a7f547>0.1
+    \u03B9attack speed</color>"
   CombatOnly: 0
   NoActivation: 1
   Stats:

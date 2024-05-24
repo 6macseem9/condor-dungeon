@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b2fae34924c7514d9774574a8b6f9b9, type: 3}
-  m_Name: Nexus
+  m_Name: Guy
   m_EditorClassIdentifier: 
-  ClassName: structure
-  ClassDescription: 
-  ClassColor: {r: 0.6392157, g: 0.75294125, b: 0.90196085, a: 1}
-  Turnaround: {fileID: 0}
+  ClassName: "\u03B5guy"
+  ClassDescription: 'just a normal guy
+
+
+    isn''t really good at anything, but
+    he learns fast'
+  ClassColor: {r: 0.654902, g: 0.9607844, b: 0.2784314, a: 1}
+  Turnaround: {fileID: 7400000, guid: 6466c899b49229749933813ff0251066, type: 2}
   Stats:
-    MaxHP: 100
+    MaxHP: 80
     AttackSpeed: 1
-    Strength: 0
-    Armor: 0
+    Strength: 10
+    Armor: 10
     Intellect: 0
-    Resistance: 0
+    Resistance: 10

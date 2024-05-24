@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\u03B4 greatshield"
   Color: {r: 0.9607844, g: 0.5372549, b: 0.19215688, a: 1}
-  Description: "while this item is in your inventory all units gain 3  <color=#f58931>\u03B4armor</color>"
+  Description: "while this item is in your inventory all units gain  <color=#f58931>3
+    \u03B4armor</color>"
   CombatOnly: 0
   NoActivation: 1
   Stats:

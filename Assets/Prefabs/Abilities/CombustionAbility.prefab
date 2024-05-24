@@ -46,8 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: COMBUSTION
-  Description: every third spell cast is empowered, dealing same damage in a much
-    wider area
+  Description: "instead of attacking <color=#448de7>\u03B3wizard</color> casts a
+    <color=#448de7>fire beam</color> spell that damages all enemies in a line\n\nevery
+    third <color=#448de7>fire beam</color> becomes <color=#448de7>fire wave</color>,
+    dealing same damage in a much wider area"
   Icon: {fileID: -1546518853, guid: 0e745cc2d37c1b74085a72aae660f338, type: 3}
   _maxStacks: 3
 --- !u!1001 &8986557741532847483

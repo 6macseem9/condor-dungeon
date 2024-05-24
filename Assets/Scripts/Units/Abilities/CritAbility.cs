@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CritAbility : Ability
 {
-    [SerializeField] private int _chance = 15;
-
     private ParticleSystem _particles;
 
     protected override void Start()
@@ -20,7 +18,7 @@ public class CritAbility : Ability
 
     private void TryCrit()
     {
-        if (Random.Range(1,101) <= _chance) 
+        if (Random.Range(1,101) <= _unit.Stats.Intellect) 
         {
             _particles.Play();
             _unit.AttackTarget.TakeDamage(_unit);

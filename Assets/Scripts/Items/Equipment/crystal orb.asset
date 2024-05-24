@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\u03B3 crystal orb"
   Color: {r: 0.26666668, g: 0.5529412, b: 0.9058824, a: 1}
-  Description: "while this item is in your inventory all units gain 3  <color=#448de7>\u03B3intellect</color> "
+  Description: "while this item is in your inventory all units gain  <color=#448de7>3
+    \u03B3intellect</color> "
   CombatOnly: 0
   NoActivation: 1
   Stats:

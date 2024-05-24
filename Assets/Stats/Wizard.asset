@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Wizard
   m_EditorClassIdentifier: 
   ClassName: "\u03B3wizard"
-  ClassDescription: spits fire yo
+  ClassDescription: "spellcaster that deals <color=#448de7>\u03B3magic damage</color>
+    to enemies in a large area"
   ClassColor: {r: 0.27058825, g: 0.5529412, b: 0.9058824, a: 1}
   Turnaround: {fileID: 7400000, guid: f849fe730bb2c8e40b40757276a757ed, type: 2}
   Stats:

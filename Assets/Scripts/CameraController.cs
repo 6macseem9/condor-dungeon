@@ -23,6 +23,8 @@ public class CameraController : MonoBehaviour
     private Transform _cameraTransform;
     private PixelPerfectCamera _pixelPerfect;
 
+    private bool _canMove;
+
     private void Start()
     {
         _cameraTransform = Camera.main.transform;
@@ -37,6 +39,8 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!_canMove) return;
+
         HandleMovementInput();
         HandleRotationInput();
         HandleZoomInput();
@@ -75,7 +79,7 @@ public class CameraController : MonoBehaviour
             _newZoom += -Input.mouseScrollDelta.y * new Vector3(0,_zoomSpeed,-_zoomSpeed) * Time.deltaTime;
         }
 
-        _newZoom = new Vector3(0, Mathf.Clamp(_newZoom.y, 8, 300), Mathf.Clamp(_newZoom.z, -300, -8));
+        _newZoom = new Vector3(_newZoom.x, Mathf.Clamp(_newZoom.y, 8, 300), Mathf.Clamp(_newZoom.z, -300, -8));
         _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition, _newZoom, _zoomLerp * Time.deltaTime);
     }
     private void HandleMousePan()
@@ -135,6 +139,8 @@ public class CameraController : MonoBehaviour
         _newZoom = new Vector3(0, 58, - 58);
 
         _background.localPosition = new Vector3(-28, 0, 600);
+
+        _canMove = true;
     }
 
     public void SetPixelization(float value)

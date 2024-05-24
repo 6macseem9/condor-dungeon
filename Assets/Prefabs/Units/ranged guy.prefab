@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2560258865766635200, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
       propertyPath: m_Radius
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4942716330356226024, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
       propertyPath: m_Name
@@ -59,10 +59,6 @@ PrefabInstance:
     - target: {fileID: 7146951048293243845, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
       propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7511055034289378357, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
-      propertyPath: m_Radius
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7560265853551302306, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
       propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
