@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Loot : MonoBehaviour
 {
+    [SerializeField] private Vector2Int _goldMinMax;
     [SerializeField] private bool _gold;
     [SerializeField] private bool _keys;
+    [Space(7)]
     [SerializeField] bool _clearRoom;
     [SerializeField] private GameObject _objectToDisable;
 
@@ -24,7 +26,9 @@ public class Loot : MonoBehaviour
         transform.DOScale(1, 0.3f).SetEase(Ease.OutCirc);
         //transform.DOShakeRotation(0.5f,20,15);
 
-        BattleIntroAndResults.Instance.PopOutReward(_gold ? 100:0, _keys?1:0);
+        var gold = Random.Range(_goldMinMax.x, _goldMinMax.y);
+
+        BattleIntroAndResults.Instance.PopOutReward(_gold ? gold:0, _keys?1:0);
         if(_clearRoom) MapController.Instance.RemoveCurrentRoomIcon();
     }
 }

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b2fae34924c7514d9774574a8b6f9b9, type: 3}
-  m_Name: lich
+  m_Name: cyclops
   m_EditorClassIdentifier: 
-  ClassName: "\u03B9chort"
+  ClassName: "\u03BBcyclops"
   ClassDescription: bad guy
-  ClassColor: {r: 1, g: 0, b: 0.26666668, a: 1}
-  Turnaround: {fileID: 7400000, guid: 6466c899b49229749933813ff0251066, type: 2}
+  ClassColor: {r: 0.9294118, g: 0.67058825, b: 0.3137255, a: 1}
+  Turnaround: {fileID: 7400000, guid: 95f52d2f3f0cb4144a487b89549be034, type: 2}
   Stats:
-    MaxHP: 100
+    MaxHP: 300
     AttackSpeed: 1
-    Strength: 0
-    Armor: 10
-    Intellect: 30
-    Resistance: 20
+    Strength: 30
+    Armor: 0
+    Intellect: 0
+    Resistance: 0

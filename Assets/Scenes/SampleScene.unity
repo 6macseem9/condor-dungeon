@@ -13925,7 +13925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5182875036685073725, guid: e34f7e6ad14b8574b85de1cbea1ae7dd, type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5182875036685073725, guid: e34f7e6ad14b8574b85de1cbea1ae7dd, type: 3}
       propertyPath: m_MaxValue
@@ -44452,7 +44452,7 @@ MonoBehaviour:
     DangerLevel: 20
   - Unit: {fileID: 922179206331057516, guid: ff27d6f09bbd34b4e90dae52990fb346, type: 3}
     DangerLevel: 40
-  _battlesDanger: 64000000
+  _battlesDanger: 32000000500000006400000082000000aa000000
   _spawnPositions:
   - {x: -4, y: 0, z: 0}
   - {x: -2.5, y: 0, z: 0}

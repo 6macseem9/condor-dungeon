@@ -16,8 +16,8 @@ public class UnitAttack : UnitState
 
         _nav.SetDestination(_transform.position);
 
-        _nav.avoidancePriority = 50;
-        _nav.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+        //_nav.avoidancePriority = 50;
+        //_nav.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
     }
     public override void Update()
     {

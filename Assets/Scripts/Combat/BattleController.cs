@@ -173,9 +173,10 @@ public class BattleController : MonoBehaviour
     {
         InCombat = false;
         MapController.Instance.ClearCurrentRoom();
-        //_currentBattle++;
+        _currentBattle++;
 
         UnitSelectionManager.Instance.FullHeal();
+        UnitSelectionManager.Instance.ReturnUnitsToPositions();
 
         _battleIntro.Victory(OnRegainControl: ()=>
         {
@@ -213,7 +214,9 @@ public class BattleController : MonoBehaviour
 
     public (int,int) GetBattleReward()
     {
-        var gold = Random.Range(50, 151);
+        var danger = _battlesDanger[_currentBattle-1];
+        var tenPercent = (int)(danger * 0.1f);
+        var gold = Random.Range(danger - tenPercent, danger + tenPercent);
         var keys = Random.Range(1, 101) <= 10 ? Random.Range(1, 101) <= 30 ? 2 : 1 : 0;
 
         return (gold, keys);

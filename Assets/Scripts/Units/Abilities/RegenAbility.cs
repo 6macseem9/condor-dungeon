@@ -6,38 +6,31 @@ using UnityEngine;
 [DefaultExecutionOrder(2)]
 public class RegenAbility : Ability
 {
-    [SerializeField] private float _delay;
+    [SerializeField] private int _percent;
 
+    private Tweener _regen;
     private ParticleSystem _particles;
-    private float _defaultRegen;
-    private Tweener _timer;
 
-    //protected override void Start()
-    //{
-    //    base.Start();
+    protected override void Start()
+    {
+        base.Start();
 
-    //    _particles = GetComponentInChildren<ParticleSystem>();
+        _particles = GetComponentInChildren<ParticleSystem>();
 
-    //    _defaultRegen = _unit.Stats.Regen;
-    //    _unit.DetectRange.OnEnter += Deactivate;
-    //    _unit.DetectRange.OnExit += Activate;
-    //    _unit.DetectRange.NoOneDetected += Activate;
+        _unit.OnDeath += () => _regen.Kill();
 
-    //    Activate();
-    //}
+        _regen = Util.Repeat(1f,-1, () => 
+        {
+            var missingHp = _unit.Stats.MaxHP - _unit.HP;
+            var missingPercent = missingHp * 100 / 300;
 
-    //private void Deactivate(Unit unit = null)
-    //{
-    //    _timer.Kill();
-    //    _unit.Stats.Regen = _defaultRegen;
-    //    _particles.Stop();
-    //}
-    //private void Activate(Unit unit=null)
-    //{
-    //    _timer = Util.Delay(_delay, () => 
-    //    {
-    //        _unit.Stats.Regen = _unit.Stats.Regen * 1.5f;
-    //        _particles.Play();
-    //    }) ;
-    //}
+            var em = _particles.emission.GetBurst(0);
+            em.count = missingPercent/10*3;
+            _particles.emission.SetBurst(0, em);
+            _particles.Play();
+
+            int heal = (int)(missingHp * (_percent/100)); 
+            _unit.Heal(heal); 
+        });
+    }
 }

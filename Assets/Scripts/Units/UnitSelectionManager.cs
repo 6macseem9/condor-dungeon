@@ -302,6 +302,11 @@ public class UnitSelectionManager : MonoBehaviour
         _statBlock.SetStats(_selectedUnits);
     }
 
+    public void ReturnUnitsToPositions()
+    {
+        AllUnits.ForEach(x => x.MoveTo(x.AssignedPosition));
+    }
+
     //private void OnDrawGizmos()
     //{
     //    var size = OptimalGridSize(3);

@@ -15,9 +15,10 @@ MonoBehaviour:
   Name: "\u03BB rust hex"
   Color: {r: 0.53333336, g: 0.32156864, b: 0.7921569, a: 1}
   Description: "decrease <color=#f58931>\u03B4armor</color> of all enemies by 10
-    for 15 seconds"
+    for 5 seconds"
   CombatOnly: 1
-  Time: 15
+  NoActivation: 0
+  Time: 5
   Negative: 1
   Stats:
     MaxHP: 0

@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ed050dad44a5e47a8d363ce227089b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _goldMinMax: {x: 20, y: 80}
   _gold: 1
   _keys: 0
   _clearRoom: 1

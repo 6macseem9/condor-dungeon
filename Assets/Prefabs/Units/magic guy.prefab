@@ -111,7 +111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2560258865766635200, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
       propertyPath: m_Radius
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4942716330356226024, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
       propertyPath: m_Name
@@ -188,7 +188,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Class>k__BackingField: {fileID: 11400000, guid: 4f0bca6352974c74ba2d49f4264d729b, type: 2}
-  _addToList: 0
   Spell: {fileID: 4364220805006294330}
   <SpellPosition>k__BackingField: {x: 0, y: 0.7, z: 1}
 --- !u!1001 &5755283041413951839

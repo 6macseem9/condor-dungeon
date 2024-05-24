@@ -17,9 +17,9 @@ MonoBehaviour:
   ClassColor: {r: 0.7803922, g: 0.8117648, b: 0.86666673, a: 1}
   Turnaround: {fileID: 7400000, guid: 22632a22c47213241a0f79c36ce6d6f5, type: 2}
   Stats:
-    MaxHP: 75
+    MaxHP: 80
     AttackSpeed: 1
     Strength: 0
     Armor: 0
-    Intellect: 16
-    Resistance: 12
+    Intellect: 15
+    Resistance: 15

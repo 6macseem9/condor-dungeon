@@ -15,9 +15,10 @@ MonoBehaviour:
   Name: "\u03BD intellect tonic"
   Color: {r: 0.26666668, g: 0.5529412, b: 0.9058824, a: 1}
   Description: "increase <color=#448de7>\u03B3intellect</color> of all units by 10
-    for 15 seconds"
+    for 5 seconds"
   CombatOnly: 1
-  Time: 15
+  NoActivation: 0
+  Time: 5
   Negative: 0
   Stats:
     MaxHP: 0

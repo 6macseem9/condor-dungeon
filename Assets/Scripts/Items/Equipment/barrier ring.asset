@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\u03B6 barrier ring"
   Color: {r: 0.26666668, g: 0.5529412, b: 0.9058824, a: 1}
-  Description: "while this item is in your inventory all units gain <color=#448de7>3
+  Description: "while this item is in your inventory all units gain <color=#448de7>2
     \u03B6resistance</color>"
   CombatOnly: 0
   NoActivation: 1
@@ -24,4 +24,4 @@ MonoBehaviour:
     Strength: 0
     Armor: 0
     Intellect: 0
-    Resistance: 3
+    Resistance: 2

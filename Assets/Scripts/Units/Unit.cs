@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -17,6 +18,8 @@ public class Unit : MonoBehaviour
     public bool IsMoving { get { return _stateMachine.CurrentStateName=="UnitMove"; } }
     public int UpgradeCost { get { return LevelCost * Level + (int)(LevelCost * Level * 0.5f); } }
     public int LevelCost { get; set; } = 50;
+    public Vector3 AssignedPosition { get; private set; }
+
 
     #region Components
     protected NavMeshAgent _nav;
@@ -43,12 +46,13 @@ public class Unit : MonoBehaviour
     public bool Selected { get; private set; }
     public float HP { get; protected set; }
     public bool IsDying { get; protected set; }
-    public bool HoldPosition { get; set; } = true;
+    public bool HoldPosition { get; set; } = false;
     #endregion
 
     #region Actions
     public Action TargetLost { get; set; }
     public Action OnAttack { get; set; }
+    public Action OnDeath { get; set; }
     public Action<bool> OnSelect { get; set; }
     public Action<int> OnLevelUp { get; set; }
 
@@ -88,6 +92,8 @@ public class Unit : MonoBehaviour
         SetUpStateMachine();
 
         gameObject.name = NameGenerator.GetRandomName();
+
+        AssignedPosition = transform.position;
 
         //if (!IsEnemy)
         //    UnitSelectionManager.Instance.AddUnit(this);
@@ -135,6 +141,7 @@ public class Unit : MonoBehaviour
         _nav.SetDestination(position);
         _visuals.BounceMarker();
 
+        AssignedPosition = position;
         AttackTarget = null;
 
         _stateMachine.TransitionTo(_moveState);
@@ -227,18 +234,7 @@ public class Unit : MonoBehaviour
             if (damage == 0) return;
         }
 
-        HP -= damage;
-        _visuals.Flash();
-        _visuals.ShakeHealthbar();
-        _visuals.DamageImpact(_animator.transform);
-
-        if (HP <= 0)
-        {
-            HP = 0;
-            IsDying = true;
-            _stateMachine.TransitionTo(_unitDeathState);
-            return;
-        }
+        TakeDamage(damage);
 
         if (_stateMachine.CurrentStateName==nameof(UnitIdle) && AttackTarget == null)
         {
@@ -261,6 +257,7 @@ public class Unit : MonoBehaviour
             HP = 0;
             IsDying = true;
             _stateMachine.TransitionTo(_unitDeathState);
+            OnDeath?.Invoke();
             return;
         }
     }
@@ -336,7 +333,7 @@ public class Unit : MonoBehaviour
         switch (index)
         {
             case 0: BonusStats.MaxHP += (int)(Class.Stats.MaxHP * 0.1f); HP = Stats.MaxHP; break;
-            case 1: BonusStats.AttackSpeed += Class.Stats.AttackSpeed * 0.1f; _animator.SetFloat("AttackSpeed", Stats.AttackSpeed); break;
+            case 1: BonusStats.AttackSpeed += /*Class.Stats.AttackSpeed * 0.1f*/0.05f; _animator.SetFloat("AttackSpeed", Stats.AttackSpeed); break;
             case 2: BonusStats.Strength += 1; break;
             case 3: BonusStats.Armor += 1; break;
             case 4: BonusStats.Intellect += 1; break;
