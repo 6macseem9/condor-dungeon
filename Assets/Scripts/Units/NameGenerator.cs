@@ -12,6 +12,6 @@ public static class NameGenerator
     {
         if (_names.Count == 0) _names = (UnityEngine.Resources.Load<TextAsset>("names").text).Split('\n').ToList();
 
-        return _names[Random.Range(0, _names.Count)];
+        return _names.RandomChoice();
     }
 }

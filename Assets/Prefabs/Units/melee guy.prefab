@@ -483,4 +483,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Class>k__BackingField: {fileID: 11400000, guid: 4fb077419aac870428b81425dc703b1c, type: 2}
-  _addToList: 0
+  debug: 0
+  frame: 0

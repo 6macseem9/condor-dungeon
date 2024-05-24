@@ -74,6 +74,10 @@ PrefabInstance:
       propertyPath: tagToCheck
       value: FriendlyUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 107111953318203330, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
+      propertyPath: _tagToCheck
+      value: FriendlyUnit
+      objectReference: {fileID: 0}
     - target: {fileID: 567439059523079214, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
       propertyPath: m_Color.b
       value: 0.2509804
@@ -128,6 +132,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3502581521756271198, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
       propertyPath: tagToCheck
+      value: FriendlyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3502581521756271198, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
+      propertyPath: _tagToCheck
       value: FriendlyUnit
       objectReference: {fileID: 0}
     - target: {fileID: 4942716330356226024, guid: 819d64917df991f46bc89a1bbd149859, type: 3}
@@ -239,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee281974ec2390d4495364be86a158a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chanceToTargerFarthest: 1
 --- !u!114 &-6072615579535240551
 MonoBehaviour:
   m_ObjectHideFlags: 0

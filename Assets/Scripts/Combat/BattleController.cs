@@ -56,10 +56,12 @@ public class BattleController : MonoBehaviour
 
     private void RandomSpawn(Unit unit)
     {
-        var spawner = _spawners[Random.Range(0, _spawners.Length)];
+        var spawner = _spawners.RandomChoice();
 
         var instance = Instantiate(unit, spawner.SpawnPoint, Quaternion.Euler(0,180,0));
         instance.Spawn();
+
+        Util.Delay(0.01f, () => instance.GetComponent<Enemy>().LevelUp(1));
     }
 
     private void RandomizeSpawnPositions()
@@ -103,7 +105,7 @@ public class BattleController : MonoBehaviour
         InCombat = true;
         StartButtonAnimation();
         UnitSelectionManager.Instance.PauseUnitControl(true);
-        UnitSelectionManager.Instance.StopAllUnits();
+        //UnitSelectionManager.Instance.StopAllUnits();
 
         foreach (var spawner in _spawners)
             spawner.ShowIcon(false);
@@ -156,7 +158,7 @@ public class BattleController : MonoBehaviour
     private EnemyDanger GetRandomValidMonster(int dangerLevel)
     {
         List<EnemyDanger> validMonsters = _enemies.Where(x => x.DangerLevel <= dangerLevel).ToList();
-        return validMonsters[Random.Range(0, validMonsters.Count)];
+        return validMonsters.RandomChoice();
     }
 
     #region Victory and UI

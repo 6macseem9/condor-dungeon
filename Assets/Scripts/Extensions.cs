@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public static class Extensions
 {
@@ -79,7 +80,14 @@ public static class Extensions
         }
         return res + "]";
     }
-
+    public static T RandomChoice<T>(this List<T> list)
+    {
+        return list[Random.Range(0,list.Count)];
+    }
+    public static T RandomChoice<T>(this T[] array)
+    {
+        return array[Random.Range(0, array.Length)];
+    }
     public static void ShowCompletely(this CanvasGroup canv,bool show)
     {
         canv.alpha = show ? 1 : 0;

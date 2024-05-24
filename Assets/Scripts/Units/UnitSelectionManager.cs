@@ -60,7 +60,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     private void Update()
     {
-        if (_selectedUnits.Count == 1) UIDebug.Instance.Show("state:", _selectedUnits[0].CurState,"yellow");
+        //if (_selectedUnits.Count == 1) UIDebug.Instance.Show("state:", _selectedUnits[0].CurState,"yellow");
 
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -81,15 +81,15 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (_canControlUnits && Input.GetMouseButtonDown(1) && _selectedUnits.Count > 0)
         {
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Unit"))
-                && hit.collider.CompareTag("EnemyUnit"))
-            {
-                foreach (var unit in _selectedUnits)
-                {
-                    unit.Chase(hit.collider.GetComponent<Unit>(),true);
-                }
-                return;
-            }
+            //if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Unit"))
+            //    && hit.collider.CompareTag("EnemyUnit"))
+            //{
+            //    foreach (var unit in _selectedUnits)
+            //    {
+            //        unit.Chase(hit.collider.GetComponent<Unit>());
+            //    }
+            //    return;
+            //}
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
                 MoveGroup(_selectedUnits, hit.point);

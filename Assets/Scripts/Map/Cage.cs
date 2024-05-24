@@ -24,7 +24,7 @@ public class Cage : MonoBehaviour
         Util.Delay(0.01f, () =>
         {
             var db = UnitSelectionManager.Instance.UnitDB;
-            var unit = db[Random.Range(0, db.Count)];
+            var unit = db.RandomChoice();
 
             _unit = Instantiate(unit, transform.position, Quaternion.Euler(0, 180, 0));
             _unit.transform.parent = transform;

@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public Class Class { get; private set; }
     public Stats Stats { get { return BonusStats==null? Class.Stats : Class.Stats + BonusStats; } }
     public Stats BonusStats { get; set; }
-    public int Level { get; private set; } = 1;
+    public int Level { get; set; } = 1;
     public bool IsEnemy { get { return CompareTag("EnemyUnit"); } }
     public bool IsMoving { get { return _stateMachine.CurrentStateName=="UnitMove"; } }
     public int UpgradeCost { get { return LevelCost * Level + (int)(LevelCost * Level * 0.5f); } }
@@ -94,9 +94,6 @@ public class Unit : MonoBehaviour
         gameObject.name = NameGenerator.GetRandomName();
 
         AssignedPosition = transform.position;
-
-        //if (!IsEnemy)
-        //    UnitSelectionManager.Instance.AddUnit(this);
     }
     private void SetUpStateMachine()
     {
@@ -155,13 +152,14 @@ public class Unit : MonoBehaviour
         OnSelect?.Invoke(selected);
     }
 
-    public void Chase(Unit unit, bool command = false)
+    public void Chase(Unit unit)
     {
-        if (AttackTarget == unit && command) return;
+        if (unit == null) return;
+        if (AttackTarget == unit) return;
         AttackTarget = unit;
 
         AttackRange.ReTrigger();
-        if (HoldPosition && !command) return;
+        if (HoldPosition) return;
 
         _visuals.TargetMarker();
         _stateMachine.TransitionTo(_chaseState);
@@ -227,6 +225,7 @@ public class Unit : MonoBehaviour
     {
         if (IsDying) return;
 
+        //OPTIMIZE
         var damage = Stats.CalculateMitigatedDamage(sender.Stats);
         if (HandleDamage is not null)
         {
@@ -265,7 +264,6 @@ public class Unit : MonoBehaviour
     public void Heal(float amount)
     {
         if (IsDying) return;
-
         HP += amount;
         if(HP>Stats.MaxHP) { HP = Stats.MaxHP; }
     }

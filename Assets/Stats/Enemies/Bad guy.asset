@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b2fae34924c7514d9774574a8b6f9b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f113eab85debb04caa214cc299ede92, type: 3}
   m_Name: Bad guy
   m_EditorClassIdentifier: 
   ClassName: "\u03B9chort"
@@ -23,4 +23,4 @@ MonoBehaviour:
     Armor: 10
     Intellect: 0
     Resistance: 10
-    DangerLevel: 10
+  LevelUpBonuses: []

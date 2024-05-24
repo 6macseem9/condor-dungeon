@@ -1,59 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [DefaultExecutionOrder(2)]
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private int _chanceToTargerFarthest;
+
     private Unit _unit;
-    private Vector3 _targerPosition;
+    private EnemyClass _class;
 
     private List<Unit> _neighbors = new List<Unit>();
 
     private void Start()
     {
         _unit = GetComponent<Unit>();
-        _targerPosition = new Vector3(transform.position.x, transform.position.y, -3);
+        _class = _unit.Class as EnemyClass;
 
         _unit.DetectRange.OnEnter += AddNeighbor;
         _unit.DetectRange.OnExit += RemoveNeighbor;
         _unit.DetectRange.OnRetrigger += () => _neighbors.Clear();
-
-        _unit.HoldPosition = false;
-        //_unit.TargetLost += MoveToNexus;
-        MoveToNexus();
     }
 
-    private void FixedUpdate()
+    private void ChooseTarget()
     {
-        if (_neighbors.Count<2 || _unit.IsDying) return;
-        
-        foreach (var neighbor in _neighbors)
-        {
-            if (neighbor == _unit.AttackTarget) continue;
+        if (_neighbors.Count < 2 || _unit.IsDying) return;
 
-            var distance = _unit.DistanceTo(neighbor);
-            if (distance==0) continue;
-
-            if (distance < _unit.DistanceTo(_unit.AttackTarget))
-            {
-                _unit.Chase(neighbor);
-            }
-        }
-    }
-
-    private void MoveToNexus()
-    {
-        _unit.MoveTo(_targerPosition);
+        var index = Random.Range(1, 101) <= _chanceToTargerFarthest ? _neighbors.Count-1 : 0;
+        var target = _neighbors.OrderBy(x => _unit.DistanceTo(x)).ToList()[index];
+        _unit.Chase(target);
     }
 
     private void AddNeighbor(Unit unit)
     {
         _neighbors.Add(unit);
+
+        ChooseTarget();
     }
     private void RemoveNeighbor(Unit unit)
     {
         _neighbors.Remove(unit);
+        ChooseTarget();
+    }
+
+    public void LevelUp(int times)
+    {
+        for(int i = 0; i < times; i++)
+        {
+            Stats upgrade = _class.LevelUpBonuses.RandomChoice();
+            _unit.BonusStats += upgrade;
+            _unit.Level++;
+        }
     }
 }

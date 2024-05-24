@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: ELUSIVE
   Description: "<color=#5AC54F>\u03BBgoblin</color> has a 30% chance to completely
-    evade incoming damage"
+    evade incoming damage\n\nsometimes targets units in backline"
   Icon: {fileID: -1191286550, guid: 0e745cc2d37c1b74085a72aae660f338, type: 3}
   _chance: 30
