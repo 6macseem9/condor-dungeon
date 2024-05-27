@@ -21,14 +21,14 @@ public class Cage : MonoBehaviour
         _collider = GetComponent<Collider>();   
         _obstacle = GetComponent<NavMeshObstacle>();
 
-        Util.Delay(0.01f, () =>
+        Util.DelayOneFrame(() =>
         {
             var db = UnitSelectionManager.Instance.UnitDB;
             var unit = db.RandomChoice();
 
             _unit = Instantiate(unit, transform.position, Quaternion.Euler(0, 180, 0));
             _unit.transform.parent = transform;
-            Util.Delay(0.01f, () => 
+            Util.DelayOneFrame(() => 
             {
                 _unit.EnableCollider(false);
                 _obstacle.carving = true;

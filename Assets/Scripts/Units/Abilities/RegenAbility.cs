@@ -29,7 +29,7 @@ public class RegenAbility : Ability
             _particles.emission.SetBurst(0, em);
             _particles.Play();
 
-            int heal = (int)(missingHp * (_percent/100)); 
+            int heal = (int)(missingHp * (_percent/100f)); 
             _unit.Heal(heal); 
         });
     }

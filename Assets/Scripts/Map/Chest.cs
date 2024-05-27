@@ -5,19 +5,14 @@ using UnityEngine;
 using System.Linq;
 
 
-[System.Serializable]
-public class ItemChance
-{
-    public Item Item;
-    public int Probability;
-}
+
 
 public class Chest : MonoBehaviour
 {
     [SerializeField] private Transform _cap;
-    [SerializeField] private List<ItemChance> _possibleItems;
 
     private bool _looted;
+
 
     private void OnMouseDown()
     {
@@ -41,11 +36,11 @@ public class Chest : MonoBehaviour
 
     private Item GetRandomItem()
     {
-        int totalWeight = _possibleItems.Sum(option => option.Probability);
+        int totalWeight = Inventory.Instance.PossibleItems.Sum(option => option.Probability);
         int randomNumber = Random.Range(1, totalWeight + 1);
 
         int cumulativeWeight = 0;
-        foreach (var entry in _possibleItems)
+        foreach (var entry in Inventory.Instance.PossibleItems)
         {
             cumulativeWeight += entry.Probability;
             if (randomNumber <= cumulativeWeight)

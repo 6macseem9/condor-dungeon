@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Security;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,6 +15,7 @@ public class SelectBox : MonoBehaviour
     private Vector2 _endPos;
 
     private bool _started;
+    private Tweener _delay;
 
     private void Start()
     {
@@ -29,6 +31,8 @@ public class SelectBox : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _startPos = Input.mousePosition;
+
+            _delay.Kill();
             _started = true;
 
             _selectionBox = new Rect();
@@ -37,12 +41,6 @@ public class SelectBox : MonoBehaviour
         // When Dragging
         if (Input.GetMouseButton(0))
         {
-
-            if (_rectTransform.rect.width > 5 || _rectTransform.rect.height > 5)
-            {
-                SelectUnits();
-            }
-
             _endPos = Input.mousePosition;
 
         }
@@ -53,6 +51,15 @@ public class SelectBox : MonoBehaviour
             _started = false;
             _startPos = Vector2.zero;
             _endPos = Vector2.zero;
+
+            Draw();
+        }
+
+        if ((_endPos - _startPos).magnitude < 20) return;
+
+        if (_rectTransform.rect.width > 5 || _rectTransform.rect.height > 5)
+        {
+            SelectUnits();
         }
 
         Draw();

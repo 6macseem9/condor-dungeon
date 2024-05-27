@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -94,6 +95,19 @@ public static class Extensions
         canv.blocksRaycasts = show;
         canv.interactable = show;
     }
+    public static Vector3 GetCenter(this List<Unit> list)
+    {
+        var totalX = 0f;
+        var totalY = 0f;
+        var totalZ = 0f;
+        foreach (var obj in list)
+        {
+            totalX += obj.transform.position.x;
+            totalY += obj.transform.position.y;
+            totalZ += obj.transform.position.z;
+        }
+        return new Vector3(totalX, totalY, totalZ) / list.Count;
+    }
 }
 
 public static class Util
@@ -105,6 +119,10 @@ public static class Util
         tween.onComplete = func;
         return tween;
     }
+    public static Tweener DelayOneFrame(TweenCallback func, bool realTime = false)
+    {
+        return Delay(0.01f,func,realTime);
+    }
 
     public static Tweener Repeat(float interval, int times, TweenCallback func, bool realTime = false)
     {
@@ -113,5 +131,29 @@ public static class Util
         tween.SetLoops(times);
         tween.onStepComplete = func;
         return tween;
+    }
+}
+
+public class NamedArrayAttribute : PropertyAttribute
+{
+    public readonly string name;
+    public NamedArrayAttribute(string name) { this.name = name; }
+}
+
+
+
+[CustomPropertyDrawer(typeof(NamedArrayAttribute))]
+public class NamedArrayDrawer : PropertyDrawer
+{
+    public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
+    {
+        try
+        {
+            EditorGUI.PropertyField(rect, property, new GUIContent(((NamedArrayAttribute)attribute).name));
+        }
+        catch
+        {
+            EditorGUI.PropertyField(rect, property, label);
+        }
     }
 }

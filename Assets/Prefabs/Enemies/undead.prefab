@@ -4869,6 +4869,10 @@ PrefabInstance:
       propertyPath: <Class>k__BackingField
       value: 
       objectReference: {fileID: 11400000, guid: 9fb5a586eab527f49a45b05ddd14a6a5, type: 2}
+    - target: {fileID: -2837158114785625978, guid: 8075b09af3354974786fe940bd79b503, type: 3}
+      propertyPath: _chanceToTargerFarthest
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 584824237394208569, guid: 8075b09af3354974786fe940bd79b503, type: 3}
       propertyPath: m_IsActive
       value: 0

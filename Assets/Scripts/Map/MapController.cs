@@ -6,7 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 using Random = UnityEngine.Random;
 
 public class MapController : MonoBehaviour
@@ -54,6 +56,18 @@ public class MapController : MonoBehaviour
         }
         else Instance = this;
     }
+    private void OnValidate()
+    {
+        foreach(var tile in _tiles) 
+        {
+            tile.Name = tile.Sprite is null? "Tile" : $"{tile.Sprite.name}  -  {tile.Probability}%";
+        }
+        foreach (var room in _rooms)
+        {
+            room.Name = room.Icon is null ? "Room" : room.Icon.name;
+        }
+    }
+
     private void Start()
     {
         _playerDirections = _player.GetComponentsInChildren<Image>().ToList();
@@ -314,8 +328,9 @@ public class MapController : MonoBehaviour
     public void Descend(bool reset = false)
     {
         _floorNumber.text = reset ? "1" : $"{int.Parse(_floorNumber.text)+1}";
+        BattleController.Instance.CurrentBattle = 0;
 
-        if (CurrentFloor == 6)
+        if (CurrentFloor == BattleController.Instance.MaxFloors+1)
         {
             WinAndLoss.Instance.DungeonCleared();
             return;

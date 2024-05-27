@@ -10,35 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f113eab85debb04caa214cc299ede92, type: 3}
-  m_Name: goblin
+  m_Name: undead
   m_EditorClassIdentifier: 
-  ClassName: "\u03BBgoblin"
+  ClassName: "\u03BBundead"
   ClassDescription: bad guy
-  ClassColor: {r: 0.3529412, g: 0.7725491, b: 0.30980393, a: 1}
-  Turnaround: {fileID: 7400000, guid: 63997eccbc9c33d46afec7b7cce961f7, type: 2}
+  ClassColor: {r: 0.7803922, g: 0.8117648, b: 0.86666673, a: 1}
+  Turnaround: {fileID: 7400000, guid: 22632a22c47213241a0f79c36ce6d6f5, type: 2}
   Stats:
-    MaxHP: 40
+    MaxHP: 80
     AttackSpeed: 1
-    Strength: 18
-    Armor: 8
-    Intellect: 0
-    Resistance: 5
+    Strength: 0
+    Armor: 0
+    Intellect: 16
+    Resistance: 15
+  DangerLevel: 20
   LevelUpBonuses:
   - MaxHP: 0
-    AttackSpeed: 0.05
-    Strength: 0
-    Armor: 0
-    Intellect: 0
-    Resistance: 0
-  - MaxHP: 0
-    AttackSpeed: 0
-    Strength: 1
-    Armor: 0
-    Intellect: 0
-    Resistance: 0
-  - MaxHP: 7
     AttackSpeed: 0
     Strength: 0
     Armor: 0
-    Intellect: 0
+    Intellect: 2
+    Resistance: 0
+  - MaxHP: 12
+    AttackSpeed: 0
+    Strength: 0
+    Armor: 0
+    Intellect: 1
     Resistance: 0

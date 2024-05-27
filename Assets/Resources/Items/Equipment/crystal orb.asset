@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fc25db27d9b9f84599576230441912f, type: 3}
-  m_Name: silver sword
+  m_Name: crystal orb
   m_EditorClassIdentifier: 
-  Name: "\u03B1 silver sword"
-  Color: {r: 0.9607844, g: 0.5372549, b: 0.19215688, a: 1}
-  Description: "while this item is in your inventory all units gain <color=#f58931>3
-    \u03B1strength</color>"
+  Name: "\u03B3 crystal orb"
+  Color: {r: 0.26666668, g: 0.5529412, b: 0.9058824, a: 1}
+  Description: "while this item is in your inventory all units gain  <color=#448de7>2
+    \u03B3intellect</color> "
   CombatOnly: 0
   NoActivation: 1
   Stats:
     MaxHP: 0
     AttackSpeed: 0
-    Strength: 3
+    Strength: 0
     Armor: 0
-    Intellect: 0
+    Intellect: 2
     Resistance: 0

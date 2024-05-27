@@ -7,18 +7,28 @@ using UnityEngine.UI;
 
 
 [System.Serializable]
-public class EnemyDanger
+public class FloorBattle
 {
-    public Unit Unit;
-    public int DangerLevel;
+    [HideInInspector] public string Name = "Floor";
+
+
+    [NamedArrayAttribute("")]
+    public Unit[] Enemies;
+    public Vector2Int EnemyLevels;
+
+    [NamedArrayAttribute("Danger")]
+    public int[] Battles;
+
+    public int SkipChance;
+    public float SpawnInterval;
 }
+
 
 public class BattleController : MonoBehaviour
 {
     public static BattleController Instance;
 
-    [SerializeField] private EnemyDanger[] _enemies;
-    [SerializeField] private int[] _battlesDanger;
+    [SerializeField] private FloorBattle[] _floorBattles;
     [Space(5)]
     [SerializeField] private Vector3[] _spawnPositions;
     [Space(5)]
@@ -28,12 +38,14 @@ public class BattleController : MonoBehaviour
     [SerializeField] private RectTransform _sword;
     [Space(5)]
     [SerializeField] private BattleIntroAndResults _battleIntro;
-    
+
+    public int CurrentBattle { get; set; }
     public bool InCombat { get; private set; }
+    public int MaxFloors { get { return _floorBattles.Length; } }
+    private FloorBattle _floor { get { return _floorBattles[MapController.Instance.CurrentFloor-1]; } }
+
 
     private Spawner[] _spawners;
-    private int _currentBattle = 0;
-
     private int _enemyCount;
     private Tweener _loop;
 
@@ -45,6 +57,15 @@ public class BattleController : MonoBehaviour
         }
         else Instance = this;
     }
+    private void OnValidate()
+    {
+        for(int i =0;i<_floorBattles.Length;i++) 
+        {
+            _floorBattles[i].Name = $"Floor {i+1}";
+        }
+    }
+
+
     private void Start()
     {
         _spawners = GetComponentsInChildren<Spawner>();
@@ -61,7 +82,13 @@ public class BattleController : MonoBehaviour
         var instance = Instantiate(unit, spawner.SpawnPoint, Quaternion.Euler(0,180,0));
         instance.Spawn();
 
-        Util.Delay(0.01f, () => instance.GetComponent<Enemy>().LevelUp(1));
+        Util.DelayOneFrame(() => 
+        {
+            int levels = Random.Range(_floor.EnemyLevels.x-1, _floor.EnemyLevels.y);
+            instance.GetComponent<Enemy>().LevelUp(levels);
+            instance.FullHeal();
+        });
+        
     }
 
     private void RandomizeSpawnPositions()
@@ -110,12 +137,12 @@ public class BattleController : MonoBehaviour
         foreach (var spawner in _spawners)
             spawner.ShowIcon(false);
 
-        var danger = _battlesDanger[_currentBattle];
+        var danger = _floor.Battles[CurrentBattle];
         var enemies = ChooseEnemiesForBattle(danger).OrderBy(x=>Random.value).ToList();
         _enemyCount = enemies.Count;
 
-        var interval = 1;
-        var skip = 50;
+        var interval = _floor.SpawnInterval;
+        var skip = _floor.SkipChance;
 
         var step = -1;
         var skips = 0;
@@ -125,12 +152,10 @@ public class BattleController : MonoBehaviour
             if(step!=0 && skips<2 && Random.Range(1,101) <= skip)
             {
                 skips++;
-                Debug.Log("skip " + skips);
                 return;
             }
             step++;
             skips = 0;
-            Debug.Log(step);
             RandomSpawn(enemies[step]);
 
             if(step == enemies.Count-1)
@@ -147,17 +172,17 @@ public class BattleController : MonoBehaviour
 
         while (remainingDanger > 0)
         {
-            EnemyDanger enemy = GetRandomValidMonster(remainingDanger);
-            enemies.Add(enemy.Unit);
-            remainingDanger -= enemy.DangerLevel;
+            Unit enemy = GetRandomValidMonster(remainingDanger);
+            enemies.Add(enemy);
+            remainingDanger -= (enemy.Class as EnemyClass).DangerLevel;
         }
 
         return enemies;
     }
 
-    private EnemyDanger GetRandomValidMonster(int dangerLevel)
+    private Unit GetRandomValidMonster(int dangerLevel)
     {
-        List<EnemyDanger> validMonsters = _enemies.Where(x => x.DangerLevel <= dangerLevel).ToList();
+        List<Unit> validMonsters = _floor.Enemies.Where(x => (x.Class as EnemyClass).DangerLevel <= dangerLevel).ToList();
         return validMonsters.RandomChoice();
     }
 
@@ -175,7 +200,7 @@ public class BattleController : MonoBehaviour
     {
         InCombat = false;
         MapController.Instance.ClearCurrentRoom();
-        _currentBattle++;
+        CurrentBattle++;
 
         UnitSelectionManager.Instance.FullHeal();
         UnitSelectionManager.Instance.ReturnUnitsToPositions();
@@ -216,7 +241,7 @@ public class BattleController : MonoBehaviour
 
     public (int,int) GetBattleReward()
     {
-        var danger = _battlesDanger[_currentBattle-1];
+        var danger = _floor.Battles[CurrentBattle-1];
         var tenPercent = (int)(danger * 0.1f);
         var gold = Random.Range(danger - tenPercent, danger + tenPercent);
         var keys = Random.Range(1, 101) <= 10 ? Random.Range(1, 101) <= 30 ? 2 : 1 : 0;
@@ -234,7 +259,7 @@ public class BattleController : MonoBehaviour
         ShowSpawners(false);
         _loop.Kill();
 
-        _currentBattle = 0;
+        CurrentBattle = 0;
     }
     #endregion
 }

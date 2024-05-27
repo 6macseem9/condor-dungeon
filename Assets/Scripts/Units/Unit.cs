@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
     public int Level { get; set; } = 1;
     public bool IsEnemy { get { return CompareTag("EnemyUnit"); } }
     public bool IsMoving { get { return _stateMachine.CurrentStateName=="UnitMove"; } }
-    public int UpgradeCost { get { return LevelCost * Level + (int)(LevelCost * Level * 0.5f); } }
+    public int UpgradeCost { get { return LevelCost * Level + (int)(LevelCost * Level * 0.25f); } }
     public int LevelCost { get; set; } = 50;
     public Vector3 AssignedPosition { get; private set; }
 
@@ -118,6 +118,7 @@ public class Unit : MonoBehaviour
     {
         _stateMachine.Update();
 
+        if (IsDying) return;
         if (AttackTarget!=null && AttackTarget.IsDying)
         {
             TargetLost?.Invoke();
@@ -254,6 +255,7 @@ public class Unit : MonoBehaviour
         if (HP <= 0)
         {
             HP = 0;
+            AttackTarget = null;
             IsDying = true;
             _stateMachine.TransitionTo(_unitDeathState);
             OnDeath?.Invoke();
@@ -331,7 +333,7 @@ public class Unit : MonoBehaviour
         switch (index)
         {
             case 0: BonusStats.MaxHP += (int)(Class.Stats.MaxHP * 0.1f); HP = Stats.MaxHP; break;
-            case 1: BonusStats.AttackSpeed += /*Class.Stats.AttackSpeed * 0.1f*/0.05f; _animator.SetFloat("AttackSpeed", Stats.AttackSpeed); break;
+            case 1: BonusStats.AttackSpeed += /*Class.Stats.AttackSpeed * 0.1f*/0.04f; _animator.SetFloat("AttackSpeed", Stats.AttackSpeed); break;
             case 2: BonusStats.Strength += 1; break;
             case 3: BonusStats.Armor += 1; break;
             case 4: BonusStats.Intellect += 1; break;

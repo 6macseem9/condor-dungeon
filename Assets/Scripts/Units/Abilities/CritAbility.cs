@@ -21,7 +21,7 @@ public class CritAbility : Ability
         if (Random.Range(1,101) <= _unit.Stats.Intellect) 
         {
             _particles.Play();
-            _unit.AttackTarget.TakeDamage(_unit);
+            if (_unit.AttackTarget != null) _unit.AttackTarget.TakeDamage(_unit);
         }
     }
 }

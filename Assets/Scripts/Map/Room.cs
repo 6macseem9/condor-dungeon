@@ -8,6 +8,7 @@ public enum RoomType { Battle, Cages, Chest, Gold, Key, Empty }
 [Serializable]
 public class Room
 {
+    [HideInInspector] public string Name = "Room";
     public Sprite Icon;
     public RoomType Type;
 

@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+[System.Serializable]
+public class ItemChance
+{
+    [HideInInspector] public string Name;
+    public Item Item;
+    public int Probability;
+}
+
+
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
 
-    [SerializeField] private List<Item> _startingItems;
+    [SerializeField] public List<ItemChance> PossibleItems;
 
     private ObjectPool<ItemUI> _pool;
 
@@ -21,6 +31,14 @@ public class Inventory : MonoBehaviour
         }
         else Instance = this;
     }
+    private void OnValidate()
+    {
+        foreach (var item in PossibleItems)
+        {
+            item.Name = item.Item is null ? "Item" : $"{item.Item.Name}  -  {item.Probability}%";
+        }
+    }
+
     private void Start()
     {
         _pool = new ObjectPool<ItemUI>(
@@ -33,8 +51,6 @@ public class Inventory : MonoBehaviour
         var items = GetComponentsInChildren<ItemUI>();
         foreach (var item in items) item.gameObject.SetActive(false);
         _pool.AddDefault(items);
-
-        _startingItems.ForEach(x=>AddItem(x));
     }
 
     public void AddItem(Item item)

@@ -41,6 +41,6 @@ public class Range : MonoBehaviour
         OnRetrigger?.Invoke();
 
         _collider.enabled = false;
-        Util.Delay(0.01f,()=> _collider.enabled = true);
+        Util.DelayOneFrame(()=> _collider.enabled = true);
     }
 }

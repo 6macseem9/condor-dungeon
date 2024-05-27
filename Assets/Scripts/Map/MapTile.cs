@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class MapTile
 {
+    [HideInInspector]public string Name = "Tile";
     public Sprite Sprite;
     public int Probability = 100;
     public int Angle { get; set; } = 0;

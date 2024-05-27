@@ -26,6 +26,7 @@ public class UnitSelectionManager : MonoBehaviour
     [SerializeField] private GroupFormation _formation;
 
     [Space(7)]
+    [NamedArrayAttribute("")]
     public List<Unit> UnitDB;
 
     public List<Unit> AllUnits {get; private set;}
@@ -99,23 +100,37 @@ public class UnitSelectionManager : MonoBehaviour
     }
     private void MoveGroup(List<Unit> units,Vector3 center)
     {
-        Vector2Int size = new Vector2Int();
-        switch(_formation.CurrentFormation)
+        if (_formation.CurrentFormation==Formation.NoFormation)
         {
-            case Formation.Square: size = OptimalGridSize(units.Count); break;
-            case Formation.ThickColumn: size = new Vector2Int(2, Mathf.CeilToInt(units.Count/2f)); break;
-            case Formation.ThickRow: size = new Vector2Int(Mathf.CeilToInt(units.Count / 2f), 2); break;
-            case Formation.Column: size = new Vector2Int(1, units.Count); break;
-            case Formation.Row: size = new Vector2Int(units.Count,1); break;
+            Vector3 oldCenter = units.GetCenter();
+
+            foreach (var unit in units)
+            {
+                if (unit.IsEnemy) continue;
+                var offset = unit.transform.position - oldCenter;
+
+                unit.MoveTo(center + offset);
+            }
         }
-
-        var offset = _formation.CurrentFormation == Formation.Square && units.Count == 3 ? 0.5f : 0;
-        var positions = SquareFormation(center, size, _unitSpread, offset);
-
-        for (int i = 0; i < units.Count; i++)
+        else
         {
-            if (units[i].IsEnemy) continue;
-            units[i].MoveTo(positions[i]);
+            Vector2Int size = Vector2Int.zero;
+            switch (_formation.CurrentFormation)
+            {
+                case Formation.Square: size = OptimalGridSize(units.Count); break;
+                case Formation.ThickRow: size = new Vector2Int(Mathf.CeilToInt(units.Count / 2f), 2); break;
+                case Formation.Column: size = new Vector2Int(1, units.Count); break;
+                case Formation.Row: size = new Vector2Int(units.Count, 1); break;
+            }
+
+            var offset = _formation.CurrentFormation == Formation.Square && units.Count == 3 ? 0.5f : 0;
+            var positions = SquareFormation(center, size, _unitSpread, offset);
+
+            for (int i = 0; i < units.Count; i++)
+            {
+                if (units[i].IsEnemy) continue;
+                units[i].MoveTo(positions[i]);
+            }
         }
     }
 
@@ -277,6 +292,7 @@ public class UnitSelectionManager : MonoBehaviour
         {
             var unit = Instantiate(entry.Unit);
             unit.transform.position = entry.Position;
+            Util.DelayOneFrame(()=>unit.MoveTo(entry.Position));
             AddUnit(unit);
         }
     }

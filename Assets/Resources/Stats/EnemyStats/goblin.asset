@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f113eab85debb04caa214cc299ede92, type: 3}
-  m_Name: cyclops
+  m_Name: goblin
   m_EditorClassIdentifier: 
-  ClassName: "\u03BBcyclops"
+  ClassName: "\u03BBgoblin"
   ClassDescription: bad guy
-  ClassColor: {r: 0.9294118, g: 0.67058825, b: 0.3137255, a: 1}
-  Turnaround: {fileID: 7400000, guid: 95f52d2f3f0cb4144a487b89549be034, type: 2}
+  ClassColor: {r: 0.3529412, g: 0.7725491, b: 0.30980393, a: 1}
+  Turnaround: {fileID: 7400000, guid: 63997eccbc9c33d46afec7b7cce961f7, type: 2}
   Stats:
-    MaxHP: 300
+    MaxHP: 40
     AttackSpeed: 1
-    Strength: 30
-    Armor: 0
+    Strength: 18
+    Armor: 8
     Intellect: 0
-    Resistance: 0
+    Resistance: 5
+  DangerLevel: 10
   LevelUpBonuses:
-  - MaxHP: 30
-    AttackSpeed: 0
+  - MaxHP: 0
+    AttackSpeed: 0.1
     Strength: 0
     Armor: 0
     Intellect: 0
@@ -33,6 +34,12 @@ MonoBehaviour:
   - MaxHP: 0
     AttackSpeed: 0
     Strength: 2
+    Armor: 0
+    Intellect: 0
+    Resistance: 0
+  - MaxHP: 10
+    AttackSpeed: 0
+    Strength: 0
     Armor: 0
     Intellect: 0
     Resistance: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public enum Formation { Square, ThickColumn,ThickRow,Column,Row }
+public enum Formation { NoFormation, Square,ThickRow,Column,Row }
 
 public class GroupFormation : MonoBehaviour
 {
