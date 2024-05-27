@@ -4903,7 +4903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: GIANT'S BLOOD
-  Description: "<color=#edab50>\u03BBcyclops</color> regenerates 10% of his missing
+  Description: "<color=#edab50>\u03BBcyclops</color> regenerates 8% of his missing
     health every second"
   Icon: {fileID: -503304853, guid: 0e745cc2d37c1b74085a72aae660f338, type: 3}
-  _percent: 10
+  _percent: 8

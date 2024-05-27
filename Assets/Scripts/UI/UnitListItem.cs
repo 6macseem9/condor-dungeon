@@ -31,7 +31,7 @@ public class UnitListItem : MonoBehaviour
     {
         _unit = unit;
         _unit.OnLevelUp += UpdateLevel;
-        _unit.OnSelect += ShowSelected;
+        _unit.OnSelect = ShowSelected;
 
         ClassName = unit.Class.ClassName;
         _texts[0].text = FormatText(ClassName);

@@ -26,7 +26,9 @@ public class UnitSelectionManager : MonoBehaviour
     [SerializeField] private GroupFormation _formation;
 
     [Space(7)]
+#if UNITY_EDITOR
     [NamedArrayAttribute("")]
+#endif
     public List<Unit> UnitDB;
 
     public List<Unit> AllUnits {get; private set;}
@@ -323,6 +325,11 @@ public class UnitSelectionManager : MonoBehaviour
         AllUnits.ForEach(x => x.MoveTo(x.AssignedPosition));
     }
 
+    public void SortUnits()
+    {
+        AllUnits = AllUnits.OrderBy(x => x.Class.ClassName).ToList();
+        UnitAddedOrRemoved(AllUnits,null);
+    }
     //private void OnDrawGizmos()
     //{
     //    var size = OptimalGridSize(3);

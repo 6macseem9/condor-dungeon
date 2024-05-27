@@ -11,12 +11,15 @@ public class FloorBattle
 {
     [HideInInspector] public string Name = "Floor";
 
-
+#if UNITY_EDITOR
     [NamedArrayAttribute("")]
+#endif
     public Unit[] Enemies;
     public Vector2Int EnemyLevels;
 
+#if UNITY_EDITOR
     [NamedArrayAttribute("Danger")]
+#endif
     public int[] Battles;
 
     public int SkipChance;

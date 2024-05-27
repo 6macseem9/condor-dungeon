@@ -24,6 +24,8 @@ public class UnitList : MonoBehaviour
         var items = GetComponentsInChildren<UnitListItem>();
         foreach (var item in items) item.gameObject.SetActive(false);
         _pool.AddDefault(items);
+
+        GetComponentInChildren<Button>().AddPressAnimation();
     }
 
     public void UpdateList(List<Unit> units, Unit addedUnit)

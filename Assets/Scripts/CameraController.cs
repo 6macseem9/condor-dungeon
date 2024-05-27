@@ -37,6 +37,15 @@ public class CameraController : MonoBehaviour
         Camera.main.eventMask = LayerMask.GetMask("RoomObject");
     }
 
+    //temp
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F11))
+        {
+            Screen.fullScreen = !Screen.fullScreen;
+        }
+    }
+
     private void LateUpdate()
     {
         if (!_canMove) return;

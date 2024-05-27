@@ -1,11 +1,8 @@
 using DG.Tweening;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using TreeEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
 [DefaultExecutionOrder(1)]
 public class Unit : MonoBehaviour
@@ -136,6 +133,8 @@ public class Unit : MonoBehaviour
     #region Commands
     public void MoveTo(Vector3 position)
     {
+        if (IsDying) return;
+
         _nav.SetDestination(position);
         _visuals.BounceMarker();
 
@@ -156,7 +155,7 @@ public class Unit : MonoBehaviour
     public void Chase(Unit unit)
     {
         if (unit == null) return;
-        if (AttackTarget == unit) return;
+        //if (AttackTarget == unit) return;
         AttackTarget = unit;
 
         AttackRange.ReTrigger();
@@ -332,7 +331,7 @@ public class Unit : MonoBehaviour
         OnLevelUp?.Invoke(Level);
         switch (index)
         {
-            case 0: BonusStats.MaxHP += (int)(Class.Stats.MaxHP * 0.1f); HP = Stats.MaxHP; break;
+            case 0: BonusStats.MaxHP += (int)(Class.Stats.MaxHP * 0.1f); if(!BattleController.Instance.InCombat) HP = Stats.MaxHP; break;
             case 1: BonusStats.AttackSpeed += /*Class.Stats.AttackSpeed * 0.1f*/0.04f; _animator.SetFloat("AttackSpeed", Stats.AttackSpeed); break;
             case 2: BonusStats.Strength += 1; break;
             case 3: BonusStats.Armor += 1; break;

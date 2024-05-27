@@ -22,7 +22,7 @@ public class DescendTransition : MonoBehaviour
         _rectTransform.DOAnchorPos(Vector2.zero, 2f).SetEase(Ease.OutBack)
             .onComplete = () => MapController.Instance.Descend(reset);
 
-        _rectTransform.DOAnchorPos(new Vector2(0,-1250), 2f).SetEase(Ease.InBack).SetDelay(2.5f);
+        _rectTransform.DOAnchorPos(new Vector2(0,-1460), 2f).SetEase(Ease.InBack).SetDelay(2.5f);
         
         _animation.DORotate(new Vector3(0, 0, 8), 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
         _borders.DORotate(new Vector3(0, 0, -32), 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
@@ -35,7 +35,7 @@ public class DescendTransition : MonoBehaviour
             _borders.DOKill();
             _animation.DORotate(new Vector3(0, 0, -8), 0);
             _borders.DORotate(new Vector3(-0, 0, -72), 0);
-            _rectTransform.DOAnchorPos(new Vector2(0, 1250), 0);
+            _rectTransform.DOAnchorPos(new Vector2(0, 1460), 0);
         });
     }
 }

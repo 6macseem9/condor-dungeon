@@ -52,6 +52,7 @@ public class Spell : MonoBehaviour
     }
     private void Wave()
     {
+        transform.DOKill();
         transform.localScale = new Vector3(1, 1, 0f);
         _collider.enabled = true;
 

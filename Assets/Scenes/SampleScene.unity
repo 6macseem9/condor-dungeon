@@ -10349,8 +10349,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: 1250}
-  m_SizeDelta: {x: 650, y: 450}
+  m_AnchoredPosition: {x: 6, y: 1460}
+  m_SizeDelta: {x: 650, y: 470}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &282380377
 MonoBehaviour:
@@ -10703,7 +10703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &297591703
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11652,12 +11652,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startingUnits:
+  - Unit: {fileID: 8557660991680269324, guid: b4be7be4b596434439fb0688d94870ed, type: 3}
+    Position: {x: 1, y: 0, z: -1}
   - Unit: {fileID: -8354941969178145755, guid: cf4e2335b041ecd48ba3442077e96cca, type: 3}
     Position: {x: 0, y: 0, z: 0}
   - Unit: {fileID: -6245940105781821972, guid: 89c2f5faf3f3cde40bb5975f9a0c8e84, type: 3}
     Position: {x: -1, y: 0, z: -1}
-  - Unit: {fileID: 8557660991680269324, guid: b4be7be4b596434439fb0688d94870ed, type: 3}
-    Position: {x: 1, y: 0, z: -1}
   _unitSpread: 1
   _statBlock: {fileID: 961725795}
   _formation: {fileID: 1928025413}
@@ -13713,7 +13713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
@@ -20641,7 +20641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ba94edb57ee6049b35c720a22c5fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Title: "<color=#f58931> BONUS \u03B1 STRENGTH"
+  Title: "<color=#f58931>BONUS \u03B1 STRENGTH"
   Description: bonus value, can be increased by upgrading
   Delay: 0.3
   Dynamic: 0
@@ -29696,6 +29696,7 @@ RectTransform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1374551961}
   - {fileID: 137763344}
   - {fileID: 40782437}
   - {fileID: 1144265552}
@@ -30841,7 +30842,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -910, y: 1484}
+  m_AnchoredPosition: {x: -910, y: 1555}
   m_SizeDelta: {x: 464, y: 610}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1339023100
@@ -31518,6 +31519,177 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1374551960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1374551961}
+  - component: {fileID: 1374551965}
+  - component: {fileID: 1374551964}
+  - component: {fileID: 1374551963}
+  - component: {fileID: 1374551962}
+  - component: {fileID: 1374551966}
+  m_Layer: 5
+  m_Name: SortButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1374551961
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374551960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1249328298}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 3.61, y: 17.36}
+  m_SizeDelta: {x: 9, y: 7}
+  m_Pivot: {x: 0.5000035, y: 0.50000036}
+--- !u!114 &1374551962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374551960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &1374551963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374551960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 0
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1374551964}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 349626594}
+        m_TargetAssemblyTypeName: UnitSelectionManager, Assembly-CSharp
+        m_MethodName: SortUnits
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1374551964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374551960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -1415761798, guid: 2d2ae0b41090ad64482f4b9deb2ea369, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1374551965
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374551960}
+  m_CullTransparentMesh: 1
+--- !u!114 &1374551966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374551960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ba94edb57ee6049b35c720a22c5fd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Title: SORT UNIT LIST
+  Description: <color=#a3c0e6>} CLICK TO SORT THE UNIT LIST BY CLASS
+  Delay: 0
+  Dynamic: 0
+  NotUI: 0
 --- !u!1 &1374664115
 GameObject:
   m_ObjectHideFlags: 0
@@ -35968,8 +36140,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 147.38112, y: -201}
-  m_SizeDelta: {x: 167.0668, y: 135.9632}
+  m_AnchoredPosition: {x: 143.0193, y: -201}
+  m_SizeDelta: {x: 164.159, y: 135.9632}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1653863265
 MonoBehaviour:
@@ -35991,9 +36163,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'if you enter a battle you won''t be able to move until the battle ends.
-    however the battle doesn''t start right away, you have to press on the <color=#a3c0e6>[start
-    battle]</color> button when you are ready
+  m_text: 'if you enter a battle you won''t be able to leave the room until the battle
+    ends. however the battle doesn''t start right away, you have to press on the
+    <color=#a3c0e6>[start battle]</color> button when you are ready
 
 '
   m_isRightToLeft: 0
@@ -36495,8 +36667,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'white lines show in which directions you can move. click on room to move
-    into it. map legend on the right shows all the room types you will encounter
+  m_text: 'white lines show in which directions you can move. click on a room to
+    move into it. map legend on the right shows all the room types you will encounter
 
 
     you
@@ -52977,7 +53149,7 @@ MonoBehaviour:
     - {fileID: 248551432342635207, guid: bd14037085cf9834499dec8a73a7087b, type: 3}
     - {fileID: 922179206331057516, guid: ff27d6f09bbd34b4e90dae52990fb346, type: 3}
     EnemyLevels: {x: 1, y: 1}
-    Battles: 32000000500000006400000082000000aa000000
+    Battles: 28000000500000006400000082000000aa000000
     SkipChance: 50
     SpawnInterval: 1
   - Name: Floor 2
@@ -52985,7 +53157,7 @@ MonoBehaviour:
     - {fileID: 1348771329543463548, guid: 3c4457ad4a2a7b7438ab90ba2cff608e, type: 3}
     - {fileID: 248551432342635207, guid: bd14037085cf9834499dec8a73a7087b, type: 3}
     - {fileID: 922179206331057516, guid: ff27d6f09bbd34b4e90dae52990fb346, type: 3}
-    EnemyLevels: {x: 2, y: 4}
+    EnemyLevels: {x: 2, y: 3}
     Battles: 96000000aa000000be000000d2000000e6000000fa000000
     SkipChance: 35
     SpawnInterval: 0.9
@@ -52994,19 +53166,10 @@ MonoBehaviour:
     - {fileID: 1348771329543463548, guid: 3c4457ad4a2a7b7438ab90ba2cff608e, type: 3}
     - {fileID: 248551432342635207, guid: bd14037085cf9834499dec8a73a7087b, type: 3}
     - {fileID: 922179206331057516, guid: ff27d6f09bbd34b4e90dae52990fb346, type: 3}
-    EnemyLevels: {x: 5, y: 7}
-    Battles: 040100000e01000018010000860100002c0100003601000040010000
-    SkipChance: 5
+    EnemyLevels: {x: 5, y: 6}
+    Battles: fa0000000401000018010000860100002c0100003601000040010000
+    SkipChance: 10
     SpawnInterval: 0.8
-  - Name: Floor 4
-    Enemies:
-    - {fileID: 1348771329543463548, guid: 3c4457ad4a2a7b7438ab90ba2cff608e, type: 3}
-    - {fileID: 248551432342635207, guid: bd14037085cf9834499dec8a73a7087b, type: 3}
-    - {fileID: 922179206331057516, guid: ff27d6f09bbd34b4e90dae52990fb346, type: 3}
-    EnemyLevels: {x: 7, y: 10}
-    Battles: 18010000220100002c010000400100004a0100005e0100005e01000072010000
-    SkipChance: 1
-    SpawnInterval: 0.7
   _spawnPositions:
   - {x: -4, y: 0, z: 0}
   - {x: -2.5, y: 0, z: 0}

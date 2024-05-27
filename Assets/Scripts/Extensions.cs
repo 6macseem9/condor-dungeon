@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -134,6 +133,7 @@ public static class Util
     }
 }
 
+#if UNITY_EDITOR
 public class NamedArrayAttribute : PropertyAttribute
 {
     public readonly string name;
@@ -157,3 +157,4 @@ public class NamedArrayDrawer : PropertyDrawer
         }
     }
 }
+#endif

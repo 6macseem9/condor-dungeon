@@ -1,14 +1,10 @@
 using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 using Random = UnityEngine.Random;
 
 public class MapController : MonoBehaviour
@@ -265,7 +261,7 @@ public class MapController : MonoBehaviour
             if (_currentPlayerCell.Room is not null) _currentPlayerCell.Room.Enter();
         });
 
-        _cover.DOAnchorPos(new Vector2(-910, -1484), 0.9f).onComplete = ()=> _cover.DOAnchorPos(new Vector2(-910, 1484), 0);
+        _cover.DOAnchorPos(new Vector2(-910, -1555), 0.9f).onComplete = ()=> _cover.DOAnchorPos(new Vector2(-910, 1555), 0);
         _player.DOMove(cell.transform.position, 1).onComplete = () =>
         {
             _raycastBlock.SetActive(false);
