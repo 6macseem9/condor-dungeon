@@ -350,5 +350,10 @@ public class Unit : MonoBehaviour
     {
         _animator.SetFloat("AttackSpeed", Stats.AttackSpeed);
     }
+
+    public void SetDestination(Vector3 destination)
+    {
+        _nav.SetDestination(destination);
+    }
     #endregion
 }

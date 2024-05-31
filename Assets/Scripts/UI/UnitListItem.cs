@@ -30,7 +30,7 @@ public class UnitListItem : MonoBehaviour
     public void SetInfo(Unit unit)
     {
         _unit = unit;
-        _unit.OnLevelUp += UpdateLevel;
+        _unit.OnLevelUp = UpdateLevel;
         _unit.OnSelect = ShowSelected;
 
         ClassName = unit.Class.ClassName;

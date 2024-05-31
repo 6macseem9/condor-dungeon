@@ -15,7 +15,7 @@ public class UnitMove : UnitState
     {
         _animator.Play("walk");
 
-        Util.Delay(0.02f, () => _startedPath = true);
+        Util.Delay(0.04f, () => _startedPath = true);
 
         _nav.avoidancePriority = 49;
         _nav.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;

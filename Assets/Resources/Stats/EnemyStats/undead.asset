@@ -29,7 +29,7 @@ MonoBehaviour:
     AttackSpeed: 0
     Strength: 0
     Armor: 0
-    Intellect: 2
+    Intellect: 1
     Resistance: 0
   - MaxHP: 12
     AttackSpeed: 0

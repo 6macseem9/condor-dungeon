@@ -36140,8 +36140,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 143.0193, y: -201}
-  m_SizeDelta: {x: 164.159, y: 135.9632}
+  m_AnchoredPosition: {x: 138.41628, y: -201}
+  m_SizeDelta: {x: 161.0903, y: 135.9632}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1653863265
 MonoBehaviour:
@@ -36201,7 +36201,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 16
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0.75
@@ -36644,8 +36644,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 51.9, y: -86.58144}
-  m_SizeDelta: {x: 133.4346, y: 95.8882}
+  m_AnchoredPosition: {x: 45.2051, y: -86.58144}
+  m_SizeDelta: {x: 128.9713, y: 95.8882}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1664841528
 MonoBehaviour:
@@ -36672,7 +36672,7 @@ MonoBehaviour:
 
 
     you
-    wil be able to descend to the next floor when all enemies on current floor are
+    will be able to descend to the next floor when all enemies on current floor are
     defeated'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2486f19830fd1e246b91bd741624831c, type: 2}
@@ -36707,7 +36707,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 16
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0.75
@@ -51954,6 +51954,7 @@ GameObject:
   - component: {fileID: 2103619553}
   - component: {fileID: 2103619555}
   - component: {fileID: 2103619556}
+  - component: {fileID: 2103619557}
   m_Layer: 5
   m_Name: Resources
   m_TagString: Untagged
@@ -52005,6 +52006,18 @@ MonoBehaviour:
   _startingGold: 50
   _gold: {fileID: 1159016893}
   _keys: {fileID: 1255165618}
+--- !u!225 &2103619557
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103619552}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2103996191
 GameObject:
   m_ObjectHideFlags: 0

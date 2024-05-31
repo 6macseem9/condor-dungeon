@@ -35,14 +35,20 @@ public class CameraController : MonoBehaviour
         _newZoom = _cameraTransform.localPosition;
 
         Camera.main.eventMask = LayerMask.GetMask("RoomObject");
+
+        //Util.Repeat(0.5f,-1, () => UIDebug.Instance.Show("", (1.0f / Time.deltaTime).ToString("0")));
     }
 
     //temp
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F11))
+        if (Input.GetKeyDown(KeyCode.F11))
         {
             Screen.fullScreen = !Screen.fullScreen;
+        }
+        if(Input.GetKeyDown(KeyCode.F12))
+        {
+            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.FullScreenWindow);
         }
     }
 

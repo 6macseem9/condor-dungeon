@@ -40,12 +40,12 @@ public class MainMenu : MonoBehaviour
 
             _hud.ShowCompletely(true);
 
-            WinAndLoss.Instance.ResetUI();
+            WinAndLoss.Instance.ResetUI(); 
             BattleController.Instance.ResetEverything();
-            UnitSelectionManager.Instance.SpawnStartUnits();
-            BattleIntroAndResults.Instance.ReturnToDefaultPositions();
+            UnitSelectionManager.Instance.SpawnStartUnits(); 
+            BattleIntroAndResults.Instance.ReturnToDefaultPositions(); 
             Inventory.Instance.ClearInventory();
-            Resources.Instance.ResetResources();
+            Resources.Instance.ResetResources(); 
         });
     }
 

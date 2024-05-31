@@ -282,9 +282,12 @@ public class UnitSelectionManager : MonoBehaviour
 
     public void SpawnStartUnits()
     {
-        AllUnits.AddRange(FindObjectsOfType<Unit>().Where(x=>x.IsEnemy));
+        _deadUnits = 0;
+
+        AllUnits.AddRange(FindObjectsOfType<Unit>().Where(x=>x.IsEnemy && !x.IsDying));
         foreach(var unit in AllUnits)
         {
+            if(unit == null) continue;
             Destroy(unit.gameObject);
         }
         AllUnits.Clear();
@@ -294,7 +297,7 @@ public class UnitSelectionManager : MonoBehaviour
         {
             var unit = Instantiate(entry.Unit);
             unit.transform.position = entry.Position;
-            Util.DelayOneFrame(()=>unit.MoveTo(entry.Position));
+            Util.DelayOneFrame(()=>unit.SetDestination(entry.Position));
             AddUnit(unit);
         }
     }
