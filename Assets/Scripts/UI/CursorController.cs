@@ -51,11 +51,7 @@ public class CursorController : MonoBehaviour
         _rect.anchoredPosition = Input.mousePosition;
 
         AdjustTooltipPosition();
-
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-        {
-            ClickAnim();
-        }
+        
     }
 
     private void AdjustTooltipPosition()
@@ -74,16 +70,6 @@ public class CursorController : MonoBehaviour
             pos = new Vector2(pos.x, 3);
 
         _tooltip.Rect.anchoredPosition = pos;
-    }
-
-    private void ClickAnim()
-    {
-        //_cursor.rectTransform.DOKill();
-        //_cursor.rectTransform.anchoredPosition += new Vector2(0, 3);
-        //_cursor.rectTransform.DOAnchorPos(Vector2.zero, 0.2f);
-
-        //_cursor.sprite = _click;
-        //Util.Delay(0.2f, () => _cursor.sprite = _default);
     }
 
     public void NotEnoughResource(NotEnough resource)

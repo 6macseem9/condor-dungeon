@@ -4,11 +4,10 @@ using System.Diagnostics;
 
 public class StateMachine
 {
-    private StateNode current;
-    private Dictionary<Type, StateNode> nodes = new();
-    private HashSet<Transition> anyTransitions = new();
+    private StateNode _current;
+    private Dictionary<Type, StateNode> _nodes = new();
 
-    public string CurrentStateName => current.State.GetType().Name;
+    public string CurrentStateName => _current.State.GetType().Name;
     public string PreviousStateName { get; private set; }
 
     public void Update()
@@ -17,20 +16,20 @@ public class StateMachine
         if (transition != null)
             ChangeState(transition.To);
 
-        current.State?.Update();
+        _current.State?.Update();
     }
 
     public void FixedUpdate()
     {
-        current.State?.FixedUpdate();
+        _current.State?.FixedUpdate();
     }
 
     public void TransitionTo(State state)
     {
-        if(current==null)
+        if(_current==null)
         {
-            current = nodes[state.GetType()];
-            current.State?.Enter();
+            _current = _nodes[state.GetType()];
+            _current.State?.Enter();
             return;
         }
 
@@ -39,24 +38,20 @@ public class StateMachine
 
     private void ChangeState(State state)
     {
-        if (state == current.State) return;
+        if (state == _current.State) return;
 
-        var previousState = current.State;
+        var previousState = _current.State;
         PreviousStateName = previousState.GetType().ToString();
-        var nextState = nodes[state.GetType()].State;
+        var nextState = _nodes[state.GetType()].State;
 
         previousState?.Exit();
         nextState?.Enter();
-        current = nodes[state.GetType()];
+        _current = _nodes[state.GetType()];
     }
 
     private Transition GetTransition()
     {
-        foreach (var transition in anyTransitions)
-            if (transition.Condition())
-                return transition;
-
-        foreach (var transition in current.Transitions)
+        foreach (var transition in _current.Transitions)
             if (transition.Condition())
                 return transition;
 
@@ -68,19 +63,14 @@ public class StateMachine
         GetOrAddNode(from).AddTransition(GetOrAddNode(to).State, condition);
     }
 
-    public void AddAnyTransition(State to, Func<bool> condition)
-    {
-        anyTransitions.Add(new Transition(GetOrAddNode(to).State, condition));
-    }
-
     private StateNode GetOrAddNode(State state)
     {
-        var node = nodes.GetValueOrDefault(state.GetType());
+        var node = _nodes.GetValueOrDefault(state.GetType());
 
         if (node == null)
         {
             node = new StateNode(state);
-            nodes.Add(state.GetType(), node);
+            _nodes.Add(state.GetType(), node);
         }
 
         return node;
@@ -93,13 +83,13 @@ public class StateMachine
 
     private class StateNode
     {
-        public State State { get; }
-        public HashSet<Transition> Transitions { get; }
+        public State State;
+        public List<Transition> Transitions;
 
         public StateNode(State state)
         {
             State = state;
-            Transitions = new HashSet<Transition>();
+            Transitions = new List<Transition>();
         }
 
         public void AddTransition(State to, Func<bool> condition)

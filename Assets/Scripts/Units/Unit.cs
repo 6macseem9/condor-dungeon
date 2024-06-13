@@ -47,7 +47,6 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region Actions
-    public Action TargetLost { get; set; }
     public Action OnAttack { get; set; }
     public Action OnDeath { get; set; }
     public Action<bool> OnSelect { get; set; }
@@ -55,9 +54,6 @@ public class Unit : MonoBehaviour
 
     public Func<int,int> HandleDamage;
     #endregion
-
-    //TEMP
-    public string CurState { get { return _stateMachine==null? "structure" : _stateMachine.CurrentStateName; } }
 
     protected virtual void Start()
     {
@@ -118,8 +114,6 @@ public class Unit : MonoBehaviour
         if (IsDying) return;
         if (AttackTarget!=null && AttackTarget.IsDying)
         {
-            TargetLost?.Invoke();
-
             AttackTarget = null;
             DetectRange.ReTrigger();
             AttackRange.ReTrigger();
@@ -155,7 +149,6 @@ public class Unit : MonoBehaviour
     public void Chase(Unit unit)
     {
         if (unit == null) return;
-        //if (AttackTarget == unit) return;
         AttackTarget = unit;
 
         AttackRange.ReTrigger();
@@ -180,22 +173,18 @@ public class Unit : MonoBehaviour
     {
         if (AttackTarget == unit)
         {
-            TargetLost?.Invoke();
             AttackTarget = null;
         }
     }
     private void EnemyInAttackRange(Unit unit)
     {
         if (unit.IsDying) return;
-
-        if (_stateMachine.CurrentStateName == nameof(UnitMove)) return;
         if (AttackTarget != unit) return;
 
         _stateMachine.TransitionTo(_attackState);
     }
     private void EnemyLeftAttackRange(Unit unit)
     {
-        if (_stateMachine.CurrentStateName == nameof(UnitMove)) return;
         if (AttackTarget != unit) return;
 
         if (HoldPosition) _stateMachine.TransitionTo(_idleState); 
@@ -216,12 +205,12 @@ public class Unit : MonoBehaviour
 
     }
 
-    public virtual void DealDamageToUnit(Unit unit)
+    public void DealDamageToUnit(Unit unit)
     {
         unit.TakeDamage(this);
     }
 
-    public virtual void TakeDamage(Unit sender)
+    public void TakeDamage(Unit sender)
     {
         if (IsDying) return;
 
@@ -242,7 +231,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public virtual void TakeDamage(int trueDamage)
+    public void TakeDamage(int trueDamage)
     {
         if (IsDying) return;
 
@@ -258,7 +247,6 @@ public class Unit : MonoBehaviour
             IsDying = true;
             _stateMachine.TransitionTo(_unitDeathState);
             OnDeath?.Invoke();
-            return;
         }
     }
 
@@ -295,12 +283,6 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region Misc
-    public bool ToggleMode()
-    {
-        HoldPosition = !HoldPosition;
-
-        return HoldPosition;
-    }
 
     public float GetAttackPerSecond()
     {

@@ -6,6 +6,6 @@ public class MeleeUnit : Unit
 {
     public override void DealDamage()
     {
-        AttackTarget.TakeDamage(this);
+        AttackTarget.TakeDamage(sender: this);
     }
 }

@@ -20,7 +20,7 @@ MonoBehaviour:
     MaxHP: 40
     AttackSpeed: 1
     Strength: 18
-    Armor: 8
+    Armor: 6
     Intellect: 0
     Resistance: 5
   DangerLevel: 10

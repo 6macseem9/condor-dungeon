@@ -18,18 +18,9 @@ public class UnitIdle : UnitState
 
         //if (_unit.HoldPosition) _unit.AttackTarget = null; //????
     }
-    public override void Update()
-    {
-
-    }
     public override void FixedUpdate()
     {
 
     }
-    public override void OnExit()
-    {
 
-    }
-
-    
 }

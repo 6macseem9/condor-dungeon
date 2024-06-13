@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum RoomType { Battle, Cages, Chest, Gold, Key, Empty }
+public enum RoomType { Battle, Reward }
 
 [Serializable]
 public class Room

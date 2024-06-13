@@ -134,18 +134,18 @@ public class MapController : MonoBehaviour
         CloseOpenPassages();
     }
 
-    public List<MapCell> GetNeighbors((int, int) pos)
+public List<MapCell> GetNeighbors((int, int) pos)
+{
+    List<MapCell> cells = new List<MapCell>
     {
-        List<MapCell> cells = new List<MapCell>
-        {
-            pos.Item2 != 0 ? _allCells[(pos.Item1, pos.Item2 - 1)] : null,
-            pos.Item1 != 7 ? _allCells[(pos.Item1 + 1, pos.Item2)] : null,
-            pos.Item2 != 6 ? _allCells[(pos.Item1, pos.Item2 + 1)] : null,
-            pos.Item1 != 0 ? _allCells[(pos.Item1 - 1, pos.Item2)] : null
-        };
+        pos.Item2 != 0 ? _allCells[(pos.Item1, pos.Item2 - 1)] : null,
+        pos.Item1 != 7 ? _allCells[(pos.Item1 + 1, pos.Item2)] : null,
+        pos.Item2 != 6 ? _allCells[(pos.Item1, pos.Item2 + 1)] : null,
+        pos.Item1 != 0 ? _allCells[(pos.Item1 - 1, pos.Item2)] : null
+    };
 
-        return cells;
-    }
+    return cells;
+}
 
     private MapCell GetLowestEntropyCell()
     {

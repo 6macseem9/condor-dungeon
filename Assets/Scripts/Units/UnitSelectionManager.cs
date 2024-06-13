@@ -104,7 +104,7 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (_formation.CurrentFormation==Formation.NoFormation)
         {
-            Vector3 oldCenter = units.GetCenter();
+            Vector3 oldCenter = GetCenter(units);
 
             foreach (var unit in units)
             {
@@ -242,11 +242,6 @@ public class UnitSelectionManager : MonoBehaviour
         AllUnits.Add(unit);
         UnitAddedOrRemoved?.Invoke(AllUnits, unit);
     }
-    public void ToggleSelectedUnitMode()
-    {
-        if (_selectedUnits.Count <= 0) return;
-        _selectedUnits[0].ToggleMode();
-    }
     public void SetSelectedUnitsMode(bool hold)
     {
         if (_selectedUnits.Count <= 1) return;
@@ -332,6 +327,20 @@ public class UnitSelectionManager : MonoBehaviour
     {
         AllUnits = AllUnits.OrderBy(x => x.Class.ClassName).ToList();
         UnitAddedOrRemoved(AllUnits,null);
+    }
+
+    private Vector3 GetCenter(List<Unit> list)
+    {
+        var totalX = 0f;
+        var totalY = 0f;
+        var totalZ = 0f;
+        foreach (var obj in list)
+        {
+            totalX += obj.transform.position.x;
+            totalY += obj.transform.position.y;
+            totalZ += obj.transform.position.z;
+        }
+        return new Vector3(totalX, totalY, totalZ) / list.Count;
     }
     //private void OnDrawGizmos()
     //{

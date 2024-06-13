@@ -94,19 +94,6 @@ public static class Extensions
         canv.blocksRaycasts = show;
         canv.interactable = show;
     }
-    public static Vector3 GetCenter(this List<Unit> list)
-    {
-        var totalX = 0f;
-        var totalY = 0f;
-        var totalZ = 0f;
-        foreach (var obj in list)
-        {
-            totalX += obj.transform.position.x;
-            totalY += obj.transform.position.y;
-            totalZ += obj.transform.position.z;
-        }
-        return new Vector3(totalX, totalY, totalZ) / list.Count;
-    }
 }
 
 public static class Util

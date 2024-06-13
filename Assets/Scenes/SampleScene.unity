@@ -379,15 +379,15 @@ MonoBehaviour:
     Prefab: {fileID: 1789526041926500478, guid: 8b56226cbefa9d64586fb5e096ff2219, type: 3}
   - Name: chest
     Icon: {fileID: 1152172859, guid: 81bf7c696fe51c64495c302875c669f4, type: 3}
-    Type: 2
+    Type: 1
     Prefab: {fileID: 2500048114017235340, guid: a3ce43b24c19da546a3dce01ffcc7c25, type: 3}
   - Name: gold reward
     Icon: {fileID: 1646694308, guid: 81bf7c696fe51c64495c302875c669f4, type: 3}
-    Type: 3
+    Type: 1
     Prefab: {fileID: 8260868692966161445, guid: 13b5c88105f3443449691f85427bb393, type: 3}
   - Name: key
     Icon: {fileID: 1378699885, guid: 81bf7c696fe51c64495c302875c669f4, type: 3}
-    Type: 4
+    Type: 1
     Prefab: {fileID: 8260868692966161445, guid: 24b15a2748552d74d94f0a567ac22b98, type: 3}
   _raycastBlock: {fileID: 367717295}
   _cover: {fileID: 1339023099}

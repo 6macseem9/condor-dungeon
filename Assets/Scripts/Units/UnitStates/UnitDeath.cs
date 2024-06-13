@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -51,5 +52,9 @@ public class UnitDeath : UnitState
             BattleController.Instance.DecreaseEnemyCount();
             MonoBehaviour.Destroy(_unit.gameObject);
         };
+    }
+    public override void FixedUpdate()
+    {
+        
     }
 }

@@ -26,8 +26,8 @@ public class RangedUnit : Unit
     }
     public override void DealDamage()
     {
-        var proj = _pool.GetObject();
+        var projectile = _pool.GetObject();
         var target = AttackTarget;
-        proj.SetTarget(AttackTarget.transform, ()=> { target.TakeDamage(this); OnHit.Invoke(); });
+        projectile.SetTarget(AttackTarget.transform, ()=> { target.TakeDamage(this); OnHit.Invoke(); });
     }
 }

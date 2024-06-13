@@ -26,8 +26,6 @@ public class MapCell : MonoBehaviour, IPointerClickHandler
     private Image _iconImage;
     private Sprite _emptyTileSprite;
 
-    private GameObject _roomObject;
-
     void Start()
     {
         var images = GetComponentsInChildren<Image>();

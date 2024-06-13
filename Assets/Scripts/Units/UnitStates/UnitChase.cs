@@ -33,12 +33,7 @@ public class UnitChase : UnitState
     public override void FixedUpdate()
     {
         if (_nav.steeringTarget == _transform.position) return;
-        Vector3 lookAtPos = _nav.steeringTarget - _transform.position;
-        Quaternion newRotation = Quaternion.LookRotation(lookAtPos, _transform.up);
-        _transform.rotation = Quaternion.Slerp(_transform.rotation, newRotation, 0.1f);
-    }
-    public override void OnExit()
-    {
-
+        _lookTarget = _nav.steeringTarget;
+        base.FixedUpdate();
     }
 }

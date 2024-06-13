@@ -48,12 +48,10 @@ public class Stats
     {
         int damage;
         
-        if(damageStats.Strength==0) damage = (damageStats.Intellect - Resistance);
-        else damage = (damageStats.Strength - Armor);
+        if(damageStats.Strength==0) damage = damageStats.Intellect - Resistance;
+        else damage = damageStats.Strength - Armor;
 
-        damage = damage <= 0 ? 0 : damage;
-
-        return damage;
+        return damage <= 0 ? 0 : damage;
     }
 
     public List<float> GetArray()

@@ -26,14 +26,7 @@ public class UnitAttack : UnitState
     public override void FixedUpdate()
     {
         if (_unit.AttackTarget == null) return;
-        Vector3 lookAtPos = _unit.AttackTarget.transform.position - _transform.position;
-        Quaternion newRotation = Quaternion.LookRotation(lookAtPos, _transform.up);
-        _transform.rotation = Quaternion.Slerp(_transform.rotation, newRotation, 0.1f);
+        _lookTarget = _unit.AttackTarget.transform.position;
+        base.FixedUpdate();
     }
-    public override void OnExit()
-    {
-
-    }
-
-
 }
