@@ -48,7 +48,7 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
-        _rect.anchoredPosition = Input.mousePosition;
+        transform.position = Input.mousePosition;
 
         AdjustTooltipPosition();
         

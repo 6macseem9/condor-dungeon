@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class UnitPosition
@@ -52,6 +53,7 @@ public class UnitSelectionManager : MonoBehaviour
         else Instance = this;
 
         AllUnits = new List<Unit>();
+        Random.InitState(Mathf.Abs((int)DateTime.Now.Ticks));
     }
 
     private void Start()
